@@ -1,0 +1,26 @@
+//MobileSideBar
+.ant-drawer-content {
+    .ant-drawer-header {
+        div>button>span>svg {
+            color: rgba(27, 129, 231, 1);
+            font-size: 22px;
+        }
+
+        div>button>span {
+            background-color: rgba(236, 245, 255, 1);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        div {
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+
+//UndreLineAboveTheCloseSvg
+:where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-header {
+    border-bottom: none;
+}

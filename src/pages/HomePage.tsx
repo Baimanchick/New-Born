@@ -1,8 +1,11 @@
 import React from 'react'
+import BannerCarousel from '../components/BannerCarousel'
 
 function HomePage() {
     return (
-        <div>HomePage</div>
+        <div>
+            {/* <BannerCarousel /> */}
+        </div>
     )
 }
 
