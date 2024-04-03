@@ -18,9 +18,8 @@ function Navbar() {
     const menuItems: MenuItem[] = [
         { label: "Главная", key: 'home' },
         { label: "Акции", key: 'stock' },
-        { label: "Блог", key: 'blog' },
         { label: "Все Бренды", key: 'allBrands' },
-        { label: "Скидки", key: 'sales' },
+        { label: "Войти", key: 'login' }
     ];
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
     const [isFilterDrawerOpen, setFilterIsDrawerOpen] = useState<boolean>(false);
@@ -131,7 +130,7 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
             <Drawer
                 closable={false}
                 bodyStyle={{ backgroundColor: "rgba(27, 129, 231, 1)" }}
-                width={300}
+                width={'70%'}
                 open={isDrawerOpen}
                 onClose={() => setIsDrawerOpen(false)}
                 placement='right'
