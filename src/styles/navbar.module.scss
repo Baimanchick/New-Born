@@ -176,31 +176,6 @@
                 }
             }
         }
-
-        .navbar_mobile__sidebar {
-            .ant-drawer-content {
-                background: rgba(27, 129, 231, 1) !important;
-
-                .ant-drawer-header {
-                    div>button>span>svg {
-                        color: rgba(27, 129, 231, 1);
-                        font-size: 22px;
-                    }
-
-                    div>button>span {
-                        background-color: rgba(236, 245, 255, 1);
-                        padding: 15px;
-                        border-radius: 15px;
-                    }
-
-                    div {
-                        margin-top: 15px;
-                        display: flex;
-                        justify-content: flex-end;
-                    }
-                }
-            }
-        }
     }
 
     .sideBar_navigation {
@@ -218,6 +193,26 @@
             color: rgba(255, 255, 255, 1);
         }
     }
+
+    .navbar_mobile__footer {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        div {
+            color: rgba(255, 255, 255, 1);
+            font-size: 12px;
+            font-weight: 400;
+
+            a {
+                text-decoration: underline;
+                color: #fff;
+            }
+        }
+
+
+    }
+
 }
 
 //! ModalSearch
@@ -286,6 +281,137 @@
                     }
                 }
             }
+        }
+    }
+}
+
+//! MobileNavbarFilterSideBar
+@media only screen and (max-width: 660px) {
+
+    .mobile_filter__main {
+        margin-top: 40px;
+
+        .mobile_filter__container {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+
+
+
+            .mobile_filter {
+                display: flex;
+                flex-direction: column;
+                row-gap: 15px;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 20px;
+
+
+                .main_title {
+                    display: flex;
+                    justify-content: space-between;
+
+                    div {
+                        font-size: 22px;
+                        font-weight: 1000;
+                        color: rgba(27, 129, 231, 1);
+                    }
+                }
+
+                .mobile_filter__item {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 15px;
+
+                    .dropdown_mobile__filter {
+                        display: flex;
+                        justify-content: space-between;
+
+                        div {
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+                    }
+
+                    .dropdown_mobile_filter__item {
+                        display: flex;
+                        flex-direction: column;
+                        row-gap: 15px;
+
+                        div {
+                            font-size: 16px;
+                            font-weight: 500;
+                            color: rgba(123, 123, 123, 1);
+                        }
+
+                        .active {
+                            color: rgba(250, 188, 34, 1);
+                            font-weight: 1000;
+                        }
+                    }
+                }
+            }
+
+            .mobile_button {
+                display: flex;
+                justify-content: center;
+
+                button {
+                    width: 100%;
+                    height: 60px;
+                    border-radius: 60px;
+                    color: #fff;
+                    background-color: rgba(250, 188, 34, 1);
+                    font-size: 18px;
+                    font-weight: 1000;
+                    outline: none;
+                }
+
+                button:hover {
+                    color: #fff;
+                    background-color: rgba(250, 188, 34, 1);
+                    border: none !important;
+                }
+            }
+        }
+    }
+}
+
+//! PriceRangeSelector
+@media only screen and (max-width: 660px) {
+    .priceRangeSelector_main {
+        display: flex;
+        flex-direction: column;
+
+        .priceRangeSelector_title {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 5px 0px 10px 0px;
+
+            li {
+                font-size: 16px;
+                color: rgba(123, 123, 123, 1);
+                font-weight: 500;
+            }
+        }
+
+        div {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+        }
+
+        div>div>div {
+            height: 60px;
+            outline: none;
+            border-radius: 15px;
+        }
+
+        div>div>div>div {
+            border: none !important;
+            background-color: rgba(248, 248, 248, 1) !important;
         }
     }
 }
