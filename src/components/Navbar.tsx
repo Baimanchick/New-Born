@@ -3,6 +3,8 @@ import { Button, Menu, Input, Drawer } from 'antd';
 import { MenuItem, MobileNavbarProps, NavbarMenuProps, SearchModalProps } from '../utils/interfacesAndTypes';
 import styles from "../styles/navbar.module.scss";
 import phone from "../assets/svgs/navbar/phone.svg";
+import phoneWhite from "../assets/svgs/navbar/phoneWhite.svg";
+
 import logo from "../assets/svgs/navbar/logo.svg";
 import cart from "../assets/svgs/navbar/cart.svg";
 import favourite from "../assets/svgs/navbar/favourites.svg";
@@ -139,6 +141,10 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
                         <li key={item.key}>{item.label}</li>
                     ))}
                 </ul>
+                <div className={styles.navbar_mobile__footer}>
+                    <img src={phoneWhite} />
+                    <div>Горячая линия  <a href="#">+01 112 352 566</a></div>
+                </div>
             </Drawer>
             <MobileNavbarFilterSideBar isFilterDrawerOpen={isFilterDrawerOpen} setFilterIsDrawerOpen={setFilterIsDrawerOpen} />
         </div>
