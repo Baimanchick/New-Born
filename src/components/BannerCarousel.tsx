@@ -1,67 +1,57 @@
 import React, { useRef } from 'react';
-import { Button, Carousel, Drawer } from 'antd';
+import { Button, Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/lib/carousel';
+import styles from "../styles/carousel.module.scss";
+import arrowLeft from "../assets/svgs/carousel/arrowLeft.svg";
+import arrowRight from "../assets/svgs/carousel/arrowRight.svg"
+import img from "../assets/carousel/image 1.png"
 
-const contentStyle: React.CSSProperties = {
-    height: '160px',
-    color: '#fff',
-    lineHeight: '160px',
-    textAlign: 'center',
-    background: 'red',
-};
 
 const BannerCarousel: React.FC = () => {
     const ref = useRef<CarouselRef>(null);
 
     return (
-        <>
-            <Carousel
-                autoplay
-                dots={true} dotPosition='bottom'
-                pauseOnHover={true}
-                pauseOnDotsHover={true}
-                draggable
-                ref={ref}
-                effect='fade'
-            >
-                <div>
-                    <h3 style={contentStyle}>1</h3>
-                </div>
-                <div>
-                    <h3 style={contentStyle}>2</h3>
-                </div>
-                <div>
-                    <h3 style={contentStyle}>3</h3>
-                </div>
-                <div>
-                    <h3 style={contentStyle}>4</h3>
-                </div>
-            </Carousel>
-            <div>
-                <Button
-                    onClick={() => {
-                        ref.current && ref.current.prev();
-                    }}
+        <div className={styles.banner_carousel__container}>
+            <div className={styles.banner_carousel}>
+                <Carousel
+                    autoplay
+                    dots={true}
+                    dotPosition='bottom'
+                    pauseOnHover={true}
+                    pauseOnDotsHover={true}
+                    ref={ref}
+                    effect='fade'
+                    swipeToSlide
+                    draggable
                 >
-                    Prev
-                </Button>
-                <Button
-                    onClick={() => {
-                        ref.current && ref.current.goTo(0);
-                    }}
-                >
-                    Reset
-                </Button>
-                <Button
-                    onClick={() => {
-                        ref.current && ref.current.next();
-                    }}
-                >
-                    Next
-                </Button>
+                    <div className={styles.banner_carousel__pages}>
+                        <img src={img} />
+                    </div>
+                    <div className={styles.banner_carousel__pages}>
+                        <img src="https://turan-backend.online/media/media/carousel/MacBook-Air-15-Inch-Feature-Purple.jpg" />
+                    </div>
+                </Carousel>
             </div>
-        </>
+            <div className={styles.banner_carousel__button}>
+                <button>
+                    <img
+                        onClick={() => {
+                            ref.current && ref.current.prev();
+                        }}
+                        src={arrowLeft}
+                    />
+                </button>
+                <button>
+                    <img
+                        onClick={() => {
+                            ref.current && ref.current.next();
+                        }}
+                        src={arrowRight}
+                    />
+                </button>
+            </div>
+        </div>
     );
 };
 
