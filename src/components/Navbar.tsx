@@ -41,7 +41,7 @@ function Navbar() {
     }, []);
 
     return (
-        <div>
+        <div className='container'>
             {isMobile ? (
                 <>
                     <MobileNavbar

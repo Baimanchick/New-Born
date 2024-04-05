@@ -34,19 +34,19 @@ const BannerCarousel: React.FC = () => {
                 </Carousel>
             </div>
             <div className={styles.banner_carousel__button}>
-                <button>
+                <button onClick={() => {
+                    ref.current && ref.current.prev();
+                }}>
                     <img
-                        onClick={() => {
-                            ref.current && ref.current.prev();
-                        }}
+
                         src={arrowLeft}
                     />
                 </button>
-                <button>
+                <button onClick={() => {
+                    ref.current && ref.current.next();
+                }}>
                     <img
-                        onClick={() => {
-                            ref.current && ref.current.next();
-                        }}
+
                         src={arrowRight}
                     />
                 </button>
