@@ -1,0 +1,39 @@
+.extraCustom{
+  margin: 0 !important;
+}
+
+.wrapper{
+  margin-right: 8px;
+}
+.cardCustom{
+  width: 225px !important;
+  border-radius: 20px !important;
+  padding: 10px !important;
+  cursor: pointer;
+}
+.bodyCustom{
+  padding: 0 !important;
+}
+.headCustom{
+  padding: 0 !important;
+  min-height: 30px !important;
+  border: none !important;
+}
+.tag{
+  margin-block: 3px;
+  margin-inline-end: 3px !important;
+  border-radius: 6px;
+  padding-inline: 6px !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
+}
+
+.favButton{
+  width: 30px !important;
+  height: 30px !important;
+  background: #F8F8F8;
+  border-color: transparent !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

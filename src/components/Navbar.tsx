@@ -14,13 +14,14 @@ import search from "../assets/svgs/navbar/search.svg"
 import "../styles/antd.scss";
 import MobileNavbarFilterSideBar from './MobileNavbarFilterSideBar';
 
+const menuItems: MenuItem[] = [
+    { label: "Главная", key: 'home' },
+    { label: "Акции", key: 'stock' },
+    { label: "Все Бренды", key: 'allBrands' },
+    { label: "Войти", key: 'login' }
+];
+
 function Navbar() {
-    const menuItems: MenuItem[] = [
-        { label: "Главная", key: 'home' },
-        { label: "Акции", key: 'stock' },
-        { label: "Все Бренды", key: 'allBrands' },
-        { label: "Войти", key: 'login' }
-    ];
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
     const [isFilterDrawerOpen, setFilterIsDrawerOpen] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 660);
