@@ -10,7 +10,6 @@ function CategoryCard() {
     const abbreviatedTitleSpecail = words.slice(0, 1).join(' ');
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 880);
 
-
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 880);
         window.addEventListener('resize', handleResize);
