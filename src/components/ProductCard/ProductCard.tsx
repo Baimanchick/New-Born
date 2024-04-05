@@ -81,7 +81,7 @@ export function ProductCard({ title, price, rating, image, tags}: ProductCardPro
             </Flex>
                 <Text style={{marginBottom: 20, fontSize: 14}}>{title}</Text>
                 {isClicked &&
-                    <Flex style={{width: '100%', backgroundColor:'#ECF5FF', borderRadius: '20%', paddingInline: 3, paddingBlock: 4, marginBottom: 10}} justify={"space-between"} align={"center"}>
+                    <Flex style={{width: '100%', backgroundColor:'#ECF5FF', borderRadius: 50, paddingInline: 3, paddingBlock: 4, marginBottom: 10}} justify={"space-between"} align={"center"}>
                     <ButtonAnt onClick={decline} icon={<MinusOutlined />} shape={"circle"} />
                         <Text style={{fontSize: 14, fontWeight:'bold', color: '#1B81E7'}}>{count}</Text>
                         <ButtonAnt onClick={increase} icon={<PlusOutlined />} shape={"circle"} />
