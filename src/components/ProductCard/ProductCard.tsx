@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import { Card, Typography, Flex } from 'antd';
 import { Tag } from "antd";
 import {Button as ButtonAnt} from 'antd'
@@ -11,6 +11,7 @@ import { ProductCardProps } from './ProductCard.props';
 import {formatNumberAndAddCurrency} from "../../utils/helperFunctions";
 import styles from "./productCard.module.scss";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
+import {Colors} from "../../helpers/enums/color.enum";
 
 const {Title,Text} = Typography
 
@@ -41,17 +42,17 @@ export function ProductCard({ title, price, rating, image, tags}: ProductCardPro
     return (
         <Card
             className={styles.cardCustom}
-            classNames={{body: styles.bodyCustom,header: styles.headCustom, extra: styles.extraCustom}}
+            classNames={{body: styles.bodyCustom, header: styles.headCustom, extra: styles.extraCustom}}
             extra={
             <Flex align={"center"}>
                 <Flex className={styles.wrapper} align={"center"} wrap={"wrap"}>
                  {tags.map((tag: string)=> (
-                    <Tag className={styles.tag} color={'#ABDEE9'}>{tag}</Tag>
+                    <Tag className={styles.tag} color={Colors.BRAND_COLOR}>{tag}</Tag>
                  ))}
                 </Flex>
                <ButtonAnt className={styles.favButton} icon={<Fav/>} shape="circle" danger/>
             </Flex>
-        }
+            }
             cover={<img src={image} alt={title}/>}
             actions={[
                 !isClicked ?
@@ -81,11 +82,12 @@ export function ProductCard({ title, price, rating, image, tags}: ProductCardPro
             </Flex>
                 <Text style={{marginBottom: 20, fontSize: 14}}>{title}</Text>
                 {isClicked &&
-                    <Flex style={{width: '100%', backgroundColor:'#ECF5FF', borderRadius: 50, paddingInline: 3, paddingBlock: 4, marginBottom: 10}} justify={"space-between"} align={"center"}>
-                    <ButtonAnt onClick={decline} icon={<MinusOutlined />} shape={"circle"} />
-                        <Text style={{fontSize: 14, fontWeight:'bold', color: '#1B81E7'}}>{count}</Text>
+                    <Flex className={styles.counterWrapper} justify={"space-between"} align={"center"}>
+                        <ButtonAnt onClick={decline} icon={<MinusOutlined />} shape={"circle"} />
+                        <Text >{count}</Text>
                         <ButtonAnt onClick={increase} icon={<PlusOutlined />} shape={"circle"} />
-                </Flex>}
+                </Flex> || null
+                }
 
             </Flex>
         </Card>
