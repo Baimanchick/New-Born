@@ -1,0 +1,31 @@
+.button{border-radius: 14px;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px }
+
+.yellow{
+  background: #FABC22;
+  &:hover{
+    border-color: #FABC22 !important;
+    color: #FABC22 !important;
+    svg path {
+      stroke: #FABC22;
+    }
+  }
+}
+
+.blue{
+  background: #1B81E7;
+  &:hover{
+    svg path {
+      stroke: #1B81E7;
+    }
+    border-color: #1B81E7 !important;
+    color: #1B81E7 !important;
+  }
+}
