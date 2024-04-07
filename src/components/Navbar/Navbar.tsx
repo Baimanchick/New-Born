@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Button, Menu, Input, Drawer } from 'antd';
-import { MenuItem, MobileNavbarProps, NavbarMenuProps, SearchModalProps } from '../utils/interfacesAndTypes';
-import styles from "../styles/navbar.module.scss";
-import phone from "../assets/svgs/navbar/phone.svg";
-import phoneWhite from "../assets/svgs/navbar/phoneWhite.svg";
+import { MenuItem, MobileNavbarProps, NavbarMenuProps, SearchModalProps } from './Navbar.props';
+import styles from "./navbar.module.scss";
+import phone from "../../assets/svgs/navbar/phone.svg";
+import phoneWhite from "../../assets/svgs/navbar/phoneWhite.svg";
 
-import logo from "../assets/svgs/navbar/logo.svg";
-import cart from "../assets/svgs/navbar/cart.svg";
-import favourite from "../assets/svgs/navbar/favourites.svg";
-import filter from "../assets/svgs/navbar/filter.svg"
-import burger from "../assets/svgs/navbar/burgerMenu.svg"
-import search from "../assets/svgs/navbar/search.svg"
-import "../styles/antd.scss";
+import logo from "../../assets/svgs/navbar/logo.svg";
+import cart from "../../assets/svgs/navbar/cart.svg";
+import favourite from "../../assets/svgs/navbar/favourites.svg";
+import filter from "../../assets/svgs/navbar/filter.svg"
+import burger from "../../assets/svgs/navbar/burgerMenu.svg"
+import "../../styles/antd.scss";
 import MobileNavbarFilterSideBar from './MobileNavbarFilterSideBar';
 
 const menuItems: MenuItem[] = [
@@ -129,9 +128,9 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
                 </div>
             </div>
             <Drawer
-                closable={false}
+                closable={true}
                 bodyStyle={{ backgroundColor: "rgba(27, 129, 231, 1)" }}
-                width={'70%'}
+                width={'100%'}
                 open={isDrawerOpen}
                 onClose={() => setIsDrawerOpen(false)}
                 placement='right'

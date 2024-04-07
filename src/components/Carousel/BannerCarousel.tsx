@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
-import { Button, Carousel } from 'antd';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Carousel } from 'antd';
 import { CarouselRef } from 'antd/lib/carousel';
-import styles from "../styles/carousel.module.scss";
-import arrowLeft from "../assets/svgs/carousel/arrowLeft.svg";
-import arrowRight from "../assets/svgs/carousel/arrowRight.svg"
-import img from "../assets/carousel/image 1.png"
+import styles from "./carousel.module.scss";
+import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
+import arrowRight from "../../assets/svgs/carousel/arrowRight.svg"
+import img from "../../assets/carousel/image 1.png"
 
 
 const BannerCarousel: React.FC = () => {
@@ -38,7 +37,6 @@ const BannerCarousel: React.FC = () => {
                     ref.current && ref.current.prev();
                 }}>
                     <img
-
                         src={arrowLeft}
                     />
                 </button>
@@ -46,7 +44,6 @@ const BannerCarousel: React.FC = () => {
                     ref.current && ref.current.next();
                 }}>
                     <img
-
                         src={arrowRight}
                     />
                 </button>

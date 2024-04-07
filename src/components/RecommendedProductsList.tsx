@@ -1,17 +1,14 @@
+import styles from "../styles/card.module.scss"
 import { ProductCard } from "./ProductCard/ProductCard"
 import nutrilon from '../assets/card/nutrilon.png'
-import styles from "../styles/card.module.scss"
-import { Button } from "antd"
 
-function NewProductsList() {
+
+function RecommendedProductsList() {
     return (
-        <div className={styles.newProducts_main}>
-            <div className={styles.newProducts_container}>
-                <div className={styles.newProducts_section__title}>
-                    <div>Самые популярные</div>
-                    <Button>Больше</Button>
-                </div>
-                <div className={styles.newProducts}>
+        <div className={styles.recommendedProducts_main}>
+            <div className={styles.recommendedProducts_container}>
+                <div className={styles.recommendedProducts_title}>Рекомендуем вам</div>
+                <div className={styles.recommendedProducts}>
                     {[1, 2, 3, 4, 5].map((index: number) => (
                         <ProductCard
                             key={index}
@@ -28,4 +25,4 @@ function NewProductsList() {
     )
 }
 
-export default NewProductsList
+export default RecommendedProductsList

@@ -1,10 +1,14 @@
 import React from 'react'
-import CategoryCard from './CategoryCard'
+import CategoryCard from './CategoryCard/CategoryCard'
+import img from "../assets/card/image.png";
 
 function CategoryCardList() {
     return (
         <div>
-            <CategoryCard />
+            <CategoryCard
+                title='Искусственное вскармливание'
+                image={img}
+            />
         </div>
     )
 }

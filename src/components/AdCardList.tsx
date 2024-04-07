@@ -1,4 +1,4 @@
-import AdCard from "./AdCard"
+import AdCard from "./AdCard/AdCard"
 
 function AdCardList() {
     return (

@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
-import arrowDown from "../assets/svgs/navbar/blueArrowDown.svg";
-import arrowDownBlack from "../assets/svgs/navbar/blackArrowDown.svg";
-import arrowUpBlack from "../assets/svgs/navbar/blackArrowUp.svg"
-import styles from "../styles/navbar.module.scss";
+import arrowDown from "../../assets/svgs/navbar/blueArrowDown.svg";
+import arrowDownBlack from "../../assets/svgs/navbar/blackArrowDown.svg";
+import arrowUpBlack from "../../assets/svgs/navbar/blackArrowUp.svg"
+import styles from "./navbar.module.scss";
 import { Button, Drawer, } from 'antd';
 import PriceRangeSelector from './PriceRangeSelector';
 
@@ -10,7 +10,6 @@ function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }
     const [isOpenDropdown, setIsOpenDropdown] = useState<{ [key: string]: boolean }>({});
     const [isOpenChildDropdown, setIsOpenChildDropdown] = useState<{ [key: string]: boolean }>({});
     const [activeItem, setActiveItem] = useState('');
-    const SALARY_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 

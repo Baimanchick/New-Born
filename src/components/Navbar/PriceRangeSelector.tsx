@@ -1,6 +1,6 @@
 import { Select, Space } from 'antd'
 import React, { useState } from 'react'
-import styles from "../styles/navbar.module.scss"
+import styles from "./navbar.module.scss"
 
 function PriceRangeSelector() {
     const [salaryFrom, setSalaryFrom] = useState<any>(null)
