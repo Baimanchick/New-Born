@@ -129,6 +129,7 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
             </div>
             <Drawer
                 closable={true}
+                classNames={{ header: styles.navbar_mobile__drawer }}
                 bodyStyle={{ backgroundColor: "rgba(27, 129, 231, 1)" }}
                 width={'100%'}
                 open={isDrawerOpen}

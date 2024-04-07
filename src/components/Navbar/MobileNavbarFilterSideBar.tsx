@@ -33,7 +33,7 @@ function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }
 
     return (
         <div>
-            <Drawer bodyStyle={{ backgroundColor: "rgba(248, 248, 248, 1)" }} width="100%" open={isFilterDrawerOpen} onClose={() => setFilterIsDrawerOpen(false)}>
+            <Drawer classNames={{ header: styles.mobile_filter_drawer }} bodyStyle={{ backgroundColor: "rgba(248, 248, 248, 1)" }} width="100%" open={isFilterDrawerOpen} onClose={() => setFilterIsDrawerOpen(false)}>
                 <div className={styles.mobile_filter__main}>
                     <div className={styles.mobile_filter__container}>
                         <div className={styles.mobile_filter}>
