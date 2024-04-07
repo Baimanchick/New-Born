@@ -1,34 +1,51 @@
-.extraCustom{
+.extraCustom {
   margin: 0 !important;
 }
 
-.wrapper{
+.wrapper {
   margin-right: 8px;
 }
-.cardCustom{
+
+.cardCustom {
   width: 225px !important;
+
+  @media screen and (max-width: 530px) {
+    width: 145px !important;
+  }
+
   border-radius: 20px !important;
   padding: 10px !important;
   cursor: pointer;
 }
-.bodyCustom{
+
+.bodyCustom {
   padding: 0 !important;
 }
-.headCustom{
+
+.headCustom {
   padding: 0 !important;
   min-height: 30px !important;
   border: none !important;
 }
-.tag{
+
+.tag {
   margin-block: 3px;
   margin-inline-end: 3px !important;
   border-radius: 6px;
   padding-inline: 6px !important;
   font-size: 10px !important;
+
+  @media screen and (max-width:530px) {
+    font-size: 7.91px !important;
+    width: auto !important;
+    height: auto !important;
+    padding: initial !important;
+  }
+
   font-weight: bold !important;
 }
 
-.favButton{
+.favButton {
   width: 30px !important;
   height: 30px !important;
   background: #F8F8F8;
@@ -37,7 +54,8 @@
   align-items: center;
   justify-content: center;
 }
-.counterWrapper{
+
+.counterWrapper {
   width: 100%;
   background-color: #ECF5FF;
   border-radius: 50px;
@@ -45,7 +63,7 @@
   padding-block: 4px;
   margin-bottom: 10px;
 
-  span{
+  span {
     font-size: 14px !important;
     font-weight: bold !important;
     color: #1B81E7 !important;

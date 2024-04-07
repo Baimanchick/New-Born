@@ -1,11 +1,10 @@
 import React from 'react'
-import BannerCarousel from '../components/BannerCarousel'
+import BannerCarousel from '../components/Carousel/BannerCarousel'
 import CategoryCardList from '../components/CategoryCardList'
 import AdCardList from '../components/AdCardList'
-
-import nutrilon from '../assets/card/nutrilon.png'
-import agusha from '../assets/card/agusha.png'
-import {ProductCard} from '../components/'
+import NewProductsList from '../components/NewProductsList'
+import RecommendedProductsList from '../components/RecommendedProductsList'
+import PopularProductsList from '../components/PopularProductsList'
 
 function HomePage() {
     return (
@@ -17,13 +16,11 @@ function HomePage() {
             <div className='container-gray'>
                 <div className='gray'>
                     <AdCardList />
-                    <ProductCard
-                        price={2699}
-                        rating={5}
-                        title={"Смесь сухая Nutrilon Пепти Аллергия 800г с 0 месяцев"}
-                        image={nutrilon}
-                        tags={['800г', 'с 0 месяцев', 'new']}
-                    />
+                    <NewProductsList />
+                    <div className='turquoise'>
+                        <RecommendedProductsList />
+                    </div>
+                    <PopularProductsList />
                 </div>
             </div>
             <div style={{ paddingBottom: '200px' }}></div>

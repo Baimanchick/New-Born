@@ -1,8 +1,5 @@
 export interface NavbarMenuProps {
-    // setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
     menuItems: MenuItem[]; 
-    // isDrawerOpen: boolean; 
-    // openSearchModal: any;
 }
 
 export interface SearchModalProps {
