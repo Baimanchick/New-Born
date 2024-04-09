@@ -16,8 +16,7 @@ body {
 
 .container-gray {
     background-color: rgba(245, 244, 242, 1);
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-radius: 50px;
 }
 
 .gray {
@@ -30,6 +29,11 @@ body {
     border-radius: 20px;
     padding: 20px;
     margin-top: 40px;
+}
+
+.footer-white {
+    position: absolute;
+    background-color: black;
 }
 
 * {

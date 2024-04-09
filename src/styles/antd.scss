@@ -21,18 +21,22 @@
 }
 
 //UndreLineAboveTheCloseSvg
-// :where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-header {
-//     border-bottom: none;
-// }
+:where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-header {
+    border-bottom: none;
+}
 
-// :where(.css-dev-only-do-not-override-42nv3w).ant-card-bordered .ant-card-cover {
-//     margin: 0;
-// }
+:where(.css-dev-only-do-not-override-42nv3w).ant-card-bordered .ant-card-cover {
+    margin: 0;
+}
 
-// :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions {
-//     border-top: 0;
-// }
+:where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions {
+    border-top: 0;
+}
 
-// :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions>li {
-//     margin: 0;
-// }
+:where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions>li {
+    margin: 0;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-content {
+    background: none;
+}
