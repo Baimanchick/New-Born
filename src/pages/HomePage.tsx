@@ -5,6 +5,9 @@ import AdCardList from '../components/AdCardList'
 import NewProductsList from '../components/NewProductsList'
 import RecommendedProductsList from '../components/RecommendedProductsList'
 import PopularProductsList from '../components/PopularProductsList'
+import { ReviewsCarousel } from '../components/Carousel/ReviewsCarousel'
+import BrandCardList from '../components/BrandCardList'
+import agusha from "../assets/card/agushaBrand.png"
 
 function HomePage() {
     return (
@@ -16,14 +19,15 @@ function HomePage() {
             <div className='container-gray'>
                 <div className='gray'>
                     <AdCardList />
-                    <NewProductsList />
+                    <PopularProductsList />
                     <div className='turquoise'>
                         <RecommendedProductsList />
                     </div>
-                    <PopularProductsList />
+                    <NewProductsList />
+                    <ReviewsCarousel />
+                    <BrandCardList />
                 </div>
             </div>
-            <div style={{ paddingBottom: '200px' }}></div>
         </>
     )
 }

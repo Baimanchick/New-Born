@@ -1,0 +1,140 @@
+.footer_main {
+    max-width: 85vw;
+    margin: 10vh auto;
+    height: 200px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer_social__logo {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    .logo {
+        width: 100px;
+        height: 82px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    span {
+        font-size: 14px;
+        color: rgba(119, 134, 146, 1);
+        cursor: pointer;
+    }
+
+    .social_media {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        img {
+            cursor: pointer;
+        }
+    }
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    li {
+        font-size: 16px;
+        color: rgba(119, 134, 146, 1);
+        font-weight: 400;
+        cursor: pointer;
+    }
+
+    .bold {
+        color: rgba(42, 42, 42, 1);
+        font-weight: 500;
+        font-size: 20px;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+
+    .title {
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .footer_input {
+        margin-top: 20px;
+        border: none;
+        width: 100%;
+        height: 3vw;
+
+        @media screen and (max-width: 755px) {
+            padding: 10px;
+            height: auto;
+
+        }
+
+        background-color: #778692;
+        border-radius: 8px;
+        color: #000;
+        position: relative;
+    }
+
+    .footer_input input {
+        background-color: initial;
+        border: none;
+        padding-left: 20px;
+        padding-top: 1vw;
+        max-width: 180px;
+        font-family: "Montserrat", sans-serif;
+        outline: none;
+    }
+
+    .footer_input input::placeholder {
+        color: #000;
+    }
+
+
+    .footer_input img {
+        position: absolute;
+        top: 15%;
+        right: 10px;
+    }
+
+
+}
+
+@media screen and (max-width: 755px) {
+    .footer {
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+    }
+
+    .logos {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .social_media {
+        display: flex;
+        gap: 10px;
+    }
+
+    .footer_text {
+        margin: 20px 0px 20px 0px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            color: rgba(119, 134, 146, 1);
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+}

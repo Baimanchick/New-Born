@@ -28,7 +28,7 @@ const BannerCarousel: React.FC = () => {
                         <img src={img} />
                     </div>
                     <div className={styles.banner_carousel__pages}>
-                        <img src="https://turan-backend.online/media/media/carousel/MacBook-Air-15-Inch-Feature-Purple.jpg" />
+                        <img src="https://static-cse.canva.com/blob/759807/vk1776.png" />
                     </div>
                 </Carousel>
             </div>
