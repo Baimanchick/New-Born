@@ -4,7 +4,7 @@ import arrowDownBlack from "../../assets/svgs/navbar/blackArrowDown.svg";
 import arrowUpBlack from "../../assets/svgs/navbar/blackArrowUp.svg"
 import styles from "./navbar.module.scss";
 import { Button, Drawer, } from 'antd';
-import PriceRangeSelector from './PriceRangeSelector';
+import PriceRangeSelector from '../PriceRangeSelector/PriceRangeSelector';
 
 function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }: { isFilterDrawerOpen: boolean, setFilterIsDrawerOpen: (isOpen: boolean) => void }) {
     const [isOpenDropdown, setIsOpenDropdown] = useState<{ [key: string]: boolean }>({});
