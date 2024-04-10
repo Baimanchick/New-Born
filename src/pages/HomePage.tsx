@@ -7,7 +7,6 @@ import RecommendedProductsList from '../components/RecommendedProductsList'
 import PopularProductsList from '../components/PopularProductsList'
 import { ReviewsCarousel } from '../components/Carousel/ReviewsCarousel'
 import BrandCardList from '../components/BrandCardList'
-import agusha from "../assets/card/agushaBrand.png"
 
 function HomePage() {
     return (

@@ -40,3 +40,34 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-content {
     background: none;
 }
+
+// UlInsideOfFilterSideBar
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+    background: #fff !important;
+}
+
+// PaddinForTextInFilterSideBar
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-item,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-item {
+    padding-left: 0px !important;
+}
+
+//HeightForFilterSideBar
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider {
+    flex: none !important;
+}
+
+//BorderForFilterSideBar
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+    border-radius: 40px !important;
+}
+
+//FilterSideBarClickedText
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
+    color: #000;
+}
