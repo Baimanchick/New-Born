@@ -13,7 +13,7 @@ function PriceRangeSelector() {
     const [salaryTo, setSalaryTo] = useState<any>(SALARY_RANGE[SALARY_RANGE.length - 1])
 
     return (
-        <div style={{ margin: '20px' }} className={styles.priceRangeSelector_main}>
+        <div className={styles.priceRangeSelector_main}>
             <Flex justify={'space-between'} gap={40}>
                 <Title style={{ color: '#7B7B7B', fontWeight: '500', fontSize: '16px', cursor: 'pointer' }} level={5}>Цена от</Title>
                 <Title style={{ marginTop: 'initial', marginBottom: 'initial', color: '#7B7B7B', fontWeight: '500', fontSize: '16px', cursor: 'pointer' }} level={5}>Цена до</Title>

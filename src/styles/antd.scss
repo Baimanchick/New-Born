@@ -41,31 +41,18 @@
     background: none;
 }
 
-//UlInsideOfFilterSideBar
+// UlInsideOfFilterSideBar
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-sub.ant-menu-inline {
-    background: #fff;
+    background: #fff !important;
 }
 
-//ForPriceRangeSelector
-
-// :where(.css-dev-only-do-not-override-42nv3w).ant-flex {
-//     display: initial;
-// }
-
-//UnderCategoryForFilterSideBar
-:where(.css-dev-only-do-not-override-42nv3w).ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    padding-left: 24px !important;
-}
+// PaddinForTextInFilterSideBar
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-item,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-item {
-    padding-left: 24px !important;
+    padding-left: 0px !important;
 }
-
-// :where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider-children {
-//     height: auto !important;
-// }
 
 //HeightForFilterSideBar
 
@@ -76,15 +63,11 @@
 //BorderForFilterSideBar
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-sub.ant-menu-inline {
-    border-radius: 20px !important;
+    border-radius: 40px !important;
 }
 
 //FilterSideBarClickedText
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
     color: #000;
-}
-
-.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
-    color: blue;
 }
