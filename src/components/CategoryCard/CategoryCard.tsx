@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from "../../styles/card.module.scss";
 import { Card } from 'antd';
 import { CategoryCardProps } from './CategoryCard.props';
-import { abbreviateTitle } from '../../functions/helperFunctions';
+import { abbreviateTitle } from '../../helpers/functions/helperFunctions';
 
 function CategoryCard({ title, image }: CategoryCardProps) {
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 880);

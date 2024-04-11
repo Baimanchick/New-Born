@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Carousel } from 'antd';
+import { Carousel, Typography } from 'antd';
 import { CarouselRef } from 'antd/lib/carousel';
 import styles from "./carousel.module.scss";
 import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
 import arrowRight from "../../assets/svgs/carousel/arrowRight.svg"
 
-
-
+const { Title } = Typography
 
 export const ReviewsCarousel: React.FC = () => {
     const ref = useRef<CarouselRef>(null);
@@ -20,6 +19,7 @@ export const ReviewsCarousel: React.FC = () => {
 
     return (
         <div className={styles.reviews_carousel__container}>
+            <Title style={{ fontSize: '24px', fontWeight: '1000', color: '#778692' }}>Что клиенты говорят о нас</Title>
             <div className={styles.reviews_carousel}>
                 {isMobile ? (
                     <Carousel

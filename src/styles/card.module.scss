@@ -4,6 +4,8 @@
 
     .categoryCard_container {
         display: flex;
+        max-width: 1700px;
+        margin: 0 auto;
 
         @media only screen and (max-width: 640px) {
             justify-content: initial;
@@ -103,6 +105,8 @@
         display: flex;
         gap: 15px;
         justify-content: space-between;
+        max-width: 1700px;
+        margin: 0 auto;
 
         @media screen and (max-width: 1200px) {
             justify-content: initial;
@@ -185,19 +189,11 @@
     margin-top: 40px;
     padding-bottom: 40px;
 
-    .brandCard_title {
-        font-size: 24px;
-        font-weight: 1000;
-        color: rgba(119, 134, 146, 1);
-    }
+
 
     .brandCard_container {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 15px;
-        row-gap: 15px;
-        flex-wrap: wrap;
+        max-width: 1700px;
+        margin: 15px auto;
     }
 }
 
@@ -207,6 +203,8 @@
     margin-top: 40px;
 
     .newProducts_container {
+        max-width: 1700px;
+        margin: 0 auto;
 
         .newProducts_section__title {
             display: flex;
@@ -218,36 +216,6 @@
                 align-items: initial;
                 flex-direction: column;
                 row-gap: 10px;
-            }
-
-
-
-            div {
-                font-weight: 1000;
-                font-size: 24px;
-                color: rgba(119, 134, 146, 1);
-                cursor: pointer;
-            }
-
-            button {
-                border: none;
-                width: 140px;
-                height: 40px;
-                background-color: rgba(250, 188, 34, 1);
-                color: #fff;
-                border-radius: 10px;
-
-                @media screen and (max-width: 390px) {
-                    width: 99px;
-                    height: 28px;
-                    font-size: 12px;
-                    font-weight: 1000;
-                }
-            }
-
-            button:hover {
-                background-color: rgba(250, 188, 34, 1);
-                color: #fff;
             }
         }
 
@@ -270,12 +238,6 @@
 
 .recommendedProducts_main {
     .recommendedProducts_container {
-        .recommendedProducts_title {
-            font-size: 24px;
-            font-weight: 1000;
-            color: rgba(255, 255, 255, 1);
-        }
-
         .recommendedProducts {
             flex-wrap: wrap;
             display: flex;
@@ -297,6 +259,8 @@
     margin-top: 40px;
 
     .popularProducts_container {
+        max-width: 1700px;
+        margin: 0 auto;
 
         .popularProducts_section__title {
             display: flex;
@@ -308,36 +272,6 @@
                 align-items: initial;
                 flex-direction: column;
                 row-gap: 10px;
-            }
-
-
-
-            div {
-                font-weight: 1000;
-                font-size: 24px;
-                color: rgba(119, 134, 146, 1);
-                cursor: pointer;
-            }
-
-            button {
-                border: none;
-                width: 140px;
-                height: 40px;
-                background-color: rgba(250, 188, 34, 1);
-                color: #fff;
-                border-radius: 10px;
-
-                @media screen and (max-width: 390px) {
-                    width: 99px;
-                    height: 28px;
-                    font-size: 12px;
-                    font-weight: 1000;
-                }
-            }
-
-            button:hover {
-                background-color: rgba(250, 188, 34, 1);
-                color: #fff;
             }
         }
 

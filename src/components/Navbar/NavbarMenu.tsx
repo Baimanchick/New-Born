@@ -8,7 +8,6 @@ import filter from "../../assets/svgs/navbar/filter.svg"
 import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
-
 import styles from "./navbar.module.scss";
 
 function NavbarMenu({ menuItems }: NavbarMenuProps) {
@@ -27,7 +26,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <div className={styles.navbar}>
             <div className={styles.nav_up}>
                 <div className={styles.phone}>
-                    <img src={phone} alt="Телефон" />
+                    <img src={phone} onClick={() => navigate("/")} alt="Телефон" />
                     <span>Горячая линия +01 112 352 566</span>
                 </div>
                 <Menu style={{ background: 'none', boxShadow: 'initial', borderBottom: "initial" }} mode='horizontal' >
