@@ -19,7 +19,7 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
         <div className={styles.navbar_mobile}>
             <div className={styles.nav_up__mobile}>
                 <div className={styles.logo_mobile}>
-                    <img src={logo} className={styles.logo_mobile__image} />
+                    <img src={logo} onClick={() => navigate('/')} className={styles.logo_mobile__image} />
                 </div>
                 <div className={styles.icon_mobile}>
                     <img src={favourite} className={styles.icon_mobile__item} alt="Избранное" />

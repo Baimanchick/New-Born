@@ -1,15 +1,18 @@
 import { ProductCard } from "./ProductCard/ProductCard"
 import nutrilon from '../assets/card/nutrilon.png'
 import styles from "../styles/card.module.scss"
-import { Button } from "antd"
+import { Typography } from "antd"
+import { Button } from "./Button/Button"
+
+const { Title } = Typography
 
 function NewProductsList() {
     return (
         <div className={styles.newProducts_main}>
             <div className={styles.newProducts_container}>
                 <div className={styles.newProducts_section__title}>
-                    <div>Самые популярные</div>
-                    <Button>Больше</Button>
+                    <Title style={{ fontSize: '24px', color: "#778692", fontWeight: '1000' }}>Самые популярные</Title>
+                    <Button appearance={"yellow"} style={{ width: '140px', borderRadius: '10px', fontSize: '16px', fontWeight: '600' }}>Больше</Button>
                 </div>
                 <div className={styles.newProducts}>
                     {[1, 2, 3, 4, 5].map((index: number) => (

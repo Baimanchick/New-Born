@@ -8,7 +8,7 @@ import { ReactComponent as Basket } from '../../assets/svgs/card/basket.svg';
 import { ReactComponent as Fav } from '../../assets/svgs/card/heart.svg';
 import { Button } from '../Button/Button'
 import { ProductCardProps } from './ProductCard.props';
-import { formatNumberAndAddCurrency, truncateTitle } from "../../functions/helperFunctions";
+import { formatNumberAndAddCurrency, truncateTitle } from "../../helpers/functions/helperFunctions";
 import styles from "./productCard.module.scss";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Colors } from "../../helpers/enums/color.enum";

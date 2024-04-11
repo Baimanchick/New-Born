@@ -54,6 +54,10 @@
     padding-left: 0px !important;
 }
 
+.ant-menu-submenu-title {
+    padding: 0px !important;
+}
+
 //HeightForFilterSideBar
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider {
@@ -70,4 +74,13 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
     color: #000;
+}
+
+//RightLineForFilterMenuSideBar
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-root.ant-menu-inline,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-root.ant-menu-inline,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-root.ant-menu-vertical,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-root.ant-menu-vertical {
+    border-inline-end: none !important;
+    // width: 100% !important;
 }

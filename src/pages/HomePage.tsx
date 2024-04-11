@@ -18,11 +18,11 @@ function HomePage() {
             <div className='container-gray'>
                 <div className='gray'>
                     <AdCardList />
-                    <PopularProductsList />
+                    <NewProductsList />
                     <div className='turquoise'>
                         <RecommendedProductsList />
                     </div>
-                    <NewProductsList />
+                    <PopularProductsList />
                     <ReviewsCarousel />
                     <BrandCardList />
                 </div>

@@ -1,7 +1,8 @@
 //! BannerCarousel
 .banner_carousel__container {
     position: relative;
-    margin-top: 15px;
+    max-width: 1700px;
+    margin: 15px auto;
 
     .banner_carousel__pages {
 
@@ -49,7 +50,8 @@
 //! ReviewsCarousel
 
 .reviews_carousel__container {
-    margin-top: 40px;
+    max-width: 1700px;
+    margin: 40px auto;
 
     .reviews_main {
 
@@ -57,6 +59,8 @@
         .reviews_container {
             display: flex;
             justify-content: space-between;
+            max-width: 1700px;
+            margin: 0 auto;
 
             @media screen and (max-width: 1200px) {
                 gap: 20px;

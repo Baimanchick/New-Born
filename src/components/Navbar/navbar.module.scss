@@ -1,7 +1,8 @@
 .navbar {
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    max-width: 1700px;
+    margin: 15px auto;
 
     .nav_up {
         display: flex;
@@ -359,28 +360,6 @@
                             font-weight: 1000;
                         }
                     }
-                }
-            }
-
-            .mobile_button {
-                display: flex;
-                justify-content: center;
-
-                button {
-                    width: 100%;
-                    height: 60px;
-                    border-radius: 60px;
-                    color: #fff;
-                    background-color: rgba(250, 188, 34, 1);
-                    font-size: 18px;
-                    font-weight: 1000;
-                    outline: none;
-                }
-
-                button:hover {
-                    color: #fff;
-                    background-color: rgba(250, 188, 34, 1);
-                    border: none !important;
                 }
             }
         }

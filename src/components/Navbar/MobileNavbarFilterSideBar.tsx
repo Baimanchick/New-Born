@@ -3,8 +3,9 @@ import arrowDown from "../../assets/svgs/navbar/blueArrowDown.svg";
 import arrowDownBlack from "../../assets/svgs/navbar/blackArrowDown.svg";
 import arrowUpBlack from "../../assets/svgs/navbar/blackArrowUp.svg"
 import styles from "./navbar.module.scss";
-import { Button, Drawer, } from 'antd';
 import PriceRangeSelector from '../PriceRangeSelector/PriceRangeSelector';
+import { Button } from '../Button/Button';
+import { Drawer, Flex } from 'antd';
 
 function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }: { isFilterDrawerOpen: boolean, setFilterIsDrawerOpen: (isOpen: boolean) => void }) {
     const [isOpenDropdown, setIsOpenDropdown] = useState<{ [key: string]: boolean }>({});
@@ -88,9 +89,14 @@ function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }
                             ) : null}
                         </div>
 
-                        <div className={styles.mobile_button}>
-                            <Button>Показать результаты</Button>
-                        </div>
+                        <Flex justify={'center'}>
+                            <Button
+                                style={{ width: '100%', borderRadius: '60px', height: '60px', color: '#fff', fontSize: '18px', fontWeight: '1000', border: 'none' }}
+                                appearance='yellow'
+                            >
+                                Показать результаты
+                            </Button>
+                        </Flex>
                     </div>
                 </div>
             </Drawer>
