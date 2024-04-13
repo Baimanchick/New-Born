@@ -57,18 +57,16 @@ function FilterMenuSideBar() {
     return (
         <>
             <Sider style={{ background: colorBgContainer, flex: 'none', }} width={`${isTablet ? '100%' : '350'}`}>
-                <Menu mode="inline" style={{ height: '100%' }}>
-                    <Flex style={{ flexDirection: 'column', padding: '20px' }}>
-                        <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>Каталог</Title>
-                        <Menu
-                            onClick={onClick}
-                            style={{ width: '100%' }}
-                            defaultOpenKeys={['drop1']}
-                            mode="inline"
-                            items={item1}
-                        />
-                    </Flex>
-                </Menu>
+                <Flex style={{ flexDirection: 'column', padding: '20px' }}>
+                    <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>Каталог</Title>
+                    <Menu
+                        onClick={onClick}
+                        style={{ width: '100%' }}
+                        defaultOpenKeys={['drop1']}
+                        mode="inline"
+                        items={item1}
+                    />
+                </Flex>
             </Sider>
             <Sider style={{ background: colorBgContainer, flex: 'none', }} width={`${isTablet ? '100%' : '350'}`}>
                 <Menu mode="inline" style={{ height: '100%', }}>
@@ -79,18 +77,16 @@ function FilterMenuSideBar() {
                 </Menu>
             </Sider>
             <Sider style={{ background: colorBgContainer, flex: 'none', }} width={`${isTablet ? '100%' : '350'}`}>
-                <Menu mode="inline" style={{ height: '100%', }}>
-                    <Flex style={{ flexDirection: 'column', padding: '20px' }}>
-                        <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>Бренд</Title>
-                        <Menu
-                            onClick={onClick}
-                            style={{ width: '100%' }}
-                            defaultOpenKeys={['drop2']}
-                            mode="inline"
-                            items={item2}
-                        />
-                    </Flex>
-                </Menu>
+                <Flex style={{ flexDirection: 'column', padding: '20px' }}>
+                    <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>Бренд</Title>
+                    <Menu
+                        onClick={onClick}
+                        style={{ width: '100%' }}
+                        defaultOpenKeys={['drop2']}
+                        mode="inline"
+                        items={item2}
+                    />
+                </Flex>
             </Sider>
         </>
     );

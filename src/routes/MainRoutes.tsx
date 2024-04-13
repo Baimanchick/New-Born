@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import HomePage from '../pages/HomePage'
 import FilterPage from '../pages/FilterPage'
+import DetailPage from '../pages/DetailPage'
 
 function MainRoutes() {
     return (
@@ -10,6 +11,7 @@ function MainRoutes() {
             <Route element={<MainLayout />}>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/filter' element={<FilterPage />} />
+                <Route path='/detail' element={<DetailPage />} />
             </Route>
         </Routes>
     )

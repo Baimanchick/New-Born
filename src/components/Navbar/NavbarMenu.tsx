@@ -26,7 +26,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <div className={styles.navbar}>
             <div className={styles.nav_up}>
                 <div className={styles.phone}>
-                    <img src={phone} onClick={() => navigate("/")} alt="Телефон" />
+                    <img src={phone} alt="Телефон" />
                     <span>Горячая линия +01 112 352 566</span>
                 </div>
                 <Menu style={{ background: 'none', boxShadow: 'initial', borderBottom: "initial" }} mode='horizontal' >
@@ -37,7 +37,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
             </div>
             <div className={styles.nav_down}>
                 <div className={styles.logo}>
-                    <img src={logo} alt="Логотип" />
+                    <img onClick={() => navigate("/")} style={{ cursor: 'pointer' }} src={logo} alt="Логотип" />
                 </div>
                 <div className={styles.form}>
                     <Button

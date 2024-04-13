@@ -3,5 +3,5 @@ import React from "react";
 
 export interface ButtonProps extends BtnPropsAntd{
     onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-    appearance: "yellow" | "blue",
+    appearance: "yellow" | "blue" | "lightBlue",
 }

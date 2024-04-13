@@ -15,3 +15,11 @@ export const abbreviateTitle = (title: string, wordsCount: number): string => {
     const words = title.split(' ');
     return words.slice(0, wordsCount).join(' ');
 };
+
+export function truncateTextAfterWords(text : string, numWords : number) {
+    const words = text.split(' ');
+    if (words.length > numWords) {
+        return words.slice(0, numWords).join(' ') + '...';
+    }
+    return text;
+}
