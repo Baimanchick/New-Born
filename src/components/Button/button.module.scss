@@ -1,4 +1,5 @@
-.button{border-radius: 14px;
+.button {
+  border-radius: 14px;
   padding: 10px;
   color: white;
   font-weight: bold;
@@ -6,25 +7,44 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px }
+  font-size: 16px
+}
 
-.yellow{
+.yellow {
   background: #FABC22;
-  &:hover{
+
+  &:hover {
     border-color: #FABC22 !important;
     color: #FABC22 !important;
+
     svg path {
       stroke: #FABC22;
     }
   }
 }
 
-.blue{
+.blue {
   background: #1B81E7;
-  &:hover{
+
+  &:hover {
     svg path {
       stroke: #1B81E7;
     }
+
+    border-color: #1B81E7 !important;
+    color: #1B81E7 !important;
+  }
+}
+
+.lightBlue {
+  background: #ECF5FF;
+  color: #1B81E7;
+
+  &:hover {
+    svg path {
+      stroke: #1B81E7;
+    }
+
     border-color: #1B81E7 !important;
     color: #1B81E7 !important;
   }

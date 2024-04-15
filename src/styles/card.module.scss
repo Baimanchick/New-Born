@@ -94,19 +94,20 @@
     }
 }
 
-//! AdCard
+//! AdCardList
 
-.adCard_main {
+.adCardList_main {
     margin-top: 90px;
     padding-top: 40px;
 
 
-    .adCard_container {
+    .adCardList_container {
         display: flex;
         gap: 15px;
         justify-content: space-between;
         max-width: 1700px;
         margin: 0 auto;
+
 
         @media screen and (max-width: 1200px) {
             justify-content: initial;
@@ -123,37 +124,20 @@
 
         width: 100%;
         height: 100%;
+    }
+}
 
-        div {
-            width: 340px;
-
-            @media screen and (max-width: 1440px) {
-                width: 290px;
-            }
-
-            @media screen and (max-width: 1200px) {
-                width: 250px;
-            }
-
-            @media screen and (max-width: 660px) {
-                width: 140px;
-                height: 110px;
-            }
+.adCard_swiper {
 
 
-            height: 252px;
-            border: none;
-            border-radius: 20px;
-            padding: 20px 0px 0px 20px;
-            color: rgba(119, 134, 146, 1);
-            font-weight: 1000;
-            font-size: 22px;
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
 
-
-            div {
-                padding: initial;
-                height: auto;
-            }
+        @media screen and (max-width: 660px) {
+            width: 151px;
+            height: 112px;
         }
     }
 }

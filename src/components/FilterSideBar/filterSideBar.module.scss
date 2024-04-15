@@ -3,3 +3,11 @@
         display: none;
     }
 }
+
+.menuCustomFilter {
+    // background-color: red;
+
+    .menuCustomFilter>li>div>span {
+        color: blue !important;
+    }
+}

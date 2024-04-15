@@ -1,7 +1,7 @@
 import { ProductCard } from "./ProductCard/ProductCard"
 import nutrilon from '../assets/card/nutrilon.png'
 import styles from "../styles/card.module.scss"
-import { Typography } from "antd"
+import { Col, Row, Typography } from "antd"
 import { Button } from "./Button/Button"
 
 const { Title } = Typography
