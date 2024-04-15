@@ -12,6 +12,7 @@ import { formatNumberAndAddCurrency, truncateTitle } from "../../helpers/functio
 import styles from "./productCard.module.scss";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Colors } from "../../helpers/enums/color.enum";
+import { useNavigate } from 'react-router-dom';
 
 const { Title, Text } = Typography
 
@@ -19,6 +20,7 @@ const { Title, Text } = Typography
 export function ProductCard({ title, price, rating, image, tags }: ProductCardProps) {
     const [isClicked, setIsClicked] = useState(false);
     const [count, setCount] = useState(1);
+    const navigate = useNavigate()
 
     const increase = () => {
         setCount(count + 1);
@@ -44,7 +46,7 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
             classNames={{ body: styles.bodyCustom, header: styles.headCustom, extra: styles.extraCustom }}
             extra={
                 <Flex align={"center"}>
-                    <Flex className={styles.wrapper} align={"center"} wrap={"wrap"}>
+                    <Flex onClick={() => navigate('/detail')} className={styles.wrapper} align={"center"} wrap={"wrap"}>
                         {tags.map((tag: string, index: number) => (
                             <Tag key={index} className={styles.tag} color={Colors.BRAND_COLOR}>{tag}</Tag>
                         ))}
@@ -52,7 +54,7 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
                     <ButtonAnt className={styles.favButton} icon={<Fav />} shape="circle" danger />
                 </Flex>
             }
-            cover={<img src={image} alt={title} />}
+            cover={<img onClick={() => navigate('/detail')} src={image} alt={title} />}
             actions={[
                 !isClicked ?
                     (<Button
@@ -72,7 +74,7 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
             ]}
         >
             <Flex vertical align={'center'}>
-                <Flex justify={'space-between'} align={'center'} style={{ width: '100%' }}>
+                <Flex onClick={() => navigate('/detail')} justify={'space-between'} align={'center'} style={{ width: '100%' }}>
                     <Title style={{ margin: 0 }} level={4}>{formatNumberAndAddCurrency(price, '₽')}</Title>
                     <Flex align={'center'}>
                         <Star />

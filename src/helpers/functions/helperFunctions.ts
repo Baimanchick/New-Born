@@ -23,3 +23,4 @@ export function truncateTextAfterWords(text : string, numWords : number) {
     }
     return text;
 }
+

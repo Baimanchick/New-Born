@@ -88,3 +88,19 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-image .ant-image-mask {
     display: none;
 }
+
+// TODO потом я исправлю
+//UnderLineAboveUlLiInNavbarAndFilter
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal>.ant-menu-item-selected::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal>.ant-menu-item-selected::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-selected::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal>.ant-menu-submenu-selected::after {
+    border-bottom-color: #FABC22 !important;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal>.ant-menu-item-selected::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal>.ant-menu-item-selected::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal>.ant-menu-submenu-selected::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal>.ant-menu-submenu-selected:hover {
+    border-bottom-color: #FABC22 !important;
+}
