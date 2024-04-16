@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import { Outlet, useLocation } from 'react-router-dom'
 import "../styles/main.scss"
@@ -18,7 +18,9 @@ function MainLayout() {
     return (
         <>
             <Navbar />
-            <Outlet />
+            <Suspense>
+                <Outlet />
+            </Suspense>
             <Footer />
             <ScrollToTop />
         </>
