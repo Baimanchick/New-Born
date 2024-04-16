@@ -1,14 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Carousel } from 'antd';
 import { CarouselRef } from 'antd/lib/carousel';
 import styles from "./carousel.module.scss";
 import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
 import arrowRight from "../../assets/svgs/carousel/arrowRight.svg"
-import img from "../../assets/carousel/image 1.png"
+import { useDispatch, useSelector } from 'react-redux';
+import { RootStates } from '../../store/store';
+import { fetchCarousel } from '../../store/features/carousel/carouselSlice';
+import { CarouselType } from './Carousel.props';
 
 
 const BannerCarousel: React.FC = () => {
+    const dispatch = useDispatch<any>()
+    const carousel = useSelector((state: RootStates) => state.carousel.carousel)
     const ref = useRef<CarouselRef>(null);
+
+    useEffect(() => {
+        dispatch(fetchCarousel())
+    }, [dispatch])
 
     return (
         <div className={styles.banner_carousel__container}>
@@ -24,12 +33,11 @@ const BannerCarousel: React.FC = () => {
                     swipeToSlide
                     draggable
                 >
-                    <div className={styles.banner_carousel__pages}>
-                        <img src={img} />
-                    </div>
-                    <div className={styles.banner_carousel__pages}>
-                        <img src="https://static-cse.canva.com/blob/759807/vk1776.png" />
-                    </div>
+                    {carousel.map((carousel: CarouselType, index: number) => (
+                        <div key={index} className={styles.banner_carousel__pages}>
+                            <img src={carousel.images} />
+                        </div>
+                    ))}
                 </Carousel>
             </div>
             <div className={styles.banner_carousel__button}>

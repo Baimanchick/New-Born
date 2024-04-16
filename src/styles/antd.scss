@@ -104,3 +104,9 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal>.ant-menu-submenu-selected:hover {
     border-bottom-color: #FABC22 !important;
 }
+
+// BorderRadiusForCarousel
+:where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-slider .slick-track,
+:where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-slider .slick-list {
+    border-radius: 20px;
+}
