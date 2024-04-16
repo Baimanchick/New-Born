@@ -5,16 +5,16 @@
     margin: 15px auto;
 
     .banner_carousel__pages {
+        height: 481px;
+        width: 100%;
+
+        @media screen and (max-width: 620px) {
+            height: 281px;
+        }
 
         img {
-            width: 100%;
-            height: 481px;
-            object-fit: cover;
-            border-radius: 20px;
-
-            @media screen and (max-width: 620px) {
-                height: 281px;
-            }
+            object-fit: contain;
+            // border-radius: 20px;
         }
     }
 
