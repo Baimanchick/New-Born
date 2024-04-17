@@ -22,7 +22,7 @@ const carouselSlice = createSlice({
 export const fetchCarousel = () : AppThunk => async (dispatch) => {
     try {
         const response = await $axios.get(`${API_URL}/carousel_items/`)
-        const data: CarouselI = {carousel : response.data.results };
+        const data: CarouselI = {carousel : response.data.results };        
         dispatch(carouselSlice.actions.setCarousel(data))
     } catch (error) {
         console.log(error);

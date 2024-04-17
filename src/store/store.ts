@@ -1,10 +1,14 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import carouselReducer from "./features/carousel/carouselSlice";
+import categoryReducer from "./features/category/categorySlice";
+
+
 
 
 export const store = configureStore({
     reducer: {
-        carousel: carouselReducer
+        carousel: carouselReducer,
+        category: categoryReducer
     }
 })
 

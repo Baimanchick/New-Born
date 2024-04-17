@@ -1,29 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import styles from "../../styles/card.module.scss";
-import { Card } from 'antd';
-import { CategoryCardProps } from './CategoryCard.props';
-import { abbreviateTitle } from '../../helpers/functions/helperFunctions';
+import { Card, Flex, Typography } from 'antd';
+import styles from "../../styles/card.module.scss"
+import { truncateTextAfterWords } from '../../helpers/functions/helperFunctions';
 
-function CategoryCard({ title, image }: CategoryCardProps) {
-    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 880);
+const { Title } = Typography
 
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 880);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
+function CategoryCard({ category }: any) {
     return (
-        <div className={styles.categoryCard_main}>
-            <div className={styles.categoryCard_container}>
-                {[1, 2, 3, 4, 5].map((index) => (
-                    <Card key={index}>
-                        <img src={image} alt="Category" />
-                        <span>{isMobile ? abbreviateTitle(title, isMobile ? 1 : 2) : abbreviateTitle(title, 3)} {isMobile ? '..' : ''}</span>
-                    </Card>
-                ))}
-            </div>
-        </div>
+        <Card classNames={{ body: styles.categoryCardAntBody, }} className={styles.categoryCardAnt}>
+            <Flex style={{ flexDirection: 'column', rowGap: '5px' }}>
+                <img style={{ width: '120px', height: '120px', objectFit: 'contain' }} src={category.image} alt="Category" />
+                <Title style={{ margin: '0px', fontSize: '22px', fontWeight: '1000' }}>{truncateTextAfterWords(category.name, 4)}</Title>
+            </Flex>
+        </Card>
     );
 }
 
