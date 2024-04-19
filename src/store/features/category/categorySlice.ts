@@ -23,7 +23,6 @@ export const fetchCategory = () : AppThunk => async (dispatch) => {
     try {
         const response = await $axios.get(`${API_URL}/food_categories/`)
         const data: CategoryI = {category : response.data.results };
-        console.log(data);
         dispatch(categoryCardlSlice.actions.setCategoryCard(data))
     } catch (error) {
         console.log(error);
