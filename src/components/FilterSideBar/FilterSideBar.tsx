@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Flex, Layout, Menu, Typography, theme } from 'antd';
+import { Col, Flex, Layout, Menu, Row, Typography, theme } from 'antd';
 import { ProductCard } from '../ProductCard/ProductCard';
 import nutrilon from '../../assets/card/nutrilon.png';
 import FilterMenuSideBar from './FilterMenuSideBar';
@@ -11,13 +11,13 @@ function FilterSideBar() {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
     const [isTablet, setIsTablet] = useState<boolean>(window.innerWidth < 1000);
-    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 510);
+    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 660);
 
 
 
     useEffect(() => {
         const handleTabletResize = () => setIsTablet(window.innerWidth < 1000);
-        const handleMobileResize = () => setIsMobile(window.innerWidth < 510)
+        const handleMobileResize = () => setIsMobile(window.innerWidth < 660)
         window.addEventListener('resize', handleTabletResize);
         window.addEventListener('resize', handleMobileResize);
         return () => {
@@ -40,7 +40,7 @@ function FilterSideBar() {
                     <FilterMenuSideBar />
                 </Layout>
                 <Content style={{ minHeight: 280, marginTop: `${isTablet ? '20px' : '0px'}` }}>
-                    <Flex wrap={'wrap'} justify={'space-between'} style={{ rowGap: '15px' }}>
+                    {/* <Flex wrap={'wrap'} justify={'space-between'} style={{ rowGap: '15px' }}>
                         {[1, 2, 3, 4, 5, 6].map((index) => (
                             <ProductCard
                                 key={index}
@@ -51,7 +51,24 @@ function FilterSideBar() {
                                 tags={['800г', 'с 0 месяцев', 'new']}
                             />
                         ))}
-                    </Flex>
+                    </Flex> */}
+
+                    <Row gutter={[16, 16]}>
+                        {[1, 2, 3, 4, 5, 6].map((index) => (
+                            <Col span={8}>
+
+                                <ProductCard
+                                    key={index}
+                                    price={2600}
+                                    rating={5}
+                                    title={"Смесь сухая Nutrilon Пепти Аллергия 800г с 0 месяцев"}
+                                    image={nutrilon}
+                                    tags={['800г', 'с 0 месяцев', 'new']}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
+
                 </Content>
             </Content>
         </Layout>
