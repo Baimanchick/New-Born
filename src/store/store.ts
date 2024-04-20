@@ -3,10 +3,6 @@ import carouselReducer from "./features/carousel/carouselSlice";
 import categoryReducer from "./features/category/categorySlice";
 import adReducer from "./features/ad/adSlice";
 
-
-
-
-
 export const store = configureStore({
     reducer: {
         carousel: carouselReducer,

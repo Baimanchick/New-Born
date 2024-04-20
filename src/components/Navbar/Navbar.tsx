@@ -25,7 +25,6 @@ function Navbar() {
         setIsSearchModalVisible(false);
     };
 
-    // TODO Надо потом переделать
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 660);
         window.addEventListener('resize', handleResize);

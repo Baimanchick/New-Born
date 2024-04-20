@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'antd';
 import { CarouselRef } from 'antd/lib/carousel';
 import styles from "./carousel.module.scss";
@@ -8,16 +8,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../../store/store';
 import { fetchCarousel } from '../../store/features/carousel/carouselSlice';
 import { CarouselType } from './Carousel.props';
-
+import ErrorTitle from '../ErrorTitle/ErrorTitle';
 
 const BannerCarousel: React.FC = () => {
     const dispatch = useDispatch<any>()
     const carousel = useSelector((state: RootStates) => state.carousel.carousel)
     const ref = useRef<CarouselRef>(null);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         dispatch(fetchCarousel())
+            .catch(() => setError(true));
     }, [dispatch])
+
+    if (!error) {
+        return <ErrorTitle />
+    }
 
     return (
         <div className={styles.banner_carousel__container}>
