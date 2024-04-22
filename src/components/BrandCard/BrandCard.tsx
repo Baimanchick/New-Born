@@ -1,10 +1,10 @@
+import { replaceUrl } from "../../helpers/functions/helperFunctions"
 import styles from "../../styles/card.module.scss"
-import { BrandCardProps } from "./BrandCard.props"
 
-function BrandCard({ image }: BrandCardProps) {
+function BrandCard({ brand }: any) {
     return (
         <div className={styles.brandCard}>
-            <img src={image} />
+            <img src={replaceUrl(brand.images)} />
         </div>
     )
 }

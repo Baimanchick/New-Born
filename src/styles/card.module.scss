@@ -22,12 +22,25 @@
         .categoryCardAnt {
             width: 220px;
             height: 220px;
+
+            @media screen and (max-width: 660px) {
+                height: 190px;
+            }
+
             border: none;
             border-radius: 20px;
             cursor: pointer;
 
             .categoryCardAntBody {
                 padding: 26px 15px 26px 15px;
+
+                div {
+                    h1 {
+                        @media screen and (max-width: 660px) {
+                            font-size: 14px !important;
+                        }
+                    }
+                }
             }
         }
     }
