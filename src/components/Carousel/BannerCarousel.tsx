@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Carousel } from 'antd';
 import { CarouselRef } from 'antd/lib/carousel';
 import styles from "./carousel.module.scss";
@@ -9,37 +9,46 @@ import { RootStates } from '../../store/store';
 import { fetchCarousel } from '../../store/features/carousel/carouselSlice';
 import { CarouselType } from './Carousel.props';
 import { replaceUrl } from '../../helpers/functions/helperFunctions';
+import Loading from '../Loader/Loading';
+
 
 const BannerCarousel: React.FC = () => {
     const dispatch = useDispatch<any>()
+    const [loading, setLoading] = useState(true);
     const carousel = useSelector((state: RootStates) => state.carousel.carousel)
     const ref = useRef<CarouselRef>(null);
 
     useEffect(() => {
         dispatch(fetchCarousel())
+            .then(() => setLoading(false))
+            .catch(() => setLoading(false));
     }, [dispatch])
 
     return (
         <div className={styles.banner_carousel__container}>
-            <div className={styles.banner_carousel}>
-                <Carousel
-                    autoplay
-                    dots={true}
-                    dotPosition='bottom'
-                    pauseOnHover={true}
-                    pauseOnDotsHover={true}
-                    ref={ref}
-                    effect='fade'
-                    swipeToSlide
-                    draggable
-                >
-                    {carousel.map((carousel: CarouselType, index: number) => (
-                        <div key={index} className={styles.banner_carousel__pages}>
-                            <img src={replaceUrl(carousel.images)} />
-                        </div>
-                    ))}
-                </Carousel>
-            </div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <div className={styles.banner_carousel}>
+                    <Carousel
+                        autoplay
+                        dots={true}
+                        dotPosition='bottom'
+                        pauseOnHover={true}
+                        pauseOnDotsHover={true}
+                        ref={ref}
+                        effect='fade'
+                        swipeToSlide
+                        draggable
+                    >
+                        {carousel.map((carousel: CarouselType, index: number) => (
+                            <div key={index} className={styles.banner_carousel__pages}>
+                                <img src={replaceUrl(carousel.images)} />
+                            </div>
+                        ))}
+                    </Carousel>
+                </div>
+            )}
             <div className={styles.banner_carousel__button}>
                 <button onClick={() => {
                     ref.current && ref.current.prev();
