@@ -23,6 +23,8 @@ export const fetchAd = () : AppThunk => async (dispatch) => {
     try {
         const response = await $axios.get(`${API_URL}/promotion/`)
         const data: AdI = {ad : response.data.results };
+        console.log(data);
+        
         dispatch(adSlice.actions.setAd(data))
     } catch (error) {
         console.log(error);
