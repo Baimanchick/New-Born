@@ -19,3 +19,6 @@ export function truncateTextAfterWords(text : string, numWords : number) {
     return text;
 }
 
+export const replaceUrl = (url: string) => {
+    return url.replace('http://api:8002', 'https://baby-back.ru/')
+}
