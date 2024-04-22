@@ -11,7 +11,7 @@ function NewProductsList() {
         <div className={styles.newProducts_main}>
             <div className={styles.newProducts_container}>
                 <div className={styles.newProducts_section__title}>
-                    <Title style={{ fontSize: '24px', color: "#778692", fontWeight: '1000' }}>Самые популярные</Title>
+                    <Title style={{ fontSize: '24px', color: "#778692", fontWeight: '1000' }}>Новые товары</Title>
                     <Button appearance={"yellow"} style={{ width: '140px', borderRadius: '10px', fontSize: '16px', fontWeight: '600' }}>Больше</Button>
                 </div>
                 <div className={styles.newProducts}>
