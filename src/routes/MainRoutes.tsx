@@ -4,6 +4,7 @@ import MainLayout from '../layouts/MainLayout'
 const HomePage = lazy(() => import("../pages/HomePage"))
 const FilterPage = lazy(() => import("../pages/FilterPage"))
 const DetailPage = lazy(() => import("../pages/DetailPage"))
+const CartPage = lazy(() => import("../pages/CartPage"))
 
 
 
@@ -15,6 +16,7 @@ function MainRoutes() {
                 <Route path='/' element={<HomePage />} />
                 <Route path='/filter' element={<FilterPage />} />
                 <Route path='/detail' element={<DetailPage />} />
+                <Route path='/cart' element={<CartPage />} />
             </Route>
         </Routes>
     )

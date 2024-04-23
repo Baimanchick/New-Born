@@ -10,8 +10,10 @@ body {
 }
 
 .container {
-    max-width: 85vw;
+    width: 85vw;
+    max-width: 1420px;
     margin: 0 auto;
+    min-height: 200px;
 }
 
 .container-gray {

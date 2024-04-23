@@ -13,8 +13,9 @@ import styles from "./productCard.module.scss";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Colors } from "../../helpers/enums/color.enum";
 import { useNavigate } from 'react-router-dom';
+import {Counter} from "../Counter/Counter";
 
-const { Title, Text } = Typography
+const { Title,Text } = Typography
 
 
 export function ProductCard({ title, price, rating, image, tags }: ProductCardProps) {
@@ -22,18 +23,32 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
     const [count, setCount] = useState(1);
     const navigate = useNavigate()
 
-    const increase = () => {
-        setCount(count + 1);
+
+    const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        e.stopPropagation();
+        if (e.currentTarget === target || (e.target instanceof HTMLImageElement)) {
+            navigate('/detail');
+        }
     };
 
-    const decline = () => {
-        let newCount = count - 1;
-        if (newCount <= 0) {
-            newCount = 1;
-            setIsClicked(false)
-        }
-        setCount(newCount);
+
+
+    const handleDecrement = (newCount: number) => {
+        if(newCount === 0) setIsClicked(false)
     };
+    // const increase = () => {
+    //     setCount(count + 1);
+    // };
+    //
+    // const decline = () => {
+    //     let newCount = count - 1;
+    //     if (newCount <= 0) {
+    //         newCount = 1;
+    //         setIsClicked(false)
+    //     }
+    //     setCount(newCount);
+    // };
 
     const handleBuyClick = () => {
         setIsClicked(true);
@@ -42,6 +57,7 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
 
     return (
         <Card
+            onClick={(e) => navigateToDetail(e)}
             className={styles.cardCustom}
             classNames={{ body: styles.bodyCustom, header: styles.headCustom, extra: styles.extraCustom }}
             extra={
@@ -54,7 +70,7 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
                     <ButtonAnt className={styles.favButton} icon={<Fav />} shape="circle" danger />
                 </Flex>
             }
-            cover={<img onClick={() => navigate('/detail')} src={image} alt={title} />}
+            cover={<img src={image} alt={title} />}
             actions={[
                 !isClicked ?
                     (<Button
@@ -64,16 +80,10 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
                     >
                         Купить
                     </Button>) :
-                    (<Button
-                        icon={<Basket />}
-                        appearance={"yellow"}
-                        block
-                    >
-                        В корзину
-                    </Button>)
+                    null
             ]}
         >
-            <Flex vertical align={'center'}>
+            <Flex vertical align={'center'} >
                 <Flex onClick={() => navigate('/detail')} justify={'space-between'} align={'center'} style={{ width: '100%' }}>
                     <Title style={{ margin: 0 }} level={4}>{formatNumberAndAddCurrency(price, '₽')}</Title>
                     <Flex align={'center'}>
@@ -83,11 +93,7 @@ export function ProductCard({ title, price, rating, image, tags }: ProductCardPr
                 </Flex>
                 <Text style={{ marginBottom: 20, fontSize: 14 }}>{truncateTitle(title)}</Text>
                 {isClicked &&
-                    <Flex className={styles.counterWrapper} justify={"space-between"} align={"center"}>
-                        <ButtonAnt onClick={decline} icon={<MinusOutlined />} shape={"circle"} />
-                        <Text >{count}</Text>
-                        <ButtonAnt onClick={increase} icon={<PlusOutlined />} shape={"circle"} />
-                    </Flex> || null
+                    <Counter initialValue={1} onDecrement={handleDecrement}/> || null
                 }
 
             </Flex>
