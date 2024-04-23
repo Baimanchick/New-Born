@@ -8,11 +8,6 @@
 
 .cardCustom {
   width: 225px !important;
-
-  @media screen and (max-width: 530px) {
-    width: 145px !important;
-  }
-
   border-radius: 20px !important;
   padding: 10px !important;
   cursor: pointer;
@@ -34,14 +29,6 @@
   border-radius: 6px;
   padding-inline: 6px !important;
   font-size: 10px !important;
-
-  @media screen and (max-width:530px) {
-    font-size: 7.91px !important;
-    width: auto !important;
-    height: auto !important;
-    padding: initial !important;
-  }
-
   font-weight: bold !important;
 }
 

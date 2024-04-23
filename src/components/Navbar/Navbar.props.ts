@@ -1,5 +1,6 @@
 export interface NavbarMenuProps {
     menuItems: MenuItem[]; 
+    openSearchModal: any
 }
 
 export interface SearchModalProps {
