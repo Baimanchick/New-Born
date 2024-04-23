@@ -67,6 +67,7 @@
                 height: 50px;
                 outline: none;
                 border: none;
+                cursor: pointer;
 
 
                 @media screen and (max-width: 1200px) {
@@ -91,6 +92,47 @@
 
             }
 
+            .searchNavbarMenu {
+                position: relative;
+                z-index: 3;
+
+                .dropdown_modal__desk {
+                    position: absolute;
+                    width: 865px;
+                    top: 60px;
+
+                    @media screen and (max-width: 1200px) {
+                        width: 655px;
+                    }
+
+                    @media screen and (max-width: 1024px) {
+                        width: 555px;
+                    }
+
+                    @media screen and (max-width: 900px) {
+                        width: 405px;
+                    }
+
+                    @media screen and (max-width: 768px) {
+                        width: 255px;
+                    }
+
+                    @media screen and (max-width: 570px) {
+                        width: 205px;
+                    }
+
+                    height: auto;
+                    background-color: #fff;
+                    border-radius: 10px;
+                    padding: 10px;
+                    flex-direction: column;
+                    row-gap: 10px;
+
+
+                }
+            }
+
+
         }
 
         .icon {
@@ -103,6 +145,16 @@
             }
         }
     }
+}
+
+.modalBackgroundColor {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
 }
 
 //! MobileNavbar
@@ -270,7 +322,7 @@
                 display: flex;
                 flex-direction: column;
                 row-gap: 10px;
-                width: 300px;
+                width: 325px;
                 height: auto;
                 padding: 10px;
                 background-color: rgba(255, 255, 255, 1);
@@ -287,6 +339,7 @@
             }
         }
     }
+
 }
 
 //! MobileNavbarFilterSideBar

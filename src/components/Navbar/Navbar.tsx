@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { MenuItem } from './Navbar.props';
 import NavbarMenu from './NavbarMenu';
 import MobileNavbar from './MobileNavbar';
-import SearchModal from './SearchModal';
+import SearchModalMobile from './SearchModalMobile';
 
 const menuItems: MenuItem[] = [
     { label: "Главная", key: 'home' },
@@ -43,11 +43,14 @@ function Navbar() {
                         isFilterDrawerOpen={isFilterDrawerOpen}
                         setFilterIsDrawerOpen={setFilterIsDrawerOpen}
                     />
-                    <SearchModal isVisible={isSearchModalVisible} onClose={closeSearchModal} />
+                    <SearchModalMobile isVisible={isSearchModalVisible} onClose={closeSearchModal} />
                 </>
 
             ) : (
-                <NavbarMenu menuItems={menuItems} />
+                <NavbarMenu
+                    menuItems={menuItems}
+                    openSearchModal={openSearchModal}
+                />
             )}
         </div>
     );
