@@ -1,5 +1,5 @@
-import React, { lazy, useEffect } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import React, { lazy } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 const HomePage = lazy(() => import("../pages/HomePage"))
 const FilterPage = lazy(() => import("../pages/FilterPage"))

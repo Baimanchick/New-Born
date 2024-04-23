@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Typography, Flex } from 'antd';
+import { Card, Typography } from 'antd';
 
 import { Button } from '../Button/Button'
 import { CartItemProps } from './CartItem.props';

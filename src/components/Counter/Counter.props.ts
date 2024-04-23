@@ -1,4 +1,3 @@
-import {FlexProps} from "antd";
 import React from "react";
 
 export interface CounterProps extends React.HTMLAttributes<HTMLElement>{

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Avatar, Button as ButtonAnt, Button, Flex, List, Skeleton, Typography} from 'antd';
+import { Button as ButtonAnt, Flex, List, Skeleton, Typography} from 'antd';
 import styles from './cartList.module.scss'
 import {MinusOutlined} from "@ant-design/icons";
 import {Counter} from "../Counter/Counter";
