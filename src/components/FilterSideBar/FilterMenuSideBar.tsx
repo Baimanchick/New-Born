@@ -57,7 +57,7 @@ function FilterMenuSideBar() {
 
     return (
         <>
-            <Sider style={{ background: colorBgContainer, flex: 'none', borderRadius: 20 }} width={`${isTablet ? '100%' : '350'}`}>
+            <Sider style={{ background: colorBgContainer, flex: 'none', borderRadius: 20 }} width={'300'}>
                 <Flex style={{ flexDirection: 'column', padding: '20px' }}>
                     <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>Каталог</Title>
                     <Menu
@@ -70,7 +70,7 @@ function FilterMenuSideBar() {
                     />
                 </Flex>
             </Sider>
-            <Sider style={{ background: colorBgContainer, flex: 'none', borderRadius: 20 }} width={`${isTablet ? '100%' : '350'}`}>
+            <Sider style={{ background: colorBgContainer, flex: 'none', borderRadius: 20 }} width={'300'}>
                 <Menu mode="inline" style={{ height: '100%', borderRadius: 20 }}>
                     <Flex style={{ flexDirection: 'column', padding: '20px' }}>
                         <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px' }}>Цена, сом</Title>
@@ -78,7 +78,7 @@ function FilterMenuSideBar() {
                     </Flex>
                 </Menu>
             </Sider>
-            <Sider style={{ background: colorBgContainer, flex: 'none', borderRadius: 20 }} width={`${isTablet ? '100%' : '350'}`}>
+            <Sider style={{ background: colorBgContainer, flex: 'none', borderRadius: 20 }} width={'300'}>
                 <Flex style={{ flexDirection: 'column', padding: '20px' }}>
                     <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>Бренд</Title>
                     <Menu
