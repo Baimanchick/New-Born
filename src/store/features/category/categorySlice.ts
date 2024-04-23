@@ -21,7 +21,7 @@ const categoryCardlSlice = createSlice({
 
 export const fetchCategory = () : AppThunk => async (dispatch) => {
     try {
-        const response = await $axios.get(`${API_URL}/food_categories/`)
+        const response = await $axios.get(`${API_URL}/categories/`)
         const data: CategoryI = {category : response.data.results };
         dispatch(categoryCardlSlice.actions.setCategoryCard(data))
     } catch (error) {

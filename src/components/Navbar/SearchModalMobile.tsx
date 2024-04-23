@@ -33,7 +33,7 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
             <div className={styles.dropdown_modal__main}>
                 <div onClick={handleStopClose} className={styles.dropdown_modal__container}>
                     {[1, 2, 3, 4, 5, 6, 7, 8].map((index: number) => (
-                        <div className={styles.dropdown_modal}>
+                        <div key={index} className={styles.dropdown_modal}>
                             <p>Смесь сухая Nutrilon Пепти Аллергия</p>
                         </div>
                     ))}

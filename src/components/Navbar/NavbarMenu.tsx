@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Button, Flex, Input, Menu, Typography } from 'antd';
+import { AutoComplete, Button, Flex, Input, Menu, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
@@ -9,8 +9,55 @@ import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
+import { UserOutlined } from '@ant-design/icons';
 
 const { Title } = Typography
+
+const renderTitle = (title: string) => (
+    <span>
+        {title}
+        <a
+            style={{ float: 'right' }}
+            href="https://www.google.com/search?q=antd"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            more
+        </a>
+    </span>
+);
+
+const renderItem = (title: string, count: number) => ({
+    value: title,
+    label: (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+            }}
+        >
+            {title}
+            <span>
+                <UserOutlined /> {count}
+            </span>
+        </div>
+    ),
+});
+
+const options = [
+    {
+        label: renderTitle('Libraries'),
+        options: [renderItem('AntDesign', 10000), renderItem('AntDesign UI', 10600)],
+    },
+    {
+        label: renderTitle('Solutions'),
+        options: [renderItem('AntDesign UI FAQ', 60100), renderItem('AntDesign FAQ', 30010)],
+    },
+    {
+        label: renderTitle('Articles'),
+        options: [renderItem('AntDesign design language', 100000)],
+    },
+];
 
 
 function NavbarMenu({ menuItems }: NavbarMenuProps) {
@@ -85,20 +132,23 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                         Фильтр
                     </Button>
                     <Flex onClick={handleStopClose} className={styles.searchNavbarMenu} style={{ flexDirection: 'column' }}>
-                        <Input.Search
-                            onClick={openSearchModal}
-                            style={{ height: '50px' }}
-                            placeholder="Я ищу…"
-                            enterButton
-                            value={isSearchModalVisible ? undefined : ''}
-                        />
-                        {isSearchModalVisible ? (
-                            <Flex className={styles.dropdown_modal__desk}>
-                                {[1, 2, 3, 4, 5, 6, 7, 8].map((index: number) => (
-                                    <Title key={index} style={{ margin: 0, fontWeight: 600, fontSize: 14 }}>Смесь сухая Nutrilon Пепти Аллергия</Title>
-                                ))}
-                            </Flex>
-                        ) : null}
+                        <AutoComplete
+                            popupClassName="certain-category-search-dropdown"
+                            popupMatchSelectWidth={500}
+                            className={styles.dropdownCustomAntd}
+                            style={{ width: 810, }}
+                            options={options}
+                            size="large"
+                        >
+                            <Input.Search
+                                onClick={openSearchModal}
+                                style={{ height: '50px' }}
+                                placeholder="Я ищу…"
+                                enterButton
+                                variant={'borderless'}
+                                value={isSearchModalVisible ? undefined : ''}
+                            />
+                        </AutoComplete>
                     </Flex>
 
                 </div>
