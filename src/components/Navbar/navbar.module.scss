@@ -63,72 +63,37 @@
             }
 
             input {
-                width: 810px;
                 height: 50px;
                 outline: none;
                 border: none;
                 cursor: pointer;
-
-
-                @media screen and (max-width: 1200px) {
-                    width: 600px;
-                }
-
-                @media screen and (max-width: 1024px) {
-                    width: 500px;
-                }
-
-                @media screen and (max-width: 900px) {
-                    width: 350px;
-                }
-
-                @media screen and (max-width: 768px) {
-                    width: 200px;
-                }
-
-                @media screen and (max-width: 570px) {
-                    width: 150px;
-                }
-
+                background-color: #fff;
             }
 
             .searchNavbarMenu {
                 position: relative;
                 z-index: 3;
 
-                .dropdown_modal__desk {
-                    position: absolute;
-                    width: 865px;
-                    top: 60px;
-
+                .dropdownCustomAntd {
                     @media screen and (max-width: 1200px) {
-                        width: 655px;
+                        width: 600px !important;
                     }
 
                     @media screen and (max-width: 1024px) {
-                        width: 555px;
+                        width: 500px !important;
                     }
 
                     @media screen and (max-width: 900px) {
-                        width: 405px;
+                        width: 350px !important;
                     }
 
                     @media screen and (max-width: 768px) {
-                        width: 255px;
+                        width: 200px !important;
                     }
 
                     @media screen and (max-width: 570px) {
-                        width: 205px;
+                        width: 150px !important;
                     }
-
-                    height: auto;
-                    background-color: #fff;
-                    border-radius: 10px;
-                    padding: 10px;
-                    flex-direction: column;
-                    row-gap: 10px;
-
-
                 }
             }
 
@@ -314,32 +279,7 @@
             color: initial !important;
             background: initial !important;
         }
-
-        .dropdown_modal__main {
-            margin-top: 20px;
-
-            .dropdown_modal__container {
-                display: flex;
-                flex-direction: column;
-                row-gap: 10px;
-                width: 325px;
-                height: auto;
-                padding: 10px;
-                background-color: rgba(255, 255, 255, 1);
-                border-radius: 10px;
-
-                .dropdown_modal {
-
-                    p {
-                        font-size: 12px;
-                        font-weight: 600;
-                        color: rgba(42, 42, 42, 1);
-                    }
-                }
-            }
-        }
     }
-
 }
 
 //! MobileNavbarFilterSideBar

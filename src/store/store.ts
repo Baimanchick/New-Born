@@ -3,6 +3,10 @@ import carouselReducer from "./features/carousel/carouselSlice";
 import categoryReducer from "./features/category/categorySlice";
 import adReducer from "./features/ad/adSlice";
 import brandReducer from "./features/brand/brandSlice";
+import reviewsReducer from "./features/customer_reviews/customerReviewsSlice";
+import productsReducer from "./features/products/productSlice";
+
+
 
 
 export const store = configureStore({
@@ -10,7 +14,10 @@ export const store = configureStore({
         carousel: carouselReducer,
         category: categoryReducer,
         ad: adReducer,
-        brand: brandReducer
+        brand: brandReducer,
+        customerReviews: reviewsReducer,
+        products: productsReducer,
+
     }
 })
 

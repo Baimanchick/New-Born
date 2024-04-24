@@ -1,13 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Col, Flex, Layout, Menu, Row, Typography, theme } from 'antd';
+import { Col, Flex, Layout, Row, } from 'antd';
 import { ProductCard } from '../ProductCard/ProductCard';
-import nutrilon from '../../assets/card/nutrilon.png';
 import FilterMenuSideBar from './FilterMenuSideBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootStates } from '../../store/store';
+import { fetchProducts } from '../../store/features/products/productSlice';
+import { ProductCardType } from '../ProductCard/ProductCard.props';
 
 const { Content } = Layout;
 
 function FilterSideBar() {
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 660);
+    const dispatch = useDispatch<any>()
+    const products = useSelector((states: RootStates) => states.products.products)
+
+    useEffect(() => {
+        dispatch(fetchProducts({
+            limit: 16,
+            offset: 0
+        }))
+    }, [dispatch])
 
     useEffect(() => {
         const handleMobileResize = () => setIsMobile(window.innerWidth < 660)
@@ -30,21 +42,15 @@ function FilterSideBar() {
                     <FilterMenuSideBar />
                 </Layout>
                 <Content>
-                    <Row gutter={[16, 16]}>
-                        {[1, 2, 3, 4, 5, 6].map((index) => (
-                            <Col span={12}>
-
+                    <Flex gap={1} wrap={'wrap'}>
+                        {
+                            products.map((product: ProductCardType, index: number) => (
                                 <ProductCard
-                                    key={index}
-                                    price={2600}
-                                    rating={5}
-                                    title={"Смесь сухая Nutrilon Пепти Аллергия 800г с 0 месяцев"}
-                                    image={nutrilon}
-                                    tags={['800г', 'с 0 месяцев', 'new']}
+                                    product={product}
                                 />
-                            </Col>
-                        ))}
-                    </Row>
+                            ))
+                        }
+                    </Flex>
 
                 </Content>
             </Content>

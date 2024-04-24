@@ -19,7 +19,7 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
         <div className={styles.navbar_mobile}>
             <div className={styles.nav_up__mobile}>
                 <div className={styles.logo_mobile}>
-                    <img src={logo} onClick={() => navigate('/')} className={styles.logo_mobile__image} />
+                    <img src={logo} alt={'logo'} onClick={() => navigate('/')} className={styles.logo_mobile__image} />
                 </div>
                 <div className={styles.icon_mobile}>
                     <img src={favourite} className={styles.icon_mobile__item} alt="Избранное" />
@@ -39,7 +39,7 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
                     <Button
                         className={styles.btn}
                         type='default'
-                        icon={<img src={filter} style={{ width: '24px', height: '24px' }} />}
+                        icon={<img src={filter} style={{ width: '24px', height: '24px' }} alt={'filter'} />}
                         onClick={isOnFilterPage ? () => setFilterIsDrawerOpen && setFilterIsDrawerOpen(true) : () => navigate('/filter')}
                     >
                         Фильтр
@@ -62,7 +62,7 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
                     ))}
                 </ul>
                 <div className={styles.navbar_mobile__footer}>
-                    <img src={phoneWhite} />
+                    <img src={phoneWhite} alt={'phone'} />
                     <div>Горячая линия  <a href="#">+01 112 352 566</a></div>
                 </div>
             </Drawer>
