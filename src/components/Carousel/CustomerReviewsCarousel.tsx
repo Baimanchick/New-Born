@@ -69,6 +69,8 @@ export const CustomerReviewsCarousel: React.FC = () => {
                 }}>
                     <img
                         src={arrowLeft}
+                        alt={'arrowLeft'}
+
                     />
                 </button>
                 <button onClick={() => {
@@ -76,6 +78,7 @@ export const CustomerReviewsCarousel: React.FC = () => {
                 }}>
                     <img
                         src={arrowRight}
+                        alt={'arrowRight'}
                     />
                 </button>
             </div>
