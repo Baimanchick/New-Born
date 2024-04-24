@@ -18,13 +18,7 @@ import { Counter } from "../Counter/Counter";
 
 const { Title, Text } = Typography;
 
-export function ProductCard({
-  title,
-  price,
-  rating,
-  image,
-  tags,
-}: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
   const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -60,7 +54,7 @@ export function ProductCard({
             align={"center"}
             wrap={"wrap"}
           >
-            {tags.map((tag: string, index: number) => (
+            {product.extra_info.map((tag: string, index: number) => (
               <Tag
                 key={index}
                 className={styles.tag}
@@ -78,7 +72,7 @@ export function ProductCard({
           />
         </Flex>
       }
-      cover={<img src={image} alt={title} />}
+      cover={<img src={product.default_image} alt={product.name} />}
       actions={[
         !isClicked ? (
           <Button onClick={handleBuyClick} appearance={"blue"} block>
@@ -95,15 +89,17 @@ export function ProductCard({
           style={{ width: "100%" }}
         >
           <Title style={{ margin: 0 }} level={4}>
-            {formatNumberAndAddCurrency(price, "₽")}
+            {formatNumberAndAddCurrency(product.price, "₽")}
           </Title>
           <Flex align={"center"}>
             <Star />
-            <Text style={{ fontSize: 18, marginLeft: 3 }}>{rating}</Text>
+            <Text style={{ fontSize: 18, marginLeft: 3 }}>
+              {product.rating}
+            </Text>
           </Flex>
         </Flex>
         <Text style={{ marginBottom: 20, fontSize: 14 }}>
-          {truncateTitle(title)}
+          {truncateTitle(product.name)}
         </Text>
         {(isClicked && (
           <Counter initialValue={1} onDecrement={handleDecrement} />
