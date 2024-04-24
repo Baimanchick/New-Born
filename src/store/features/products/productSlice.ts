@@ -1,57 +1,76 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppThunk } from "../../store";
+import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
-import { FilterProductCardType, ProductCardI } from "../../../components/ProductCard/ProductCard.props";
+import {
+  FilterProduct,
+  Product,
+} from "../../../helpers/interfaces/product.interface";
+import { AxiosError } from "axios";
 
-
-const initialState: ProductCardI = {
-    products: []
+interface ProductState {
+  products: Product[];
 }
+
+const initialState: ProductState = {
+  products: [],
+};
 
 const productSlice = createSlice({
-    name: 'products',
-    initialState,
-    reducers: {
-        setProduct: (state, action: PayloadAction<ProductCardI>) => {
-            state.products = action.payload.products;
-        },
-    }
+  name: "products",
+  initialState,
+  reducers: {
+    setProduct: (state, action: PayloadAction<ProductState>) => {
+      state.products = action.payload.products;
+    },
+  },
 });
 
-export const fetchProducts = (filters : FilterProductCardType) : AppThunk => async (dispatch) => {
+export const fetchProducts = createAsyncThunk<unknown, FilterProduct>(
+  "products/fetchProducts",
+  async (filters, { dispatch, rejectWithValue }) => {
     try {
-        const queryParams ={
-            limit: filters.limit || 100,
-            offset: filters.offset || 0,
-
-        }
-        const response = await $axios.get(`${API_URL}/products/`, { params: queryParams })
-        const data: ProductCardI = {products : response.data.results };
-        dispatch(productSlice.actions.setProduct(data))
+      const queryParams = {
+        limit: filters.limit || 100,
+        offset: filters.offset || 0,
+      };
+      const response = await $axios.get(`${API_URL}/products/`, {
+        params: queryParams,
+      });
+      const data: ProductState = { products: response.data.results };
+      dispatch(productSlice.actions.setProduct(data));
     } catch (error) {
-        console.log(error);
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response!.data.message);
+      }
     }
-}
+  }
+);
 
-export const fetchRecAndPopProducts = (filters : FilterProductCardType): AppThunk => async (dispatch) => {
+export const fetchRecAndPopProducts = createAsyncThunk<unknown, FilterProduct>(
+  "products/fetchRecAndPopProducts",
+  async (filters, { dispatch, rejectWithValue }) => {
     try {
-        const queryParams ={
-            limit: filters.limit || 100,
-            offset: filters.offset || 0,
-            min_price: filters.min_price || undefined,
-            max_price: filters.max_price || undefined,
-            brand: filters.brand || [],
-            category: filters.category || [],
-            product_name: filters.product_name || [],
-        }
-        const response = await $axios.get(`${API_URL}/products/recommended/`, { params: queryParams });
-        const data: ProductCardI = { products: response.data.products };
-        dispatch(productSlice.actions.setProduct(data))
+      const queryParams = {
+        limit: filters.limit || 100,
+        offset: filters.offset || 0,
+        min_price: filters.min_price || undefined,
+        max_price: filters.max_price || undefined,
+        brand: filters.brand || [],
+        category: filters.category || [],
+        product_name: filters.product_name || [],
+      };
+      const response = await $axios.get(`${API_URL}/products/recommended/`, {
+        params: queryParams,
+      });
+      const data: ProductState = { products: response.data.products };
+      dispatch(productSlice.actions.setProduct(data));
     } catch (error) {
-        console.log(error);
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response!.data.message);
+      }
     }
-}
+  }
+);
 
 export const { setProduct } = productSlice.actions;
 export default productSlice.reducer;

@@ -1,35 +1,39 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AppThunk } from "../../store";
+import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
 import { BrandI } from "../../../components/BrandCard/BrandCard.props";
-
+import { AxiosError } from "axios";
 
 const initialState: BrandI = {
-    brand: []
-}
+  brand: [],
+};
 
 const brandSlice = createSlice({
-    name: 'brand',
-    initialState,
-    reducers: {
-        setBrand: (state, action: PayloadAction<BrandI>) => {
-            state.brand = action.payload.brand;
-        },
-    }
+  name: "brand",
+  initialState,
+  reducers: {
+    setBrand: (state, action: PayloadAction<BrandI>) => {
+      state.brand = action.payload.brand;
+    },
+  },
 });
 
-export const fetchBrand = () : AppThunk => async (dispatch) => {
+export const fetchBrand = createAsyncThunk<unknown, void>(
+  "brand/fetchBrand",
+  async (_, { dispatch, rejectWithValue }) => {
     try {
-        const response = await $axios.get(`${API_URL}/brands/`)
-        const data: BrandI = {brand : response.data.results };
-        console.log(data);
-        
-        dispatch(brandSlice.actions.setBrand(data))
+      const response = await $axios.get(`${API_URL}/brands/`);
+      const data: BrandI = { brand: response.data.results };
+      console.log(data);
+
+      dispatch(brandSlice.actions.setBrand(data));
     } catch (error) {
-        console.log(error);
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response!.data.message);
+      }
     }
-}
+  }
+);
 
 export const { setBrand } = brandSlice.actions;
 export default brandSlice.reducer;
