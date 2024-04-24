@@ -1,12 +1,11 @@
-import React from 'react'
 import BannerCarousel from '../components/Carousel/BannerCarousel'
 import CategoryCardList from '../components/CategoryCardList'
 import AdCardList from '../components/AdCardList'
 import NewProductsList from '../components/NewProductsList'
 import RecommendedProductsList from '../components/RecommendedProductsList'
 import PopularProductsList from '../components/PopularProductsList'
-import { ReviewsCarousel } from '../components/Carousel/ReviewsCarousel'
 import BrandCardList from '../components/BrandCardList'
+import CustomerReviewsCarousel from '../components/Carousel/CustomerReviewsCarousel'
 
 function HomePage() {
     return (
@@ -23,7 +22,7 @@ function HomePage() {
                         <RecommendedProductsList />
                     </div>
                     <PopularProductsList />
-                    <ReviewsCarousel />
+                    <CustomerReviewsCarousel />
                     <BrandCardList />
                 </div>
             </div>

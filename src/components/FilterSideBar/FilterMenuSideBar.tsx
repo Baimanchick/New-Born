@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Flex, Layout, Menu, Typography, theme } from 'antd';
 import PriceRangeSelector from '../PriceRangeSelector/PriceRangeSelector';
@@ -41,19 +40,6 @@ function FilterMenuSideBar() {
     const {
         token: { colorBgContainer, },
     } = theme.useToken();
-    const [isTablet, setIsTablet] = useState<boolean>(window.innerWidth < 1000);
-    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 510);
-
-    useEffect(() => {
-        const handleTabletResize = () => setIsTablet(window.innerWidth < 1000);
-        const handleMobileResize = () => setIsMobile(window.innerWidth < 510)
-        window.addEventListener('resize', handleTabletResize);
-        window.addEventListener('resize', handleMobileResize);
-        return () => {
-            window.removeEventListener('resize', handleTabletResize);
-            window.removeEventListener('resize', handleMobileResize);
-        };
-    }, []);
 
     return (
         <>

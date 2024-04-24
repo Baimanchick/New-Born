@@ -1,8 +1,6 @@
-import { AutoComplete, Input, SelectProps } from 'antd';
-import { SearchModalProps } from './Navbar.props';
-import styles from "./navbar.module.scss";
-import "../../styles/antd.scss";
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { AutoComplete, Input } from 'antd';
+import type { SelectProps } from 'antd';
 
 const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -37,10 +35,10 @@ const searchResult = (query: string) =>
             };
         });
 
-function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
+const App: React.FC = () => {
     const [options, setOptions] = useState<SelectProps<object>['options']>([]);
 
-    const handleSearchAntd = (value: string) => {
+    const handleSearch = (value: string) => {
         setOptions(value ? searchResult(value) : []);
     };
 
@@ -48,43 +46,18 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
         console.log('onSelect', value);
     };
 
-    const handleSearch = (value: string) => {
-        onClose();
-    };
-
-    const handleCloseModal = () => {
-        onClose();
-    };
-
-    const handleStopClose = (event: React.MouseEvent<HTMLInputElement>) => {
-        event.stopPropagation();
-    };
-
     return (
-        <div
-            className={styles.modalBackground}
-            style={{ display: isVisible ? 'flex' : 'none' }}
-            onClick={handleCloseModal}
+        <AutoComplete
+            popupMatchSelectWidth={252}
+            style={{ width: 300 }}
+            options={options}
+            onSelect={onSelect}
+            onSearch={handleSearch}
+            size="large"
         >
-            <AutoComplete
-                popupMatchSelectWidth={325}
-                options={options}
-                size="large"
-                style={{ marginTop: 80 }}
-                onSelect={onSelect}
-                onSearch={handleSearchAntd}
-                onClick={handleStopClose}
-            >
-                <Input.Search
-                    style={{ width: 325, }}
-                    className={styles.input_modal}
-                    placeholder="Я ищу…"
-                    onSearch={handleSearch}
-                    enterButton
-                />
-            </AutoComplete>
-        </div>
+            <Input.Search size="large" placeholder="input here" enterButton />
+        </AutoComplete>
     );
-}
+};
 
-export default SearchModalMobile;
+export default App;

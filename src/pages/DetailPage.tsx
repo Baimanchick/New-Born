@@ -1,7 +1,7 @@
 import { Flex, Layout } from 'antd'
 import DetailCarousel from '../components/Carousel/DetailCarousel'
 import InfoBlock from '../components/Detail/InfoBlock'
-import ReviewsDescription from '../components/Detail/ReviewsDescription'
+import DetailReviewsDescription from '../components/Detail/DetailReviewsDescription'
 
 
 function DetailPage() {
@@ -13,7 +13,7 @@ function DetailPage() {
                         <DetailCarousel />
                         <InfoBlock />
                     </Flex>
-                    <ReviewsDescription />
+                    <DetailReviewsDescription />
                 </Flex>
             </Layout>
         </div>

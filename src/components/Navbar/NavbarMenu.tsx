@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { AutoComplete, Button, Flex, Input, Menu, Typography } from 'antd';
+import { AutoComplete, Button, Flex, Input, Menu, SelectProps, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
@@ -13,57 +13,55 @@ import { UserOutlined } from '@ant-design/icons';
 
 const { Title } = Typography
 
-const renderTitle = (title: string) => (
-    <span>
-        {title}
-        <a
-            style={{ float: 'right' }}
-            href="https://www.google.com/search?q=antd"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            more
-        </a>
-    </span>
-);
+const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const renderItem = (title: string, count: number) => ({
-    value: title,
-    label: (
-        <div
-            style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-            }}
-        >
-            {title}
-            <span>
-                <UserOutlined /> {count}
-            </span>
-        </div>
-    ),
-});
+const searchResult = (query: string) =>
+    new Array(getRandomInt(5))
+        .join('.')
+        .split('.')
+        .map((_, idx) => {
+            const category = `${query}${idx}`;
+            return {
+                value: category,
+                label: (
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <span>
+                            Found {query} on{' '}
+                            <a
+                                href={`https://s.taobao.com/search?q=${query}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {category}
+                            </a>
+                        </span>
+                        <span>{getRandomInt(200, 100)} results</span>
+                    </div>
+                ),
+            };
+        });
 
-const options = [
-    {
-        label: renderTitle('Libraries'),
-        options: [renderItem('AntDesign', 10000), renderItem('AntDesign UI', 10600)],
-    },
-    {
-        label: renderTitle('Solutions'),
-        options: [renderItem('AntDesign UI FAQ', 60100), renderItem('AntDesign FAQ', 30010)],
-    },
-    {
-        label: renderTitle('Articles'),
-        options: [renderItem('AntDesign design language', 100000)],
-    },
-];
 
 
 function NavbarMenu({ menuItems }: NavbarMenuProps) {
     const navigate = useNavigate();
     const isOnFilterPage = window.location.pathname === '/filter';
     const [isSearchModalVisible, setIsSearchModalVisible] = useState<boolean>(false);
+    const [options, setOptions] = useState<SelectProps<object>['options']>([]);
+
+    const handleSearch = (value: string) => {
+        setOptions(value ? searchResult(value) : []);
+    };
+
+    const onSelect = (value: string) => {
+        console.log('onSelect', value);
+    };
+
 
     const openSearchModal = () => {
         setIsSearchModalVisible(true);
@@ -133,12 +131,13 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                     </Button>
                     <Flex onClick={handleStopClose} className={styles.searchNavbarMenu} style={{ flexDirection: 'column' }}>
                         <AutoComplete
-                            popupClassName="certain-category-search-dropdown"
                             popupMatchSelectWidth={500}
                             className={styles.dropdownCustomAntd}
                             style={{ width: 810, }}
                             options={options}
                             size="large"
+                            onSelect={onSelect}
+                            onSearch={handleSearch}
                         >
                             <Input.Search
                                 onClick={openSearchModal}
