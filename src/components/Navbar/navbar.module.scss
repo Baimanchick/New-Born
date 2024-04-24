@@ -279,32 +279,7 @@
             color: initial !important;
             background: initial !important;
         }
-
-        .dropdown_modal__main {
-            margin-top: 20px;
-
-            .dropdown_modal__container {
-                display: flex;
-                flex-direction: column;
-                row-gap: 10px;
-                width: 325px;
-                height: auto;
-                padding: 10px;
-                background-color: rgba(255, 255, 255, 1);
-                border-radius: 10px;
-
-                .dropdown_modal {
-
-                    p {
-                        font-size: 12px;
-                        font-weight: 600;
-                        color: rgba(42, 42, 42, 1);
-                    }
-                }
-            }
-        }
     }
-
 }
 
 //! MobileNavbarFilterSideBar

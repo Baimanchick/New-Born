@@ -5,8 +5,6 @@ import { RootStates } from "../store/store"
 import { useEffect, useState } from "react"
 import { fetchAd } from "../store/features/ad/adSlice"
 import { AdType } from "./AdCard/AdCard.props"
-import { replaceUrl } from "../helpers/functions/helperFunctions"
-import Loading from "./Loader/Loading"
 
 function AdCardList() {
     const dispatch = useDispatch<any>()
