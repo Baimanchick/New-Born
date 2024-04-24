@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../../store/store';
 import { fetchCarousel } from '../../store/features/carousel/carouselSlice';
 import { CarouselType } from './Carousel.props';
-import { replaceUrl } from '../../helpers/functions/helperFunctions';
 import Loading from '../Loader/Loading';
 
 
@@ -43,7 +42,7 @@ const BannerCarousel: React.FC = () => {
                     >
                         {carousel.map((carousel: CarouselType, index: number) => (
                             <div key={index} className={styles.banner_carousel__pages}>
-                                <img src={replaceUrl(carousel.images)} />
+                                <img src={carousel.images} alt={carousel.description} />
                             </div>
                         ))}
                     </Carousel>
@@ -55,6 +54,7 @@ const BannerCarousel: React.FC = () => {
                 }}>
                     <img
                         src={arrowLeft}
+                        alt={'arrowLeft'}
                     />
                 </button>
                 <button onClick={() => {
@@ -62,6 +62,7 @@ const BannerCarousel: React.FC = () => {
                 }}>
                     <img
                         src={arrowRight}
+                        alt={'arrowRight'}
                     />
                 </button>
             </div>

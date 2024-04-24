@@ -122,7 +122,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                 </div>
                 <div className={styles.form}>
                     <Button
-                        icon={<img src={filter} style={{ width: '24px', height: '24px' }} />}
+                        icon={<img src={filter} style={{ width: '24px', height: '24px' }} alt={'filter'} />}
                         className={styles.btn}
                         type='default'
                         onClick={handleFilterButtonClick}

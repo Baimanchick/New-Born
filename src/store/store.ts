@@ -4,6 +4,8 @@ import categoryReducer from "./features/category/categorySlice";
 import adReducer from "./features/ad/adSlice";
 import brandReducer from "./features/brand/brandSlice";
 import reviewsReducer from "./features/customer_reviews/customerReviewsSlice";
+import productsReducer from "./features/products/productSlice";
+
 
 
 
@@ -13,7 +15,8 @@ export const store = configureStore({
         category: categoryReducer,
         ad: adReducer,
         brand: brandReducer,
-        customerReviews: reviewsReducer
+        customerReviews: reviewsReducer,
+        products: productsReducer,
 
     }
 })

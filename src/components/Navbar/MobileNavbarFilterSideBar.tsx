@@ -40,13 +40,13 @@ function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }
                         <div className={styles.mobile_filter}>
                             <div onClick={() => toggleDropdown('catalog')} className={styles.main_title}>
                                 <div>Каталог</div>
-                                <img src={arrowDown} />
+                                <img src={arrowDown} alt={'arrowDown'} />
                             </div>
                             {isOpenDropdown['catalog'] ? (
                                 <div className={styles.mobile_filter__item} tabIndex={-1}>
                                     <div onClick={() => toggleChildDropdown('meal')} className={styles.dropdown_mobile__filter}>
                                         <div>Питание с 6 месяцев</div>
-                                        <img src={isOpenChildDropdown['meal'] ? arrowUpBlack : arrowDownBlack} />
+                                        <img src={isOpenChildDropdown['meal'] ? arrowUpBlack : arrowDownBlack} alt={'arrow'} />
                                     </div>
                                     {isOpenChildDropdown['meal'] ? (
                                         <div className={styles.dropdown_mobile_filter__item}>
@@ -61,7 +61,7 @@ function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }
                         <div className={styles.mobile_filter}>
                             <div onClick={() => toggleDropdown('price')} className={styles.main_title}>
                                 <div>Цена, сом</div>
-                                <img src={arrowDown} />
+                                <img src={arrowDown} alt={'arrow'} />
                             </div>
                             {isOpenDropdown['price'] ? (
                                 <PriceRangeSelector />
@@ -71,13 +71,13 @@ function MobileNavbarFilterSideBar({ isFilterDrawerOpen, setFilterIsDrawerOpen }
                         <div className={styles.mobile_filter}>
                             <div onClick={() => toggleDropdown('brand')} className={styles.main_title}>
                                 <div>Бренд</div>
-                                <img src={arrowDown} />
+                                <img src={arrowDown} alt={'arrow'} />
                             </div>
                             {isOpenDropdown['brand'] ? (
                                 <div className={styles.mobile_filter__item} tabIndex={-1}>
                                     <div onClick={() => toggleChildDropdown('brandMeal')} className={styles.dropdown_mobile__filter}>
                                         <div>Агуша</div>
-                                        <img src={isOpenChildDropdown['brandMeal'] ? arrowUpBlack : arrowDownBlack} />
+                                        <img src={isOpenChildDropdown['brandMeal'] ? arrowUpBlack : arrowDownBlack} alt={'arrow'} />
                                     </div>
                                     {isOpenChildDropdown['brandMeal'] ? (
                                         <div className={styles.dropdown_mobile_filter__item}>

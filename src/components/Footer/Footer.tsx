@@ -29,10 +29,10 @@ function Footer() {
                         <div className={styles.footer}>
                             <div className={styles.logos}>
                                 <div className={styles.social_media}>
-                                    <img src={insta} />
-                                    <img src={basket} />
-                                    <img src={twitter} />
-                                    <img src={youtube} />
+                                    <img src={insta} alt={'instagram'} />
+                                    <img src={basket} alt={'basketball'} />
+                                    <img src={twitter} alt={'twitter'} />
+                                    <img src={youtube} alt={'youtube'} />
                                 </div>
                             </div>
                             <div className={styles.footer_item_mobile}>
@@ -43,7 +43,7 @@ function Footer() {
                                         </div>
                                         <div className={styles.footer_input}>
                                             <input type="text" placeholder='Your email address' />
-                                            <img src={send} />
+                                            <img src={send} alt={'send'} />
                                         </div>
                                     </div>
                                 </div>
@@ -89,14 +89,14 @@ function Footer() {
                         <div className={styles.footer}>
                             <div className={styles.footer_item}>
                                 <div className={styles.footer_social__logo}>
-                                    <img className={styles.logo} src={logo} />
+                                    <img className={styles.logo} src={logo} alt={'logo'} />
                                     <span>Все права защищены</span>
                                     <span>®2024 new born</span>
                                     <div className={styles.social_media}>
-                                        <img src={insta} />
-                                        <img src={basket} />
-                                        <img src={twitter} />
-                                        <img src={youtube} />
+                                        <img src={insta} alt={'instagram'} />
+                                        <img src={basket} alt={'basketball'} />
+                                        <img src={twitter} alt={'twitter'} />
+                                        <img src={youtube} alt={'youtube'} />
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ function Footer() {
                                     </div>
                                     <div className={styles.footer_input}>
                                         <input type="text" placeholder='Your email address' />
-                                        <img src={send} />
+                                        <img src={send} alt={'send'} />
                                     </div>
                                 </div>
                             </div>

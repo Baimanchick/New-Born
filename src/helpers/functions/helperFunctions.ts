@@ -1,7 +1,15 @@
-export function formatNumberAndAddCurrency(number: number, currencySymbol: string): string {
-    const formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return `${formattedNumber} ${currencySymbol}`;
+export function formatNumberAndAddCurrency(number: number | string, currencySymbol: string): string {
+    const numericValue = typeof number === 'string' ? parseFloat(number) : number;
+
+    if (!isNaN(numericValue)) {
+        const formattedNumber = numericValue.toFixed(2).replace(/\.00$/, '');
+        const formattedNumberWithSpaces = formattedNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        return `${formattedNumberWithSpaces} ${currencySymbol}`;
+    } else {
+        return 'Invalid number';
+    }
 }
+
 
 export const truncateTitle = (title: string): string => {
     const words = title.split(' ');
@@ -17,8 +25,4 @@ export function truncateTextAfterWords(text : string, numWords : number) {
         return words.slice(0, numWords).join(' ') + '...';
     }
     return text;
-}
-
-export const replaceUrl = (url: string) => {
-    return url.replace('http://api:8002', 'https://baby-back.ru/')
 }

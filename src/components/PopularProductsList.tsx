@@ -3,10 +3,25 @@ import nutrilon from '../assets/card/nutrilon.png'
 import styles from "../styles/card.module.scss"
 import { Button } from "./Button/Button"
 import { Typography } from "antd"
+import { useDispatch, useSelector } from "react-redux"
+import { RootStates } from "../store/store"
+import { useEffect } from "react"
+import { fetchRecAndPopProducts } from "../store/features/products/productSlice"
+import { ProductCardType, default_filters } from "./ProductCard/ProductCard.props"
+
 
 const { Title } = Typography
 
 function PopularProductsList() {
+    const dispatch = useDispatch<any>()
+    const products = useSelector((state: RootStates) => state.products.products)
+
+    useEffect(() => {
+        dispatch(fetchRecAndPopProducts({
+            ...default_filters,
+            limit: 16
+        }))
+    }, [dispatch])
     return (
         <div className={styles.popularProducts_main}>
             <div className={styles.popularProducts_container}>
@@ -15,14 +30,10 @@ function PopularProductsList() {
                     <Button appearance="yellow" style={{ width: '140px', borderRadius: '10px', fontSize: '16px', fontWeight: '600' }}>Больше</Button>
                 </div>
                 <div className={styles.popularProducts}>
-                    {[1, 2, 3, 4, 5].map((index: number) => (
+                    {products.map((product: ProductCardType, index: number) => (
                         <ProductCard
                             key={index}
-                            price={2600}
-                            rating={5}
-                            title={"Смесь сухая Nutrilon Пепти Аллергия 800г с 0 месяцев"}
-                            image={nutrilon}
-                            tags={['800г', 'с 0 месяцев', 'new']}
+                            product={product}
                         />
                     ))}
                 </div>
