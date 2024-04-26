@@ -3,6 +3,7 @@ import { MenuItem } from './Navbar.props';
 import NavbarMenu from './NavbarMenu';
 import MobileNavbar from './MobileNavbar';
 import SearchModalMobile from './SearchModalMobile';
+import useWindowSize from '../../hooks/useWindowSize';
 
 const menuItems: MenuItem[] = [
     { label: "Главная", key: 'home' },
@@ -14,8 +15,9 @@ const menuItems: MenuItem[] = [
 function Navbar() {
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
     const [isFilterDrawerOpen, setFilterIsDrawerOpen] = useState<boolean>(false);
-    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 660);
     const [isSearchModalVisible, setIsSearchModalVisible] = useState<boolean>(false);
+    const windowSize = useWindowSize();
+    const isMobile = windowSize.width && windowSize.width < 660;
 
     const openSearchModal = () => {
         setIsSearchModalVisible(true);
@@ -25,11 +27,6 @@ function Navbar() {
         setIsSearchModalVisible(false);
     };
 
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 660);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     return (
         <div className='container'>
