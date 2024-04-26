@@ -5,13 +5,17 @@ import FilterMenuSideBar from "./FilterMenuSideBar";
 import { fetchProducts } from "../../store/features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Product } from "../../helpers/interfaces/product.interface";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const { Content } = Layout;
 
 function FilterSideBar() {
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 660);
   const dispatch = useAppDispatch();
   const products = useAppSelector((states) => states.products.products);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width && windowSize.width < 660;
+
+
 
   useEffect(() => {
     dispatch(
@@ -22,13 +26,6 @@ function FilterSideBar() {
     );
   }, [dispatch]);
 
-  useEffect(() => {
-    const handleMobileResize = () => setIsMobile(window.innerWidth < 660);
-    window.addEventListener("resize", handleMobileResize);
-    return () => {
-      window.removeEventListener("resize", handleMobileResize);
-    };
-  }, []);
 
   return (
     <Layout style={{ margin: "20px 0px 20px 0px" }}>

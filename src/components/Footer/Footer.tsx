@@ -5,21 +5,15 @@ import basket from "../../assets/svgs/footer/basket.svg"
 import twitter from "../../assets/svgs/footer/twitter.svg"
 import youtube from "../../assets/svgs/footer/youtube.svg"
 import send from "../../assets/svgs/footer/telegram.svg"
-import { Button } from 'antd';
-import { ReactComponent as Send } from '../../assets/svgs/footer/telegram.svg';
-import { useEffect, useState } from 'react';
+import useWindowSize from '../../hooks/useWindowSize';
 
 
 
 
 function Footer() {
-    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 755);
+    const windowSize = useWindowSize();
 
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 755);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    const isMobile = windowSize.width && windowSize.width < 755;
 
     return (
         <>

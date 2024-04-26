@@ -8,22 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomerReviews } from "../../store/features/customer_reviews/customerReviewsSlice";
 import { CustomerReviewsCarouselType } from "./CustomerReviews.props";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import useWindowSize from "../../hooks/useWindowSize";
 
 const { Title } = Typography;
 
 export const CustomerReviewsCarousel: React.FC = () => {
   const ref = useRef<CarouselRef>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 900);
   const dispatch = useAppDispatch();
+  const windowSize = useWindowSize();
   const customerReviews = useAppSelector(
     (state) => state.customerReviews.customerReviews
   );
+  const isMobile = windowSize.width && windowSize.width < 900;
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 900);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     dispatch(fetchCustomerReviews());
