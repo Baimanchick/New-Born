@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Col, Flex, Layout, Row } from "antd";
+import { useEffect } from "react";
+import { Flex, Layout } from "antd";
 import { ProductCard } from "../ProductCard/ProductCard";
 import FilterMenuSideBar from "./FilterMenuSideBar";
 import { fetchProducts } from "../../store/features/products/productSlice";
@@ -14,8 +14,6 @@ function FilterSideBar() {
   const products = useAppSelector((states) => states.products.products);
   const windowSize = useWindowSize();
   const isMobile = windowSize.width && windowSize.width < 660;
-
-
 
   useEffect(() => {
     dispatch(
@@ -51,7 +49,7 @@ function FilterSideBar() {
         <Content>
           <Flex gap={1} wrap={"wrap"}>
             {products.map((product: Product, index: number) => (
-              <ProductCard product={product} />
+              <ProductCard key={index} product={product} />
             ))}
           </Flex>
         </Content>
