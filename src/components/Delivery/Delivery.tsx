@@ -78,12 +78,12 @@ function Delivery() {
           </Col>
         </Row>
       </Checkbox.Group>
-      <Flex style={{ width: "100%" }} align={"center"} gap={10}>
+      <Flex style={{ width: "100%", marginTop: "20px" }} gap={10}>
         <AutoComplete
           popupMatchSelectWidth={true}
-          style={{ width: "100%" }}
           options={options}
           onSelect={onSelect}
+          style={{ width: "100%" }}
           onSearch={handleSearch}
           size="large"
         >
@@ -91,7 +91,7 @@ function Delivery() {
             width={"100%"}
             height={"60px"}
             size="large"
-            placeholder=""
+            placeholder="how"
             style={{
               backgroundColor: "#F8F8F8",
               borderRadius: 10,
@@ -106,6 +106,10 @@ function Delivery() {
         >
           Продолжить
         </Button>
+      </Flex>
+
+      <Flex style={{ maxHeight: "200px" }} justify={"center"}>
+        cart
       </Flex>
     </Flex>
   );
