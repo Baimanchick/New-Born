@@ -15,7 +15,7 @@ function MainRoutes() {
             <Route element={<MainLayout />}>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/filter' element={<FilterPage />} />
-                <Route path='/detail' element={<DetailPage />} />
+                <Route path='/detail/:id' element={<DetailPage />} />
                 <Route path='/cart' element={<CartPage />} />
             </Route>
         </Routes>

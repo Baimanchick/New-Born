@@ -21,11 +21,11 @@ const { Title, Text } = Typography;
 export function ProductCard({ product }: ProductCardProps) {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
-  const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>) => {
+  const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     const target = e.target as HTMLElement;
     e.stopPropagation();
     if (e.currentTarget === target || e.target instanceof HTMLImageElement) {
-      navigate("/detail");
+      navigate(`/detail/${id}`);
     }
   };
 
@@ -39,7 +39,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card
-      onClick={(e) => navigateToDetail(e)}
+      onClick={(e) => navigateToDetail(e, product.id)}
       className={styles.cardCustom}
       classNames={{
         body: styles.bodyCustom,
@@ -49,7 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
       extra={
         <Flex align={"center"}>
           <Flex
-            onClick={() => navigate("/detail")}
+            // onClick={() => navigate("/detail")}
             className={styles.wrapper}
             align={"center"}
             wrap={"wrap"}
@@ -83,7 +83,7 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <Flex vertical align={"center"}>
         <Flex
-          onClick={() => navigate("/detail")}
+          // onClick={() => navigate("/detail")}
           justify={"space-between"}
           align={"center"}
           style={{ width: "100%" }}

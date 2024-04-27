@@ -1,13 +1,13 @@
 import styles from "../ProductCard/productCard.module.scss";
-import {Button as ButtonAnt, Flex, Typography} from "antd";
-import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
-import React, {useState} from "react";
-import {CounterProps} from "./Counter.props";
+import { Button as ButtonAnt, Flex, Typography } from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { CounterProps } from "./Counter.props";
 
 
-const {  Text } = Typography
+const { Text } = Typography
 
-export function Counter({initialValue = 0, onIncrement, onDecrement, ...props}: CounterProps)  {
+export function Counter({ initialValue = 0, onIncrement, onDecrement, ...props }: CounterProps) {
     const [count, setCount] = useState(initialValue);
 
     const handleIncrement = () => {
@@ -26,11 +26,11 @@ export function Counter({initialValue = 0, onIncrement, onDecrement, ...props}: 
         }
     };
 
-    return(
+    return (
         <Flex {...props} className={styles.counterWrapper} justify={"space-between"} align={"center"} >
             <ButtonAnt onClick={handleDecrement} icon={<MinusOutlined />} shape={"circle"} />
             <Text>{count}</Text>
             <ButtonAnt onClick={handleIncrement} icon={<PlusOutlined />} shape={"circle"} />
         </Flex>
-)
+    )
 }

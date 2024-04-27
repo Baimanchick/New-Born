@@ -5,6 +5,8 @@ import adReducer from "./features/ad/adSlice";
 import brandReducer from "./features/brand/brandSlice";
 import reviewsReducer from "./features/customer_reviews/customerReviewsSlice";
 import productsReducer from "./features/products/productSlice";
+import oneProductReducer from "./features/products/oneProductSlice";
+
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,7 @@ const store = configureStore({
     brand: brandReducer,
     customerReviews: reviewsReducer,
     products: productsReducer,
+    oneProduct: oneProductReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

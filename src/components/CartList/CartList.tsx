@@ -4,7 +4,6 @@ import {
   Divider,
   Flex,
   List,
-  Skeleton,
   Typography,
 } from "antd";
 import styles from "./cartList.module.scss";

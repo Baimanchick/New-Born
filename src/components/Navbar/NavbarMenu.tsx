@@ -9,7 +9,6 @@ import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
-import { UserOutlined } from '@ant-design/icons';
 
 const { Title } = Typography
 

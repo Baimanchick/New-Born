@@ -1,4 +1,3 @@
-import React from 'react'
 import { squircle } from 'ldrs'
 import { Flex } from 'antd'
 

@@ -4,11 +4,11 @@ import { CarouselRef } from "antd/lib/carousel";
 import styles from "./carousel.module.scss";
 import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
 import arrowRight from "../../assets/svgs/carousel/arrowRight.svg";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomerReviews } from "../../store/features/customer_reviews/customerReviewsSlice";
 import { CustomerReviewsCarouselType } from "./CustomerReviews.props";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import useWindowSize from "../../hooks/useWindowSize";
+import { formatDate } from "../../helpers/functions/helperFunctions";
 
 const { Title } = Typography;
 
@@ -25,15 +25,6 @@ export const CustomerReviewsCarousel: React.FC = () => {
   useEffect(() => {
     dispatch(fetchCustomerReviews());
   }, [dispatch]);
-
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("ru-RU", options);
-  };
 
   return (
     <div className={styles.reviews_carousel__container}>
