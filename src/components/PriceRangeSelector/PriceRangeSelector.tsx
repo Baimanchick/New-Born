@@ -1,5 +1,5 @@
 import { Flex, Select, Space, Typography } from 'antd'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from "./priceRange.module.scss"
 
 const { Title } = Typography

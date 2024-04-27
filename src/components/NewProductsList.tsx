@@ -1,6 +1,6 @@
 import { ProductCard } from "./ProductCard/ProductCard";
 import styles from "../styles/card.module.scss";
-import { Col, Row, Typography } from "antd";
+import { Typography } from "antd";
 import { Button } from "./Button/Button";
 import { useEffect } from "react";
 import { fetchProducts } from "../store/features/products/productSlice";

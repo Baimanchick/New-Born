@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MenuItem } from './Navbar.props';
 import NavbarMenu from './NavbarMenu';
 import MobileNavbar from './MobileNavbar';

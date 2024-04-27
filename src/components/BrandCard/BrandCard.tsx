@@ -1,5 +1,4 @@
 import styles from "../../styles/card.module.scss"
-import { BrandType } from "./BrandCard.props"
 
 function BrandCard({ brand }: any) {
     return (

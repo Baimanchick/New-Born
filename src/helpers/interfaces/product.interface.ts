@@ -7,6 +7,7 @@ export interface Product {
   arrived: boolean;
   price: string;
   default_image: string;
+  product_images: string[];
   weight: number;
   rating: number;
   discount: number;
