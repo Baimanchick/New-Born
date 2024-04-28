@@ -61,7 +61,7 @@ export const CustomerReviewsCarousel: React.FC = () => {
           </Carousel>
         ) : (
           <Carousel
-            slidesToShow={3}
+            slidesToShow={1}
             dots={false}
             dotPosition="bottom"
             pauseOnHover={false}
@@ -73,20 +73,15 @@ export const CustomerReviewsCarousel: React.FC = () => {
           >
             <div className={styles.reviews_main}>
               <div className={styles.reviews_container}>
-                {customerReviews.map(
-                  (
-                    customerReview: CustomerReviewsCarouselType,
-                    index: number
-                  ) => (
-                    <div key={index} className={styles.reviews}>
-                      <p>{customerReview.text}</p>
-                      <div>
-                        <div>{customerReview.name}</div>
-                        <span>{formatDate(customerReview.created_at)}</span>
-                      </div>
+                {customerReviews.map((customerReview: CustomerReviewsCarouselType, index: number) => (
+                  <div key={index} className={styles.reviews}>
+                    <p>{customerReview.text}</p>
+                    <div>
+                      <div>{customerReview.name}</div>
+                      <span>{formatDate(customerReview.created_at)}</span>
                     </div>
-                  )
-                )}
+                  </div>
+                ))}
               </div>
             </div>
           </Carousel>

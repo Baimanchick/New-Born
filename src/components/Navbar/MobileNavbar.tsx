@@ -57,8 +57,8 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
                 placement='right'
             >
                 <ul className={styles.sideBar_navigation}>
-                    {menuItems.map((item: MenuItem) => (
-                        <li key={item.key}>{item.label}</li>
+                    {menuItems.map((item: MenuItem, index: number) => (
+                        <li onClick={() => navigate(item.link)} key={index}>{item.label}</li>
                     ))}
                 </ul>
                 <div className={styles.navbar_mobile__footer}>

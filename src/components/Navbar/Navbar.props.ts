@@ -18,5 +18,5 @@ export interface MobileNavbarProps {
 }
 export interface MenuItem {
     label: string;
-    key: string;
+    link: string;
 }
