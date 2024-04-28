@@ -9,10 +9,6 @@ const { Content } = Layout;
 function DetailCarousel({ product }: any) {
     const [selectedImage, setSelectedImage] = useState(product.default_image);
 
-    if (!product) {
-        return <Loading />;
-    }
-
     const handleThumbnailClick = (image: string) => {
         setSelectedImage(image);
     };

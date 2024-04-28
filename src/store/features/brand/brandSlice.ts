@@ -24,6 +24,8 @@ export const fetchBrand = createAsyncThunk<unknown, void>(
     try {
       const response = await $axios.get(`${API_URL}/brands/`);
       const data: BrandI = { brand: response.data.results };
+      console.log(data);
+      
       dispatch(brandSlice.actions.setBrand(data));
     } catch (error) {
       if (error instanceof AxiosError) {

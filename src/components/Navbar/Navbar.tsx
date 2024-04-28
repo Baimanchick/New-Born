@@ -6,10 +6,10 @@ import SearchModalMobile from './SearchModalMobile';
 import useWindowSize from '../../hooks/useWindowSize';
 
 const menuItems: MenuItem[] = [
-    { label: "Главная", key: 'home' },
-    { label: "Акции", key: 'stock' },
-    { label: "Все Бренды", key: 'allBrands' },
-    { label: "Войти", key: 'login' }
+    { label: "Главная", link: '/' },
+    { label: "Акции", link: '/stock' },
+    { label: "Все Бренды", link: 'brands' },
+    { label: "Войти", link: '/auth' }
 ];
 
 function Navbar() {

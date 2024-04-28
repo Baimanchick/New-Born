@@ -10,8 +10,6 @@ import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
 
-const { Title } = Typography
-
 const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const searchResult = (query: string) =>
@@ -45,13 +43,12 @@ const searchResult = (query: string) =>
             };
         });
 
-
-
 function NavbarMenu({ menuItems }: NavbarMenuProps) {
     const navigate = useNavigate();
     const isOnFilterPage = window.location.pathname === '/filter';
-    const [isSearchModalVisible, setIsSearchModalVisible] = useState<boolean>(false);
     const [options, setOptions] = useState<SelectProps<object>['options']>([]);
+    const [activeMenuItem, setActiveMenuItem] = useState<string>('');
+
 
     const handleSearch = (value: string) => {
         setOptions(value ? searchResult(value) : []);
@@ -59,26 +56,6 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
 
     const onSelect = (value: string) => {
         console.log('onSelect', value);
-    };
-
-
-    const openSearchModal = () => {
-        setIsSearchModalVisible(true);
-    };
-
-    const closeSearchModal = () => {
-        setIsSearchModalVisible(false);
-    };
-
-    const handleEscKeyPress = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-            closeSearchModal();
-        }
-    };
-
-
-    const handleStopClose = (event: React.MouseEvent<HTMLInputElement>) => {
-        event.stopPropagation();
     };
 
     const handleFilterButtonClick = () => {
@@ -89,31 +66,30 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         }
     };
 
-    useEffect(() => {
-        document.addEventListener('keydown', handleEscKeyPress);
-        return () => {
-            document.removeEventListener('keydown', handleEscKeyPress);
-        };
-    }, []);
-
 
     return (
-        <div onClick={closeSearchModal} className={`${styles.navbar}`}>
-            {isSearchModalVisible ? (
-                <div className={`${styles.modalBackgroundColor}`}></div>
-            ) : (
-                null
-            )}
+        <div className={`${styles.navbar}`}>
             <div className={styles.nav_up}>
                 <div className={styles.phone}>
                     <img src={phone} alt="Телефон" />
-                    <span>Горячая линия +01 112 352 566</span>
+                    <span>Горячая линия <a href="tel:+01112352566">+01 112 352 566</a></span>
                 </div>
-                <Menu style={{ background: 'none', boxShadow: 'initial', borderBottom: "initial" }} mode='horizontal' >
-                    {menuItems.map((item: MenuItem) => (
-                        <Menu.Item style={{ fontSize: '12px', width: 'auto' }} key={item.key}>{item.label}</Menu.Item>
+                <ul className={styles.navbar_navigation}>
+                    {menuItems.map((item: MenuItem, index: number) => (
+                        <li
+                            className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ''}`}
+                            onClick={() => {
+                                setActiveMenuItem(item.label);
+                                navigate(item.link);
+                            }}
+                            key={index}
+                            style={{ fontSize: 12, cursor: 'pointer', fontWeight: 400 }}
+                        >
+                            {item.label}
+                        </li>
+
                     ))}
-                </Menu>
+                </ul>
             </div>
             <div className={styles.nav_down}>
                 <div className={styles.logo}>
@@ -128,7 +104,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                     >
                         Фильтр
                     </Button>
-                    <Flex onClick={handleStopClose} className={styles.searchNavbarMenu} style={{ flexDirection: 'column' }}>
+                    <Flex className={styles.searchNavbarMenu} style={{ flexDirection: 'column' }}>
                         <AutoComplete
                             popupMatchSelectWidth={500}
                             className={styles.dropdownCustomAntd}
@@ -139,12 +115,10 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                             onSearch={handleSearch}
                         >
                             <Input.Search
-                                onClick={openSearchModal}
                                 style={{ height: '50px' }}
                                 placeholder="Я ищу…"
                                 enterButton
                                 variant={'borderless'}
-                                value={isSearchModalVisible ? undefined : ''}
                             />
                         </AutoComplete>
                     </Flex>
@@ -152,7 +126,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                 </div>
                 <div className={styles.icon}>
                     <img src={favourite} className={styles.icon__item} alt="Избранное" />
-                    <img src={cart} className={styles.icon__item} alt="Корзина" />
+                    <img src={cart} onClick={() => navigate('/cart')} className={styles.icon__item} alt="Корзина" />
                 </div>
             </div>
         </div>
@@ -160,3 +134,5 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
 }
 
 export default NavbarMenu;
+
+
