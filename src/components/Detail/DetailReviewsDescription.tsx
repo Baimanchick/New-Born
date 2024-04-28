@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { Flex, Layout, Menu, Typography } from 'antd';
+import { Card, Flex, Input, Layout, Menu, Typography } from 'antd';
 import styles from "./detail.module.scss";
 import { formatDate, truncateTextAfterWords } from '../../helpers/functions/helperFunctions';
 import { ReactComponent as Star } from '../../assets/svgs/card/star.svg';
 import { Review } from '../../helpers/interfaces/reviews.interface';
 import { Button } from '../Button/Button';
+import RateDetail from '../Rate/Rate';
 const { Content, Header, Footer } = Layout;
 const { Paragraph, Title } = Typography;
+const { TextArea } = Input
 
 const item1 = [
     {
@@ -26,11 +28,26 @@ function DetailReviewsDescription({ product }: any) {
     const initialText = product.description;
     const [isExpanded, setIsExpanded] = useState(false);
     const [text, setText] = useState(initialText);
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
     };
+
+    const openSearchModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const closeSearchModal = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleStopClose = (event: React.MouseEvent<HTMLInputElement>) => {
+        event.stopPropagation();
+    };
+
     return (
-        <Flex justify={'space-between'} gap={15}>
+        <Flex onClick={closeSearchModal} justify={'space-between'} gap={15}>
             <Content style={{ width: '100%', backgroundColor: '#fff', padding: '20px', borderRadius: '20px', position: 'relative' }}>
                 <Header style={{ background: '#fff', padding: '0px' }}>
                     <Menu mode="horizontal" defaultSelectedKeys={['1']} items={item1} className={styles.CustomRewDesMenu} />
@@ -72,11 +89,32 @@ function DetailReviewsDescription({ product }: any) {
                     <Flex>
                         <Title style={{ color: '#1B81E7', fontSize: '14px', fontWeight: '700', cursor: 'pointer', margin: 0 }}>Большe...</Title>
                     </Flex>
-                    <Flex>
-                        <Button style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
+                    <Flex onClick={handleStopClose}>
+                        <Button onClick={openSearchModal} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                     </Flex>
                 </Footer>
             </Content>
+            {isModalVisible ? (
+                <Content className={styles.modalBackground}>
+                    <Card
+                        onClick={handleStopClose}
+                        classNames={{ body: styles.ReviewsBodyCustom, header: styles.ReviewsHeaderCustom }}
+                        className={styles.ReviewsCardCustom}
+                        cover={
+                            <Flex>
+                                <Title style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#7B7B7B' }}>Отзыв</Title>
+                                <TextArea placeholder='Отзыв...' rows={4} variant='filled' />
+                            </Flex>
+                        }
+                        extra={<RateDetail />}
+                    >
+                        <Flex justify={'end'}>
+                            <Button className={styles.ReviewsButtonCustom} appearance='yellow'>Оставить отзыв</Button>
+                        </Flex>
+                    </Card>
+                </Content>
+            ) : null}
+
         </Flex>
     );
 }

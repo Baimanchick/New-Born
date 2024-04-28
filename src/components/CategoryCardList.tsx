@@ -4,6 +4,7 @@ import { fetchCategory } from "../store/features/category/categorySlice";
 import { CategoryType } from "./CategoryCard/CategoryCard.props";
 import CategoryCard from "./CategoryCard/CategoryCard";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { useNavigate } from "react-router-dom";
 
 function CategoryCardList() {
   const dispatch = useAppDispatch();

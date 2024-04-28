@@ -3,25 +3,27 @@ import styles from "../styles/card.module.scss";
 import { Typography } from "antd";
 import { Button } from "./Button/Button";
 import { useEffect } from "react";
-import { fetchProducts } from "../store/features/products/productSlice";
 import { Product } from "../helpers/interfaces/product.interface";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { fetchNewProducts } from "../store/features/products/productSlice";
+import { default_filters } from "../utils/consts";
+
 
 const { Title } = Typography;
 
 function NewProductsList() {
-  // TODO это на время пока не точно
   const dispatch = useAppDispatch();
-  const products = useAppSelector((states) => states.products.products);
+  const products = useAppSelector((state) => state.products.products);
 
   useEffect(() => {
     dispatch(
-      fetchProducts({
+      fetchNewProducts({
+        ...default_filters,
         limit: 16,
-        offset: 1,
       })
     );
   }, [dispatch]);
+
   return (
     <div className={styles.newProducts_main}>
       <div className={styles.newProducts_container}>

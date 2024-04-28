@@ -72,7 +72,7 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         </Flex>
       }
-      cover={<img src={product.default_image} alt={product.name} />}
+      cover={<img style={{ width: '100%', height: 'auto' }} src={product.default_image} alt={product.name} />}
       actions={[
         !isClicked ? (
           <Button onClick={handleBuyClick} appearance={"blue"} block>

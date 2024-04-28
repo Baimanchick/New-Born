@@ -14,18 +14,14 @@ function DetailPage() {
     const dispatch = useAppDispatch();
     const product = useAppSelector((state) => state.oneProduct.product);
     const numberId = Number(id)
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         dispatch(fetchOneProducts(numberId))
-            .then(() => setLoading(false))
-            .catch(() => setLoading(false));
     }, [dispatch, id]);
 
     if (!product) {
         return <Loading />
     }
-
 
     return (
         <div className='container'>
