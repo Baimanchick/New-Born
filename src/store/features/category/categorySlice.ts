@@ -23,7 +23,7 @@ export const fetchCategory = createAsyncThunk<unknown, void>(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await $axios.get(`${API_URL}/categories/`);
-      const data: CategoryI = { category: response.data.results };
+      const data: CategoryI = { category: response.data };
       dispatch(categoryCardlSlice.actions.setCategoryCard(data));
     } catch (error) {
       if (error instanceof AxiosError) {
