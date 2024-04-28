@@ -5,5 +5,5 @@ export interface BrandI {
 export type BrandType = {
     id? : number;
     name: string
-    images: string;
+    image: string;
 }

@@ -11,7 +11,7 @@ function CategoryCard({ category }: any) {
         <Card onClick={() => navigate('/filter')} classNames={{ body: styles.categoryCardAntBody, }} className={styles.categoryCardAnt}>
             <Flex style={{ flexDirection: 'column', rowGap: '5px' }}>
                 <img style={{ width: '120px', height: '120px', objectFit: 'contain' }} src={category.image} alt={category.name} />
-                <Title style={{ margin: '0px', fontSize: '22px', fontWeight: '1000' }}>{truncateTextAfterWords(category.name, 4)}</Title>
+                <Title style={{ margin: '0px', fontSize: '18px', fontWeight: '1000' }}>{truncateTextAfterWords(category.name, 2)}</Title>
             </Flex>
         </Card>
     );

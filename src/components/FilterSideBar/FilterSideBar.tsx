@@ -37,7 +37,7 @@ function FilterSideBar() {
         style={{
           display: "flex",
           gap: "20px",
-          maxWidth: "1700px",
+          maxWidth: "1420px",
           margin: "40px auto",
         }}
       >
