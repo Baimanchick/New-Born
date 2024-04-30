@@ -2,46 +2,51 @@ import { AutoComplete, Input, SelectProps } from 'antd';
 import { SearchModalProps } from './Navbar.props';
 import styles from "./navbar.module.scss";
 import "../../styles/antd.scss";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Product } from '../../helpers/interfaces/product.interface';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { fetchProducts } from '../../store/features/products/productSlice';
+import { useNavigate } from 'react-router-dom';
 
-const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const searchResult = (query: string) =>
-    new Array(getRandomInt(5))
-        .join('.')
-        .split('.')
-        .map((_, idx) => {
-            const category = `${query}${idx}`;
-            return {
-                value: category,
-                label: (
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <span>
-                            Found {query} on{' '}
-                            <a
-                                href={`https://s.taobao.com/search?q=${query}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {category}
-                            </a>
-                        </span>
-                        <span>{getRandomInt(200, 100)} results</span>
-                    </div>
-                ),
-            };
-        });
+const searchResult = (products: Product[], query: string, navigate: any) =>
+    products
+        .filter(product => product.name.toLowerCase().includes(query.toLowerCase()))
+        .map(product => ({
+            value: product.name,
+            label: (
+                <div
+                    key={product.id}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <span style={{ cursor: 'pointer' }} onClick={() => navigate(`/detail/${product.id}`)}>
+                        {product.name}
+                    </span>
+                </div>
+            ),
+        }));
 
 function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
     const [options, setOptions] = useState<SelectProps<object>['options']>([]);
+    const dispatch = useAppDispatch()
+    const products = useAppSelector((state) => state.products.products)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        dispatch(fetchProducts({
+            limit: 16,
+            offset: 0,
+        }))
+    }, [dispatch])
 
     const handleSearchAntd = (value: string) => {
-        setOptions(value ? searchResult(value) : []);
+        if (value.trim() !== '') {
+            setOptions(searchResult(products, value.trim(), navigate));
+        } else {
+            setOptions([]);
+        }
     };
 
     const onSelect = (value: string) => {
