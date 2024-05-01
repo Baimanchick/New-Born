@@ -15,6 +15,9 @@ function BrandCardList() {
   useEffect(() => {
     dispatch(fetchBrand());
   }, [dispatch]);
+  if (!brand || !brand?.length) {
+    return <div> no content</div>;
+  }
 
   return (
     <div className={styles.brandCard_main}>

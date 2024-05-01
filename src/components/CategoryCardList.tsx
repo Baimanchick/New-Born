@@ -13,6 +13,9 @@ function CategoryCardList() {
   useEffect(() => {
     dispatch(fetchCategory());
   }, [dispatch]);
+  if (!category || !category?.length) {
+    return <div> no content</div>;
+  }
   return (
     <div className={styles.categoryCard_main}>
       <div className={styles.categoryCard_container}>
