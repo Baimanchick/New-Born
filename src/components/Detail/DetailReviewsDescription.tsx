@@ -3,7 +3,7 @@ import { Card, Flex, Input, Layout, Menu, Typography } from 'antd';
 import styles from "./detail.module.scss";
 import { formatDate, truncateTextAfterWords } from '../../helpers/functions/helperFunctions';
 import { ReactComponent as Star } from '../../assets/svgs/card/star.svg';
-import { Review } from '../../helpers/interfaces/reviews.interface';
+import { ReviewType } from '../../helpers/interfaces/reviews.interface';
 import { Button } from '../Button/Button';
 import RateDetail from '../Rate/Rate';
 const { Content, Header, Footer } = Layout;
@@ -67,7 +67,7 @@ function DetailReviewsDescription({ product }: any) {
                     <Menu mode="horizontal" defaultSelectedKeys={['2']} items={item2} className={styles.CustomRewDesMenu} />
                 </Header>
                 <Flex style={{ flexDirection: 'column', rowGap: '15px', marginTop: '20px', marginBottom: '10vh' }}>
-                    {product.reviews.map((reviews: Review, index: number) => (
+                    {product.reviews.map((reviews: ReviewType, index: number) => (
                         <Flex key={index} style={{ flexDirection: 'column', rowGap: '10px' }}>
                             <Flex align={'center'} justify={'space-between'}>
                                 <Flex align={'center'} gap={8}>
