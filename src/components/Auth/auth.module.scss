@@ -1,0 +1,21 @@
+.form{
+  height: 630px;
+  width: calc(100vw - 50%);
+  max-width: 700px;
+  background-color: white;
+  border-radius: 20px;
+  margin: 0 auto;
+  padding: 40px;
+  flex-direction: column;
+}
+
+@media (max-width: 950px) {
+  .form {
+    height: 590px;
+    margin-top: 50px;
+    width: calc(100vw - 20%);
+  }
+  .form_title{
+    font-size: 30px !important;
+  }
+}

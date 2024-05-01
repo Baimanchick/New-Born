@@ -9,6 +9,8 @@ import {
   Input,
   Button,
   Space,
+  Radio,
+  RadioChangeEvent,
 } from "antd";
 import type { GetProp } from "antd";
 import { SearchProps } from "antd/lib/input";
@@ -57,9 +59,14 @@ const searchResult = (query: string) =>
 const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
   console.log(info?.source, value);
 function Delivery() {
+  const [value, setValue] = useState(1);
   const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
   const handleSearch = (value: string) => {
     setOptions(value ? searchResult(value) : []);
+  };
+  const onChange = (e: RadioChangeEvent) => {
+    console.log("radio checked", e.target.value);
+    setValue(e.target.value);
   };
 
   const onSelect = (value: string) => {
@@ -68,22 +75,22 @@ function Delivery() {
 
   return (
     <Flex vertical={true}>
-      <Checkbox.Group style={{ width: "100%" }} onChange={onChange}>
+      <Radio.Group onChange={onChange} value={value}>
         <Row justify={"center"}>
           <Col span={4}>
-            <Checkbox value="Доставка">Доставка до дома</Checkbox>
+            <Radio value={1}>Доставка до дома</Radio>
           </Col>
           <Col span={4}>
-            <Checkbox value="Самовывоз">Самовывоз</Checkbox>
+            <Radio value={2}>Самовывоз</Radio>
           </Col>
         </Row>
-      </Checkbox.Group>
-      <Flex style={{ width: "100%" }} align={"center"} gap={10}>
+      </Radio.Group>
+      <Flex style={{ width: "100%", marginTop: "20px" }} gap={10}>
         <AutoComplete
           popupMatchSelectWidth={true}
-          style={{ width: "100%" }}
           options={options}
           onSelect={onSelect}
+          style={{ width: "100%" }}
           onSearch={handleSearch}
           size="large"
         >
@@ -91,7 +98,8 @@ function Delivery() {
             width={"100%"}
             height={"60px"}
             size="large"
-            placeholder=""
+            bordered={false}
+            placeholder="how"
             style={{
               backgroundColor: "#F8F8F8",
               borderRadius: 10,
@@ -106,6 +114,10 @@ function Delivery() {
         >
           Продолжить
         </Button>
+      </Flex>
+
+      <Flex style={{ maxHeight: "200px" }} justify={"center"}>
+        cart
       </Flex>
     </Flex>
   );
