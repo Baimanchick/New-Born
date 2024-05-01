@@ -4,7 +4,7 @@
 
     .categoryCard_container {
         display: flex;
-        max-width: 1700px;
+        max-width: 1420px;
         margin: 0 auto;
 
         @media only screen and (max-width: 640px) {
@@ -17,11 +17,11 @@
         }
 
         justify-content: space-between;
-        row-gap: 15px;
+        gap: 15px;
 
         .categoryCardAnt {
-            width: 220px;
-            height: 220px;
+            width: 100%;
+            height: auto;
 
             @media screen and (max-width: 660px) {
                 height: 190px;
@@ -57,7 +57,7 @@
         display: flex;
         gap: 15px;
         justify-content: space-between;
-        max-width: 1700px;
+        max-width: 1420px;
         margin: 0 auto;
 
 
@@ -97,20 +97,21 @@
 //! BrandCard
 
 .brandCard {
-    width: 220px;
+    width: 180px;
 
     @media screen and (max-width: 530px) {
         width: 145px;
         height: 85px;
     }
 
-    height: 130px;
+    height: auto;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    cursor: pointer;
 
     img {
         width: 100%;
@@ -128,7 +129,7 @@
 
 
     .brandCard_container {
-        max-width: 1700px;
+        max-width: 1420px;
         margin: 15px auto;
     }
 }
@@ -139,7 +140,7 @@
     margin-top: 40px;
 
     .newProducts_container {
-        max-width: 1700px;
+        max-width: 1420px;
         margin: 0 auto;
 
         .newProducts_section__title {
@@ -195,7 +196,7 @@
     margin-top: 40px;
 
     .popularProducts_container {
-        max-width: 1700px;
+        max-width: 1420px;
         margin: 0 auto;
 
         .popularProducts_section__title {

@@ -9,49 +9,52 @@ import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { fetchProducts, searchProducts } from '../../store/features/products/productSlice';
+import { Product } from '../../helpers/interfaces/product.interface';
 
-const getRandomInt = (max: number, min = 0) => Math.floor(Math.random() * (max - min + 1)) + min;
+const searchResult = (products: Product[], query: string, navigate: any) =>
+    products
+        .filter(product => product.name.toLowerCase().includes(query.toLowerCase()))
+        .map(product => ({
+            value: product.name,
+            label: (
+                <div
+                    key={product.id}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <span style={{ cursor: 'pointer' }} onClick={() => navigate(`/detail/${product.id}`)}>
+                        {product.name}
+                    </span>
+                </div>
+            ),
+        }));
 
-const searchResult = (query: string) =>
-    new Array(getRandomInt(5))
-        .join('.')
-        .split('.')
-        .map((_, idx) => {
-            const category = `${query}${idx}`;
-            return {
-                value: category,
-                label: (
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <span>
-                            Found {query} on{' '}
-                            <a
-                                href={`https://s.taobao.com/search?q=${query}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {category}
-                            </a>
-                        </span>
-                        <span>{getRandomInt(200, 100)} results</span>
-                    </div>
-                ),
-            };
-        });
 
 function NavbarMenu({ menuItems }: NavbarMenuProps) {
     const navigate = useNavigate();
     const isOnFilterPage = window.location.pathname === '/filter';
     const [options, setOptions] = useState<SelectProps<object>['options']>([]);
     const [activeMenuItem, setActiveMenuItem] = useState<string>('');
+    const dispatch = useAppDispatch()
+    const products = useAppSelector((state) => state.products.products)
 
+    useEffect(() => {
+        dispatch(fetchProducts({
+            limit: 16,
+            offset: 0,
+        }))
+    }, [dispatch])
 
     const handleSearch = (value: string) => {
-        setOptions(value ? searchResult(value) : []);
+        if (value.trim() !== '') {
+            setOptions(searchResult(products, value.trim(), navigate));
+        } else {
+            setOptions([]);
+        }
     };
 
     const onSelect = (value: string) => {

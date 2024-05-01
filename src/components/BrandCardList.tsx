@@ -5,6 +5,7 @@ import { Flex, Typography } from "antd";
 import { fetchBrand } from "../store/features/brand/brandSlice";
 import { BrandType } from "./BrandCard/BrandCard.props";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import Loading from "./Loader/Loading";
 
 const { Title } = Typography;
 
@@ -40,6 +41,7 @@ function BrandCardList() {
           {brand.map((brand: BrandType, index: number) => (
             <BrandCard key={index} brand={brand} />
           ))}
+
         </Flex>
       </div>
     </div>
