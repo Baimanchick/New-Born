@@ -1,4 +1,8 @@
-export interface Review {
+export interface ReviewsI {
+  reviews: ReviewType[]
+}
+
+export interface ReviewType {
     id?: number;
     user_name:string;
     text: string;
@@ -6,4 +10,4 @@ export interface Review {
     created_at: string;
     user: number;
     product: number
-  }
+}
