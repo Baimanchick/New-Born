@@ -1,18 +1,23 @@
 .bodyCustomCard {
-    padding: 1px !important;
+    padding: 0px !important;
     width: 100% !important;
-    height: auto !important;
+    height: 100% !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
     border: none !important;
     background-color: #F8F8F8 !important;
     cursor: pointer !important;
+
+    @media screen and (max-width: 750px) {
+        width: 100px !important;
+    }
 }
 
 .selectedImage {
     object-fit: contain !important;
     padding: 5px !important;
+
 }
 
 .showMore {
@@ -43,6 +48,11 @@
     border-radius: 10px !important;
     width: 100% !important;
     padding: 15px 40px 15px 40px !important;
+
+    @media screen and (max-width: 725px) {
+        padding: 5px 20px 5px 20px !important;
+    }
+
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
@@ -66,6 +76,7 @@
 .ReviewsCardCustom {
     width: 700px;
     height: 50vh;
+    margin: 0px 20px 0px 20px;
     padding: 24px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -88,5 +99,91 @@
     height: 50px;
     width: 200px;
     border-radius: 10px;
-    // border: none;
+}
+
+.CustomFlexInfoBlock {
+    padding: 20px !important;
+    background-color: #ECF5FF !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    height: 40px !important;
+    align-items: center !important;
+
+    @media screen and (max-width:900px) {
+        padding: 0px 5px 0px 5px !important;
+    }
+
+    @media screen and (max-width: 790px) {
+        padding: 15px !important;
+    }
+}
+
+.CustomButtonInfoBlock {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+
+    @media screen and (max-width:870px) {
+        font-size: 12px !important;
+        width: 120px !important;
+    }
+
+    @media screen and (max-width: 790px) {
+        width: 160px !important;
+    }
+}
+
+.CustomButtonCart {
+    font-size: 18px !important;
+    font-weight: 1000 !important;
+    width: 320px !important;
+    height: 60px !important;
+    border-radius: 80px !important;
+
+    @media screen and (max-width: 870px) {
+        width: 100% !important;
+    }
+}
+
+.CustomUtilsFlex {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    gap: 10px !important;
+
+    @media screen and (max-width: 790px) {
+        gap: 10px !important;
+        flex-wrap: wrap;
+    }
+}
+
+.CustomFlexCard {
+    margin-top: 15px;
+
+    @media screen and (max-width: 750px) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.detail_carousel__button {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    padding: 0px 40px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+    }
 }

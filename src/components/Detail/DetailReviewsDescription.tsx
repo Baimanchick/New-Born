@@ -7,7 +7,8 @@ import { ReviewType } from '../../helpers/interfaces/reviews.interface';
 import { Button } from '../Button/Button';
 import RateDetail from '../Rate/Rate';
 import { useAppSelector } from '../../hooks/hooks';
-import { useNavigate } from 'react-router-dom';
+import useWindowSize from '../../hooks/useWindowSize';
+import { CloseOutlined } from '@ant-design/icons';
 const { Content, Header, Footer } = Layout;
 const { Paragraph, Title } = Typography;
 const { TextArea } = Input
@@ -32,6 +33,10 @@ function DetailReviewsDescription({ product }: any) {
     const [text, setText] = useState(initialText);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const isAuth = useAppSelector((store) => store.auth.user !== null);
+    const windowSize = useWindowSize();
+    const isTablet = windowSize.width && windowSize.width < 870;
+    const isMobile = windowSize.width && windowSize.width < 660;
+
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -62,14 +67,14 @@ function DetailReviewsDescription({ product }: any) {
     };
 
     return (
-        <Flex onClick={closeSearchModal} justify={'space-between'} gap={15}>
+        <Flex onClick={closeSearchModal} style={{ flexDirection: `${isMobile ? 'column' : 'initial'}` }} justify={'space-between'} gap={15}>
             <Content style={{ width: '100%', backgroundColor: '#fff', padding: '20px', borderRadius: '20px', position: 'relative' }}>
                 <Header style={{ background: '#fff', padding: '0px' }}>
                     <Menu mode="horizontal" defaultSelectedKeys={['1']} items={item1} className={styles.CustomRewDesMenu} />
                 </Header>
                 <Title style={{ fontSize: '32px', color: '#1B81E7', fontWeight: '1000', marginTop: '20px' }}>О товаре</Title>
-                <Paragraph style={{ fontSize: '16px', fontWeight: '600', color: '#000', marginBottom: '10vh' }}>
-                    {isExpanded ? <div dangerouslySetInnerHTML={{ __html: text }} /> : truncateTextAfterWords(text, 100)}
+                <Paragraph style={{ fontSize: `${isTablet ? '12px' : '16px'}`, fontWeight: '600', color: '#000', marginBottom: '10vh' }}>
+                    {isTablet ? isExpanded ? <div dangerouslySetInnerHTML={{ __html: text }} /> : truncateTextAfterWords(text, 40) : isExpanded ? <div dangerouslySetInnerHTML={{ __html: text }} /> : truncateTextAfterWords(text, 100)}
                 </Paragraph>
                 <Footer className={styles.CustomFooterFirst}>
                     <Flex>
@@ -86,15 +91,15 @@ function DetailReviewsDescription({ product }: any) {
                         <Flex key={index} style={{ flexDirection: 'column', rowGap: '10px' }}>
                             <Flex align={'center'} justify={'space-between'}>
                                 <Flex align={'center'} gap={8}>
-                                    <Title style={{ fontSize: '18px', margin: '0px', fontWeight: '1000', color: '#4B4E51' }}>{reviews.user_name}</Title>
+                                    <Title style={{ fontSize: `${isTablet ? '12px' : '18px'}`, margin: '0px', fontWeight: '1000', color: '#4B4E51' }}>{reviews.user_name}</Title>
                                     <Star />
-                                    <Title style={{ fontSize: '16px', margin: '0px', fontWeight: '600', color: '#1B81E7' }}>{reviews.rating}</Title>
+                                    <Title style={{ fontSize: `${isTablet ? '12px' : '16px'}`, margin: '0px', fontWeight: '600', color: '#1B81E7' }}>{reviews.rating}</Title>
                                 </Flex>
                                 <Flex>
-                                    <Title style={{ color: '#7B7B7B', fontSize: '16px', fontWeight: '400' }}>{formatDate(reviews.created_at)}</Title>
+                                    <Title style={{ margin: 0, color: '#7B7B7B', fontSize: `${isTablet ? '12px' : '16px'}`, fontWeight: '400' }}>{formatDate(reviews.created_at)}</Title>
                                 </Flex>
                             </Flex>
-                            <Paragraph style={{ fontWeight: '600', fontSize: '16px', color: '#2A2A2A' }}>
+                            <Paragraph style={{ fontWeight: '600', fontSize: `${isTablet ? '12px' : '16px'}`, color: '#2A2A2A' }}>
                                 {reviews.text}
                             </Paragraph>
                         </Flex>
@@ -106,7 +111,6 @@ function DetailReviewsDescription({ product }: any) {
                     </Flex>
                     <Flex onClick={handleStopClose}>
                         <Button onClick={isAuth ? openSearchModal : () => alert("Пожалуйста зарегистрируйтесь")} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
-                        <Button onClick={openSearchModal} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                     </Flex>
                 </Footer>
             </Content>
@@ -125,7 +129,7 @@ function DetailReviewsDescription({ product }: any) {
                         extra={<RateDetail />}
                     >
                         <Flex justify={'end'}>
-                            <Button className={styles.ReviewsButtonCustom} appearance='yellow'>Оставить отзыв</Button>
+                            <Button onClick={closeSearchModal} className={styles.ReviewsButtonCustom} appearance='yellow'>Оставить отзыв</Button>
                         </Flex>
                     </Card>
                 </Content>
