@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Flex, Input, Layout, Menu, Typography } from 'antd';
 import styles from "./detail.module.scss";
 import { formatDate, truncateTextAfterWords } from '../../helpers/functions/helperFunctions';
@@ -6,6 +6,8 @@ import { ReactComponent as Star } from '../../assets/svgs/card/star.svg';
 import { ReviewType } from '../../helpers/interfaces/reviews.interface';
 import { Button } from '../Button/Button';
 import RateDetail from '../Rate/Rate';
+import { useAppSelector } from '../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
 const { Content, Header, Footer } = Layout;
 const { Paragraph, Title } = Typography;
 const { TextArea } = Input
@@ -29,6 +31,19 @@ function DetailReviewsDescription({ product }: any) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [text, setText] = useState(initialText);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const isAuth = useAppSelector((store) => store.auth.user !== null);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.keyCode === 27) {
+                closeSearchModal();
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
@@ -90,6 +105,7 @@ function DetailReviewsDescription({ product }: any) {
                         <Title style={{ color: '#1B81E7', fontSize: '14px', fontWeight: '700', cursor: 'pointer', margin: 0 }}>Большe...</Title>
                     </Flex>
                     <Flex onClick={handleStopClose}>
+                        <Button onClick={isAuth ? openSearchModal : () => alert("Пожалуйста зарегистрируйтесь")} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                         <Button onClick={openSearchModal} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                     </Flex>
                 </Footer>
