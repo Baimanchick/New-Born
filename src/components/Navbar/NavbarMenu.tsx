@@ -27,7 +27,7 @@ const searchResult = (products: Product[], query: string, navigate: any) =>
                     }}
                 >
                     <span style={{ cursor: 'pointer' }} onClick={() => navigate(`/detail/${product.id}`)}>
-                        {product.name}
+                        <strong>Найдено:</strong> {product.name}
                     </span>
                 </div>
             ),
