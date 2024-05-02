@@ -25,7 +25,7 @@ function DetailCarousel({ product }: any) {
                     />
 
                 </Flex>
-                <Flex style={{ marginTop: '15px' }} gap={15}>
+                <Flex className={styles.CustomFlexCard} gap={15}>
                     {product.product_images.map((productImage: string, index: number) => (
                         <Card
                             classNames={{ body: styles.bodyCustomCard }}

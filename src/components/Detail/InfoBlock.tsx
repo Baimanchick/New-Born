@@ -18,8 +18,6 @@ function InfoBlock({ product }: any) {
     const windowSize = useWindowSize();
     const isTablet = windowSize.width && windowSize.width < 990;
 
-
-
     return (
         <Content style={{ width: '100%', backgroundColor: '#fff', borderRadius: '20px', padding: '20px' }}>
             <Flex style={{ flexDirection: 'column', rowGap: '10px' }}>
@@ -40,15 +38,8 @@ function InfoBlock({ product }: any) {
                 >
                     {truncateTextAfterWords(text, 12)}
                 </Paragraph>
-                <Flex style={{ marginTop: '15px', marginBottom: '15px' }} gap={10} >
+                <Flex className={styles.CustomUtilsFlex} >
                     <Flex
-                        style={{
-                            backgroundColor: '#ECF5FF',
-                            borderRadius: '10px',
-                            cursor: 'pointer',
-                            height: '40px'
-                        }}
-                        align={'center'}
                         gap={4}
                         className={styles.CustomFlexInfoBlock}
                     >
@@ -56,13 +47,6 @@ function InfoBlock({ product }: any) {
                         {product.rating}
                     </Flex>
                     <Flex
-                        style={{
-                            backgroundColor: '#ECF5FF',
-                            borderRadius: '10px',
-                            cursor: 'pointer',
-                            height: '40px'
-                        }}
-                        align={'center'}
                         justify={'center'}
                         className={styles.CustomFlexInfoBlock}
                     >
@@ -70,11 +54,7 @@ function InfoBlock({ product }: any) {
                     </Flex>
                     <Button
                         appearance='lightBlue'
-                        style={{
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            height: '40px'
-                        }}
+                        className={styles.CustomButtonInfoBlock}
                     >
                         <HeartOutlined />
                         В избранное
@@ -104,7 +84,9 @@ function InfoBlock({ product }: any) {
                         width: '320px',
                         height: '60px',
                         borderRadius: '80px'
-                    }} appearance='yellow'
+                    }}
+                    appearance='yellow'
+                    className={styles.CustomButtonCart}
                 >
                     В корзину
                 </Button>
