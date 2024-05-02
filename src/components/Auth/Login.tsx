@@ -12,14 +12,15 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import styles from "./auth.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/hooks";
-import { checkToken, login, userMe } from "../../store/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { login, LoginUser, userMe } from "../../store/features/auth/authSlice";
 import { Button } from "../Button/Button";
 function Login({}) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState<Error | null>(null);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -29,9 +30,14 @@ function Login({}) {
     setClientReady(true);
   }, []);
 
-  const onFinish = async (values: any) => {
-    await dispatch(login(values));
-    await dispatch(userMe()).then(() => navigate("/"));
+  const onFinish = async (values: LoginUser) => {
+    await dispatch(login(values))
+      .unwrap()
+      .then(() => {
+        userMe();
+        navigate("/");
+      })
+      .catch((error) => setError(error));
   };
   return (
     <Flex justify={"flex-end"} align={"center"} className={styles.form}>
@@ -78,6 +84,7 @@ function Login({}) {
             placeholder="Password"
           />
         </Form.Item>
+        {error && <span>{error.message}</span>}
 
         <Form.Item shouldUpdate style={{ marginTop: "170px", marginBottom: 0 }}>
           {() => (

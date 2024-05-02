@@ -5,14 +5,19 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import styles from "./auth.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../../store/features/auth/authSlice";
-import { useAppDispatch } from "../../hooks/hooks";
+import {
+  register,
+  RegisterUser,
+  userMe,
+} from "../../store/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Button } from "../Button/Button";
 function Register({}) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [error, setError] = useState<Error | null>(null);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -22,9 +27,14 @@ function Register({}) {
     setClientReady(true);
   }, []);
 
-  const onFinish = (values: any) => {
-    dispatch(register(values));
-    console.log("Received values of form: ", values);
+  const onFinish = async (values: RegisterUser) => {
+    await dispatch(register(values))
+      .unwrap()
+      .then(() => {
+        userMe();
+        navigate("/");
+      })
+      .catch((error) => setError(error));
   };
   return (
     <Flex justify={"flex-end"} align={"center"} className={styles.form}>
@@ -88,6 +98,7 @@ function Register({}) {
         <Form.Item style={{ marginBottom: 0 }}>
           <Link to={"/auth"}>Уже есть аккаунт?</Link>
         </Form.Item>
+        {error && <span>{error.message}</span>}
 
         <Form.Item shouldUpdate style={{ marginTop: 60, marginBottom: 0 }}>
           {() => (
