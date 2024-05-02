@@ -1,7 +1,7 @@
 .bodyCustomCard {
-    padding: 5px !important;
-    width: 100px !important;
-    height: 74px !important;
+    padding: 1px !important;
+    width: 100% !important;
+    height: auto !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
@@ -11,7 +11,8 @@
 }
 
 .selectedImage {
-    padding: 3px !important;
+    object-fit: contain !important;
+    padding: 5px !important;
 }
 
 .showMore {
