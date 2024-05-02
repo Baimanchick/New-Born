@@ -4,8 +4,8 @@ import { API_URL } from "../../../utils/consts";
 import { AxiosError } from "axios";
 import { RootState } from "../../store";
 
-type LoginUser = Pick<User, "email"> & { password: string };
-type RegisterUser = Pick<User, "email" | "name"> & { password: string };
+export type LoginUser = Pick<User, "email"> & { password: string };
+export type RegisterUser = Pick<User, "email" | "name"> & { password: string };
 
 interface User {
   id: number;
@@ -20,12 +20,14 @@ interface Tokens {
 interface AuthState {
   user: User | null;
   tokens: Tokens | null;
+  isValidToken: boolean;
   error: ErrorMessage;
 }
 
 const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem("user") || "{}") || null,
-  tokens: JSON.parse(localStorage.getItem("tokens") || "{}") || null,
+  user: JSON.parse(localStorage.getItem("user") || "null"),
+  tokens: JSON.parse(localStorage.getItem("tokens") || "null"),
+  isValidToken: true,
   error: null,
 };
 
@@ -48,6 +50,10 @@ const authSlice = createSlice({
       localStorage.removeItem("user");
       state.tokens = null;
       state.user = null;
+    },
+
+    setIsValidToken(state: AuthState, action: PayloadAction<boolean>) {
+      state.isValidToken = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -72,9 +78,8 @@ export const login = createAsyncThunk<unknown, LoginUser>(
 
       dispatch(authSlice.actions.setTokens(tokens));
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response!.data.message);
-      }
+      const err = error as AxiosError;
+      return rejectWithValue(err.response);
     }
   }
 );
@@ -86,9 +91,8 @@ export const register = createAsyncThunk<unknown, RegisterUser>(
       const { data: tokens } = await $axios.post(`${API_URL}/users/`, data);
       dispatch(authSlice.actions.setTokens(tokens));
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response!.data.message);
-      }
+      const err = error as AxiosError;
+      return rejectWithValue(err.response);
     }
   }
 );
@@ -103,6 +107,11 @@ export const checkToken = createAsyncThunk<unknown, void>(
       const { data } = await $axios.post(`${API_URL}/login/jwt/verify/`, {
         token,
       });
+      if (Object.keys(data).length == 0) {
+        dispatch(authSlice.actions.setIsValidToken(true));
+      } else {
+        dispatch(authSlice.actions.setIsValidToken(false));
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -121,6 +130,11 @@ export const refreshToken = createAsyncThunk<unknown, void>(
       const { data } = await $axios.post(`${API_URL}/login/jwt/refresh/`, {
         refresh,
       });
+      console.log("data", data);
+      console.log("state.auth.isValidToken", state.auth.isValidToken);
+      if (!state.auth.isValidToken) {
+        authSlice.actions.setTokens(data);
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -148,5 +162,5 @@ export const userMe = createAsyncThunk<unknown, void>(
   }
 );
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setLogout } = authSlice.actions;
 export default authSlice.reducer;
