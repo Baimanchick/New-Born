@@ -1,4 +1,4 @@
-import { Carousel, Image, Layout } from 'antd'
+import { Carousel, Flex, Image, Layout } from 'antd'
 import { CarouselRef } from 'antd/es/carousel';
 import { useRef } from 'react';
 import { API_URL } from '../../utils/consts';
@@ -26,12 +26,13 @@ function DetailCarouselMobile({ product }: any) {
             >
                 {product.product_images.map(
                     (productImage: string, index: number) => (
-                        <>
+                        <Flex key={index}>
                             <Image
                                 preview={false}
                                 src={`${API_URL}${productImage}`}
+
                             />
-                        </>
+                        </Flex>
                     )
                 )}
             </Carousel>

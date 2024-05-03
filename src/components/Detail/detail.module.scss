@@ -75,7 +75,7 @@
 
 .ReviewsCardCustom {
     width: 700px;
-    height: 50vh;
+    height: auto;
     margin: 0px 20px 0px 20px;
     padding: 24px !important;
     display: flex !important;
@@ -91,7 +91,10 @@
     height: initial !important;
 
     div {
-        display: initial !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
     }
 }
 
@@ -99,6 +102,10 @@
     height: 50px;
     width: 200px;
     border-radius: 10px;
+
+    @media screen and (max-width: 660px) {
+        width: 100%;
+    }
 }
 
 .CustomFlexInfoBlock {
