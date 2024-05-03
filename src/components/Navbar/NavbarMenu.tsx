@@ -19,7 +19,6 @@ import styles from "./navbar.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   fetchProducts,
-  searchProducts,
 } from "../../store/features/products/productSlice";
 import { Product } from "../../helpers/interfaces/product.interface";
 
@@ -97,9 +96,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <ul className={styles.navbar_navigation}>
           {menuItems.map((item: MenuItem, index: number) => (
             <li
-              className={`${styles.menuItem} ${
-                item.label === activeMenuItem ? styles.active : ""
-              }`}
+              className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ""
+                }`}
               onClick={() => {
                 setActiveMenuItem(item.label);
                 navigate(item.link);
