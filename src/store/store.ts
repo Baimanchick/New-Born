@@ -7,6 +7,7 @@ import reviewsReducer from "./features/customer_reviews/customerReviewsSlice";
 import productsReducer from "./features/products/productSlice";
 import oneProductReducer from "./features/products/oneProductSlice";
 import authSlice from "./features/auth/authSlice";
+import favoritesReducer from "./features/favorite/favoriteSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     category: categoryReducer,
     ad: adReducer,
     brand: brandReducer,
+    favorites: favoritesReducer,
     auth: authSlice,
     customerReviews: reviewsReducer,
     products: productsReducer,

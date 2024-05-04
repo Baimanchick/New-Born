@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { login, LoginUser, userMe } from "../../store/features/auth/authSlice";
 import { Button } from "../Button/Button";
-function Login({}) {
+function Login({ }) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ function Login({}) {
     await dispatch(login(values))
       .unwrap()
       .then(() => {
-        userMe();
+        dispatch(userMe());
         navigate("/");
       })
       .catch((error) => setError(error));
