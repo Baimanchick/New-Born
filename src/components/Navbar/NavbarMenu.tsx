@@ -4,9 +4,7 @@ import {
   Button,
   Flex,
   Input,
-  Menu,
   SelectProps,
-  Typography,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
@@ -160,7 +158,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
           </Flex>
         </div>
         <div className={styles.icon}>
-          <img src={favourite} className={styles.icon__item} alt="Избранное" />
+          <img src={favourite} onClick={() => navigate('/favorite')} className={styles.icon__item} alt="Избранное" />
           <img
             src={cart}
             onClick={() => navigate("/cart")}

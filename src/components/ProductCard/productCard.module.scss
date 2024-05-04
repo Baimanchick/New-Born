@@ -63,3 +63,13 @@
   height: 200px;
   object-fit: cover;
 }
+
+.clickedHeartProduct {
+  color: red !important;
+  background-color: #fde6e6 !important;
+
+
+  &:hover {
+    color: red !important;
+  }
+}

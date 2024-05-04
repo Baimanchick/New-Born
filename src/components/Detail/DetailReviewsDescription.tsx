@@ -12,6 +12,8 @@ import { addReview } from '../../store/features/reviews/reviewsSlice';
 import { AppDispatch } from '../../store/store';
 import Loading from '../Loader/Loading';
 import { CloseOutlined } from '@ant-design/icons';
+import { useAppSelector } from '../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
 const { Content, Header, Footer } = Layout;
 const { Paragraph, Title } = Typography;
 const { TextArea } = Input
@@ -32,11 +34,13 @@ const item2 = [
 
 function DetailReviewsDescription({ product }: any) {
     const initialText = product.description;
+    const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(false);
     const [text, setText] = useState(initialText);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const windowSize = useWindowSize();
     const dispatch: AppDispatch = useDispatch();
+    const isAuth = useAppSelector((state) => state.auth.user !== null)
     const isTablet = windowSize.width && windowSize.width < 870;
     const isMobile = windowSize.width && windowSize.width < 660;
     const [reviewStar] = useState(0);
@@ -89,7 +93,10 @@ function DetailReviewsDescription({ product }: any) {
         }
     };
 
-
+    const handleNavigate = () => {
+        navigate('/auth')
+        alert('Вы не авторизованы')
+    }
 
     useEscapeKey(closeSearchModal);
 
@@ -113,7 +120,7 @@ function DetailReviewsDescription({ product }: any) {
                 <Header style={{ background: '#fff', padding: '0px' }}>
                     <Menu mode="horizontal" defaultSelectedKeys={['2']} items={item2} className={styles.CustomRewDesMenu} />
                 </Header>
-                <Flex style={{ flexDirection: 'column', rowGap: '15px', marginTop: '20px', overflowY: 'scroll', maxHeight: '220px', marginBottom: '8vh' }}>
+                <Flex style={{ flexDirection: 'column', rowGap: '15px', marginTop: '20px', overflowY: 'scroll', maxHeight: '320px', marginBottom: '10vh' }}>
                     {product.reviews.map((reviews: ReviewType, index: number) => (
                         <Flex key={index} style={{ flexDirection: 'column', rowGap: '10px' }}>
                             <Flex align={'center'} justify={'space-between'}>
@@ -137,7 +144,7 @@ function DetailReviewsDescription({ product }: any) {
                         <Title style={{ color: '#1B81E7', fontSize: '14px', fontWeight: '700', cursor: 'pointer', margin: 0 }}>Большe...</Title>
                     </Flex>
                     <Flex onClick={handleStopClose}>
-                        <Button onClick={openSearchModal} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
+                        <Button onClick={isAuth ? openSearchModal : handleNavigate} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                     </Flex>
                 </Footer>
             </Content>

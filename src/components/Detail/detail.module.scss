@@ -194,3 +194,19 @@
         border: none;
     }
 }
+
+.clickedHeart {
+    color: red !important;
+    border-color: red !important;
+    background-color: #fde6e6 !important;
+
+
+    &:hover {
+        color: red !important;
+        border-color: red !important;
+    }
+
+    svg {
+        color: red !important;
+    }
+}

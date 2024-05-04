@@ -8,6 +8,7 @@ const HomePage = lazy(() => import("../pages/HomePage"));
 const FilterPage = lazy(() => import("../pages/FilterPage"));
 const DetailPage = lazy(() => import("../pages/DetailPage"));
 const CartPage = lazy(() => import("../pages/CartPage"));
+const FavoritePage = lazy(() => import("../pages/FavoritePage"));
 const NotFoundedPage = lazy(() => import("../pages/NotFoundedPage"));
 
 function MainRoutes() {
@@ -19,6 +20,7 @@ function MainRoutes() {
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/favorite" element={<FavoritePage />} />
         <Route
           path="/auth"
           element={isAuth ? <Navigate to={"/"} /> : <Login />}
