@@ -5,7 +5,7 @@ import styles from "./carousel.module.scss";
 import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
 import arrowRight from "../../assets/svgs/carousel/arrowRight.svg";
 import { fetchCarousel } from "../../store/features/carousel/carouselSlice";
-import { CarouselType } from "./Carousel.props";
+import { CarouselType } from "../../helpers/interfaces/Carousel.props";
 import Loading from "../Loader/Loading";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 

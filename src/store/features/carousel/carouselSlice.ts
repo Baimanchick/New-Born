@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { CarouselI } from "../../../components/Carousel/Carousel.props";
+import { CarouselI } from "../../../helpers/interfaces/Carousel.props";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
 import { AxiosError } from "axios";

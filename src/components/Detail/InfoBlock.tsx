@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Flex, Layout, Typography } from 'antd';
 import { formatNumberAndAddCurrency, truncateTextAfterWords } from '../../helpers/functions/helperFunctions';
 import { ReactComponent as Star } from "../../assets/svgs/card/star.svg"
@@ -12,7 +12,7 @@ import { addFavorites } from '../../store/features/favorite/favoriteSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../Loader/Loading';
+import { addToCart } from '../../store/features/cart/cartSlice';
 
 
 const { Content } = Layout;
@@ -22,9 +22,7 @@ function InfoBlock({ product }: any) {
     const initialText = product.description;
     const navigate = useNavigate()
     const [text, setText] = useState(initialText);
-    const [favoriteLoaded, setFavoriteLoad] = useState(false);
     const isAuth = useAppSelector((store) => store.auth.user !== null);
-    const favorites = useAppSelector((state) => state.favorites.favorites);
     const windowSize = useWindowSize();
     const dispatch: AppDispatch = useDispatch();
     const isTablet = windowSize.width && windowSize.width < 990;
@@ -32,10 +30,14 @@ function InfoBlock({ product }: any) {
         const storedValue = localStorage.getItem('clickedHeart');
         return storedValue ? JSON.parse(storedValue) : false;
     });
+    const [addedTocart, setAddedToCart] = useState(() => {
+        const storedValueCart = localStorage.getItem('addedCart');
+        return storedValueCart ? JSON.parse(storedValueCart) : false;
+    });
+
 
     const handleClickFavorite = (product_id: number) => {
         if (isAuth) {
-            setFavoriteLoad(true);
             setClickedHeart((prevState: any) => !prevState);
             dispatch(addFavorites(product_id));
             localStorage.setItem('clickedHeart', JSON.stringify(!clickedHeart));
@@ -45,9 +47,16 @@ function InfoBlock({ product }: any) {
         }
     }
 
-    useEffect(() => {
-        setFavoriteLoad(false);
-    }, [favorites])
+    const handleAddToCart = (id: any) => {
+        if (isAuth) {
+            setAddedToCart((prevState: any) => !prevState);
+            dispatch(addToCart(id))
+            localStorage.setItem('addedCart', JSON.stringify(!addedTocart));
+        } else if (!isAuth) {
+            navigate("/auth");
+            alert('Вы не авторизованы');
+        }
+    }
 
     return (
         <Content style={{ width: '100%', backgroundColor: '#fff', borderRadius: '20px', padding: '20px' }}>
@@ -119,6 +128,7 @@ function InfoBlock({ product }: any) {
                     }}
                     appearance='yellow'
                     className={styles.CustomButtonCart}
+                    onClick={handleAddToCart}
                 >
                     В корзину
                 </Button>

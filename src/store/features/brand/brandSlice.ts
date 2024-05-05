@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
-import { BrandI } from "../../../components/BrandCard/BrandCard.props";
+import { BrandI } from "../../../helpers/interfaces/BrandCard.props";
 import { AxiosError } from "axios";
 
 const initialState: BrandI = {
