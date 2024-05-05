@@ -5,7 +5,7 @@ export interface Product {
   name: string;
   description: string;
   arrived: boolean;
-  price: string;
+  price: string | any;
   default_image: string;
   product_images: string[];
   weight: number;

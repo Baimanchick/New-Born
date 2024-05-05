@@ -1,10 +1,9 @@
-export interface CartI {
-  carts: Cart[];
-}
+import { Product } from "./product.interface";
 
 export interface Cart {
   id?: any;
   created_at: string;
   user: number;
-  product: any;
+  count: number;
+  product: Product;
 }

@@ -24,18 +24,12 @@ import { addFavorites } from "../../store/features/favorite/favoriteSlice";
 const { Title, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
+  const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
-  const [clickedHeart, setClickedHeart] = useState(() => {
-    const storedValue = localStorage.getItem('clickedHeart');
-    return storedValue ? JSON.parse(storedValue) : false;
-  });
   const isAuth = useAppSelector((store) => store.auth.user !== null);
   const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setClickedHeart(clickedHeart);
-  }, [clickedHeart]);
+  const favorites = useAppSelector((state) => state.favorites.favorites)
+  const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
 
   const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     const target = e.target as HTMLElement;
@@ -55,10 +49,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const handleClickFavorite = (product_id: number) => {
     if (isAuth) {
-      const newClickedHeart = !clickedHeart;
-      setClickedHeart(newClickedHeart);
       dispatch(addFavorites(product_id));
-      localStorage.setItem('clickedHeart', JSON.stringify(newClickedHeart));
     } else if (!isAuth) {
       navigate("/auth");
       alert('Вы не авторизованы');
@@ -92,8 +83,8 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </Flex>
           <ButtonAnt
-            className={`${styles.favButton} ${clickedHeart ? styles.clickedHeartProduct : styles}`}
-            icon={clickedHeart ? <FavFill /> : <Fav />}
+            className={`${styles.favButton} ${isProductInFavorites ? styles.clickedHeartProduct : styles}`}
+            icon={isProductInFavorites ? <FavFill /> : <Fav />}
             shape="circle"
             danger
             onClick={() => handleClickFavorite(product.id)}
@@ -116,7 +107,7 @@ export function ProductCard({ product }: ProductCardProps) {
           style={{ width: "100%" }}
         >
           <Title style={{ margin: 0 }} level={4}>
-            {formatNumberAndAddCurrency(product.price, "₽")}
+            {formatNumberAndAddCurrency(product.price, "сом")}
           </Title>
           <Flex align={"center"}>
             <Star />
