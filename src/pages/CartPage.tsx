@@ -59,7 +59,6 @@ function CartPage() {
     title: item.title,
     icon: item.icon,
   }));
-  console.log(current);
 
   const contentStyle: React.CSSProperties = {
     lineHeight: "260px",
@@ -71,7 +70,6 @@ function CartPage() {
     width: current == 2 ? "700px" : "auto",
     margin: current == 2 ? "0 auto" : "auto",
     height: current == 2 ? "650px" : "auto",
-    // border: `1px dashed ${token.colorBorder}`,
     marginTop: 16,
   };
 

@@ -3,7 +3,7 @@ import styles from "../styles/card.module.scss";
 import BrandCard from "./BrandCard/BrandCard";
 import { Flex, Typography } from "antd";
 import { fetchBrand } from "../store/features/brand/brandSlice";
-import { BrandType } from "./BrandCard/BrandCard.props";
+import { BrandType } from "../helpers/interfaces/BrandCard.props";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import Loading from "./Loader/Loading";
 

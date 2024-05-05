@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
-import { CategoryI } from "../../../components/CategoryCard/CategoryCard.props";
+import { CategoryI } from "../../../helpers/interfaces/CategoryCard.props";
 import { AxiosError } from "axios";
 
 const initialState: CategoryI = {

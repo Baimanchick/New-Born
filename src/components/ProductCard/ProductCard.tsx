@@ -7,7 +7,7 @@ import { ReactComponent as Fav } from "../../assets/svgs/card/heart.svg";
 import { ReactComponent as FavFill } from "../../assets/svgs/card/filHeart.svg";
 
 import { Button } from "../Button/Button";
-import { ProductCardProps } from "./ProductCard.props";
+import { ProductCardProps } from "../../helpers/interfaces/ProductCard.props";
 import {
   formatNumberAndAddCurrency,
   truncateTitle,
