@@ -7,7 +7,7 @@ import { CounterProps } from "./Counter.props";
 
 const { Text } = Typography
 
-export function Counter({ initialValue = 0, onIncrement, onDecrement, ...props }: CounterProps) {
+export function Counter({ initialValue, onIncrement, onDecrement, ...props }: CounterProps) {
     const [count, setCount] = useState(initialValue);
 
     const handleIncrement = () => {

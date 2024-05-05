@@ -2,10 +2,14 @@ import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
 import { AxiosError } from "axios";
-import { CartI } from "../../../helpers/interfaces/cart.interface";
 import { RootState } from "../../store";
+import { Cart } from "../../../helpers/interfaces/cart.interface";
 
-const initialState: CartI = {
+export interface CartState {
+  carts: Cart[];
+}
+
+const initialState: CartState = {
   carts: [],
 };
 
@@ -13,7 +17,7 @@ const cartSlice = createSlice({
   name: "carts",
   initialState,
   reducers: {
-    setCart: (state, action: PayloadAction<CartI>) => {
+    setCart: (state, action: PayloadAction<CartState>) => {
       state.carts = action.payload.carts;
     },
   },
@@ -24,7 +28,7 @@ export const fetchCarts = createAsyncThunk<unknown, void>(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await $axios.get(`${API_URL}/carts/`);
-      const data: CartI = { carts: response.data };
+      const data: CartState = { carts: response.data.results };
       dispatch(cartSlice.actions.setCart(data));
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -43,7 +47,7 @@ export const deleteCart = createAsyncThunk<unknown, any, { state: RootState }>(
         const updatedCarts = getState().carts.carts.filter(
           (cart) => cart.id !== id
         );
-        const updatedCartData: CartI = { carts: updatedCarts };
+        const updatedCartData: CartState = { carts: updatedCarts };
         dispatch(cartSlice.actions.setCart(updatedCartData));
       } else {
         console.log("Ошибка при удалении товара");
@@ -56,25 +60,19 @@ export const deleteCart = createAsyncThunk<unknown, any, { state: RootState }>(
   }
 );
 
-export const addToCart = createAsyncThunk<
-  unknown,
-  { user: number; product: number; count: number; price: number }
->(
+export const addToCart = createAsyncThunk<unknown, any>(
   "carts/addToCart",
-  async ({ user, product, count, price }, { dispatch, rejectWithValue }) => {
+  async ({ count, product_id }: any, { dispatch, rejectWithValue }) => {
     try {
-      const productPrice = price;
       const obj = {
-        user: user,
-        product: product,
         count: count,
-        productPrice,
-        price,
+        product: product_id,
       };
       const response = await $axios.post(`${API_URL}/carts/`, obj);
       dispatch(fetchCarts());
-      console.log(response, obj);
       console.log(response);
+
+      return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
