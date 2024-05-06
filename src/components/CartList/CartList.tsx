@@ -149,7 +149,7 @@ export function CartList({ carts }: any) {
             style={{ color: Colors.YELLOW, fontWeight: 600, fontSize: "24px" }}
           >
             {carts.map((cart: Cart, index: number) => (
-              formatNumberAndAddCurrency(cart.product.price * cart.count, 'сом')
+              {formatNumberAndAddCurrency(carts.reduce((total: any, cart: any) => total + (cart.product.price * cart.count), 0), 'сом')}
             ))}
           </Paragraph>
         </Flex>
