@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Flex, Image, Layout } from "antd";
 import styles from "../Detail/detail.module.scss";
 import Loading from "../Loader/Loading";
@@ -9,6 +9,11 @@ const { Content } = Layout;
 function DetailCarousel({ product }: any) {
     const [selectedImage, setSelectedImage] = useState(product.default_image);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+    useEffect(() => {
+        setSelectedImage(product.default_image);
+        setSelectedImageIndex(0);
+    }, [product]);
 
     const handleThumbnailClick = (index: number) => {
         setSelectedImage(`${API_URL}${product.product_images[index]}`);
@@ -23,7 +28,6 @@ function DetailCarousel({ product }: any) {
                         style={{ width: '100%', height: '350px', cursor: 'pointer', objectFit: 'cover' }}
                         src={selectedImage}
                     />
-
                 </Flex>
                 <Flex className={styles.CustomFlexCard} gap={15}>
                     {product.product_images.map((productImage: string, index: number) => (
@@ -32,13 +36,11 @@ function DetailCarousel({ product }: any) {
                             key={index}
                             onClick={() => handleThumbnailClick(index)}
                         >
-                            {!product ? <Loading /> :
-                                <Image
-                                    preview={false}
-                                    className={index === selectedImageIndex ? '' : styles.selectedImage}
-                                    src={`${API_URL}${productImage}`}
-                                />
-                            }
+                            <Image
+                                preview={false}
+                                className={index === selectedImageIndex ? '' : styles.selectedImage}
+                                src={`${API_URL}${productImage}`}
+                            />
                         </Card>
                     ))}
                 </Flex>
