@@ -148,10 +148,9 @@ export function CartList({ carts }: any) {
           <Paragraph
             style={{ color: Colors.YELLOW, fontWeight: 600, fontSize: "24px" }}
           >
-            {carts.map((cart: Cart, index: number) => (
-              {formatNumberAndAddCurrency(carts.reduce((total: any, cart: any) => total + (cart.product.price * cart.count), 0), 'сом')}
-            ))}
+            {formatNumberAndAddCurrency(carts.reduce((total: any, cart: any) => total + (cart.product.price * cart.count), 0), 'сом')}
           </Paragraph>
+
         </Flex>
       </Flex>
     </>
