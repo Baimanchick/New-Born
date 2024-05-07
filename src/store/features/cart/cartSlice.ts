@@ -91,6 +91,7 @@ export const changeCountCartProduct = createAsyncThunk<
       const response = await $axios.patch(`${API_URL}/carts/${product_id}/`, {
         count: count,
       });
+      console.log(response.data)
       dispatch(fetchCarts());
       return response.data;
     } catch (error) {
