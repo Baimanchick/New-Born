@@ -116,7 +116,7 @@ function CartPage() {
   );
 
   if (!isAuth) {
-    navigate('/auth')
+    navigate('/register')
     alert('Вы не авторизованы');
   }
 
