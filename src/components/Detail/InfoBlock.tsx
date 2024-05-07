@@ -34,7 +34,7 @@ function InfoBlock({ product }: any) {
         if (isAuth) {
             dispatch(addFavorites(product_id));
         } else if (!isAuth) {
-            navigate("/auth");
+            navigate("/register");
             alert('Вы не авторизованы');
         }
     }
@@ -47,7 +47,7 @@ function InfoBlock({ product }: any) {
             const updatedProducts = [...addedProducts, productId];
             localStorage.setItem('addedProducts', JSON.stringify(updatedProducts));
         } else {
-            navigate("/auth");
+            navigate("/register");
             alert('Вы не авторизованы');
         }
 
