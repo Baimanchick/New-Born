@@ -51,7 +51,7 @@ export function ProductCard({ product }: ProductCardProps) {
     if (isAuth) {
       dispatch(addFavorites(product_id));
     } else if (!isAuth) {
-      navigate("/auth");
+      navigate("/register");
       alert('Вы не авторизованы');
     }
   };

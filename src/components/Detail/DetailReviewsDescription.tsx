@@ -94,7 +94,7 @@ function DetailReviewsDescription({ product }: any) {
     };
 
     const handleNavigate = () => {
-        navigate('/auth')
+        navigate('/register')
         alert('Вы не авторизованы')
     }
 
