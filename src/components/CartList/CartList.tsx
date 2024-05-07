@@ -9,7 +9,6 @@ import {
 import styles from "./cartList.module.scss";
 import { MinusOutlined } from "@ant-design/icons";
 import { Counter } from "../Counter/Counter";
-import agusha from "../../assets/card/agusha.png";
 import { Colors } from "../../helpers/enums/color.enum";
 import { formatNumberAndAddCurrency } from "../../helpers/functions/helperFunctions";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -28,41 +27,45 @@ const headerItems = ["Товар", "Цена", "Количество", "В об�
 export function CartList({ carts }: any) {
   const dispatch = useAppDispatch();
   const [counts, setCounts] = useState<{ [key: string]: number }>(() => {
-    const savedCounts = localStorage.getItem('cartCounts');
-    return savedCounts ? JSON.parse(savedCounts) : {};
+    const storedCounts = localStorage.getItem("cartCounts");
+    if (storedCounts && storedCounts !== "{}") {
+      return JSON.parse(storedCounts);
+    } else {
+      const countObj = carts.reduce((acc: any, item: any) => {
+        return { ...acc, [item.id]: item.count };
+      }, {});
+      localStorage.setItem("cartCounts", JSON.stringify(countObj));
+      return countObj;
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem('cartCounts', JSON.stringify(counts));
-  }, [counts]);
-
-  useEffect(() => {
-    setCounts((prevCounts) => {
-      const newCounts: any = {};
-      carts.forEach((cart: any) => {
-        newCounts[cart.id] = prevCounts[cart.id] || 1;
-      });
-      return newCounts;
-    });
+    if (Object.keys(counts).length === 0) {
+      const countObj = carts.reduce((acc: any, item: any) => {
+        return { ...acc, [item.id]: item.count };
+      }, {});
+      localStorage.setItem("cartCounts", JSON.stringify(countObj));
+      setCounts(countObj);
+    }
   }, [carts]);
 
+  console.log(counts)
+
   const incrementCount = (id: string) => {
-    dispatch(changeCountCartProduct({ count: counts[id] + 1, product_id: +id }));
-    setCounts((prevCounts) => ({
-      ...prevCounts,
-      [id]: (prevCounts[id] || 0) + 1
-    }));
+    const newCounts = { ...counts };
+    newCounts[id] = (newCounts[id] || 0) + 1;
+    setCounts(newCounts);
+    localStorage.setItem("cartCounts", JSON.stringify(newCounts));
+    dispatch(changeCountCartProduct({ count: newCounts[id], product_id: +id }));
   };
 
   const decrementCount = (id: string) => {
-    const updatedCount = Math.max((counts[id] || 0) - 1, 0);
-    setCounts((prevCounts) => ({
-      ...prevCounts,
-      [id]: updatedCount
-    }));
-
-    dispatch(changeCountCartProduct({ count: updatedCount, product_id: +id }));
-    if (updatedCount < 1) {
+    const newCounts = { ...counts };
+    newCounts[id] = (newCounts[id] || 0) - 1;
+    setCounts(newCounts);
+    localStorage.setItem("cartCounts", JSON.stringify(newCounts));
+    dispatch(changeCountCartProduct({ count: newCounts[id], product_id: +id }));
+    if (newCounts[id] < 1) {
       localStorage.removeItem("addedProducts");
       dispatch(deleteCart(+id));
     }
