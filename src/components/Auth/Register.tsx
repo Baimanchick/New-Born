@@ -12,7 +12,7 @@ import {
 } from "../../store/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Button } from "../Button/Button";
-function Register({}) {
+function Register({ }) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function Register({}) {
     await dispatch(register(values))
       .unwrap()
       .then(() => {
-        userMe();
+        dispatch(userMe());
         navigate("/");
       })
       .catch((error) => setError(error));

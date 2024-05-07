@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Typography, Flex } from "antd";
 import { Tag } from "antd";
 import { Button as ButtonAnt } from "antd";
-
 import { ReactComponent as Star } from "../../assets/svgs/card/star.svg";
 import { ReactComponent as Fav } from "../../assets/svgs/card/heart.svg";
+import { ReactComponent as FavFill } from "../../assets/svgs/card/filHeart.svg";
+
 import { Button } from "../Button/Button";
-import { ProductCardProps } from "./ProductCard.props";
+import { ProductCardProps } from "../../helpers/interfaces/ProductCard.props";
 import {
   formatNumberAndAddCurrency,
   truncateTitle,
@@ -15,12 +16,21 @@ import styles from "./productCard.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
 import { useNavigate } from "react-router-dom";
 import { Counter } from "../Counter/Counter";
+import { useAppSelector } from "../../hooks/hooks";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { addFavorites } from "../../store/features/favorite/favoriteSlice";
 
 const { Title, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
-  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
+  const [isClicked, setIsClicked] = useState(false);
+  const isAuth = useAppSelector((store) => store.auth.user !== null);
+  const dispatch: AppDispatch = useDispatch();
+  const favorites = useAppSelector((state) => state.favorites.favorites)
+  const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
+
   const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     const target = e.target as HTMLElement;
     e.stopPropagation();
@@ -37,6 +47,15 @@ export function ProductCard({ product }: ProductCardProps) {
     setIsClicked(true);
   };
 
+  const handleClickFavorite = (product_id: number) => {
+    if (isAuth) {
+      dispatch(addFavorites(product_id));
+    } else if (!isAuth) {
+      navigate("/auth");
+      alert('Вы не авторизованы');
+    }
+  };
+
   return (
     <Card
       onClick={(e) => navigateToDetail(e, product.id)}
@@ -49,7 +68,6 @@ export function ProductCard({ product }: ProductCardProps) {
       extra={
         <Flex align={"center"}>
           <Flex
-            // onClick={() => navigate("/detail")}
             className={styles.wrapper}
             align={"center"}
             wrap={"wrap"}
@@ -65,10 +83,11 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </Flex>
           <ButtonAnt
-            className={styles.favButton}
-            icon={<Fav />}
+            className={`${styles.favButton} ${isProductInFavorites ? styles.clickedHeartProduct : styles}`}
+            icon={isProductInFavorites ? <FavFill /> : <Fav />}
             shape="circle"
             danger
+            onClick={() => handleClickFavorite(product.id)}
           />
         </Flex>
       }
@@ -83,13 +102,12 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <Flex vertical align={"center"}>
         <Flex
-          // onClick={() => navigate("/detail")}
           justify={"space-between"}
           align={"center"}
           style={{ width: "100%" }}
         >
           <Title style={{ margin: 0 }} level={4}>
-            {formatNumberAndAddCurrency(product.price, "₽")}
+            {formatNumberAndAddCurrency(product.price, "сом")}
           </Title>
           <Flex align={"center"}>
             <Star />

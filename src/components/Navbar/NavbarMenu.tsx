@@ -4,12 +4,10 @@ import {
   Button,
   Flex,
   Input,
-  Menu,
   SelectProps,
-  Typography,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { MenuItem, NavbarMenuProps } from "./Navbar.props";
+import { MenuItem, NavbarMenuProps } from "../../helpers/interfaces/Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
 import filter from "../../assets/svgs/navbar/filter.svg";
 import favourite from "../../assets/svgs/navbar/favourites.svg";
@@ -19,7 +17,6 @@ import styles from "./navbar.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
   fetchProducts,
-  searchProducts,
 } from "../../store/features/products/productSlice";
 import { Product } from "../../helpers/interfaces/product.interface";
 
@@ -97,9 +94,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <ul className={styles.navbar_navigation}>
           {menuItems.map((item: MenuItem, index: number) => (
             <li
-              className={`${styles.menuItem} ${
-                item.label === activeMenuItem ? styles.active : ""
-              }`}
+              className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ""
+                }`}
               onClick={() => {
                 setActiveMenuItem(item.label);
                 navigate(item.link);
@@ -162,7 +158,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
           </Flex>
         </div>
         <div className={styles.icon}>
-          <img src={favourite} className={styles.icon__item} alt="Избранное" />
+          <img src={favourite} onClick={() => navigate('/favorite')} className={styles.icon__item} alt="Избранное" />
           <img
             src={cart}
             onClick={() => navigate("/cart")}

@@ -1,14 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Card, Flex, Input, Layout, Menu, Typography } from 'antd';
+import { useState, } from 'react';
+import { Card, Flex, Input, Layout, Menu, Rate, Typography } from 'antd';
 import styles from "./detail.module.scss";
 import { formatDate, truncateTextAfterWords } from '../../helpers/functions/helperFunctions';
 import { ReactComponent as Star } from '../../assets/svgs/card/star.svg';
 import { ReviewType } from '../../helpers/interfaces/reviews.interface';
 import { Button } from '../Button/Button';
-import RateDetail from '../Rate/Rate';
-import { useAppSelector } from '../../hooks/hooks';
 import useWindowSize from '../../hooks/useWindowSize';
+import useEscapeKey from '../../hooks/useKeyDown';
+import { useDispatch } from 'react-redux';
+import { addReview } from '../../store/features/reviews/reviewsSlice';
+import { AppDispatch } from '../../store/store';
+import Loading from '../Loader/Loading';
 import { CloseOutlined } from '@ant-design/icons';
+import { useAppSelector } from '../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
 const { Content, Header, Footer } = Layout;
 const { Paragraph, Title } = Typography;
 const { TextArea } = Input
@@ -29,26 +34,21 @@ const item2 = [
 
 function DetailReviewsDescription({ product }: any) {
     const initialText = product.description;
+    const navigate = useNavigate()
     const [isExpanded, setIsExpanded] = useState(false);
     const [text, setText] = useState(initialText);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const isAuth = useAppSelector((store) => store.auth.user !== null);
     const windowSize = useWindowSize();
+    const dispatch: AppDispatch = useDispatch();
+    const isAuth = useAppSelector((state) => state.auth.user !== null)
     const isTablet = windowSize.width && windowSize.width < 870;
     const isMobile = windowSize.width && windowSize.width < 660;
-
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.keyCode === 27) {
-                closeSearchModal();
-            }
-        };
-        document.addEventListener('keydown', handleKeyDown);
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
+    const [reviewStar] = useState(0);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
+    const [reviewData, setReviewData] = useState({
+        text: "",
+        rating: reviewStar,
+    });
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
@@ -66,6 +66,40 @@ function DetailReviewsDescription({ product }: any) {
         event.stopPropagation();
     };
 
+    const handleRating = (rate: number) => {
+        setReviewData({ ...reviewData, rating: rate })
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setReviewData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
+    const handleSubmit = async () => {
+        try {
+            setLoadingSubmit(true);
+            if (reviewData.rating === 0 || reviewData.text.trim() === "") {
+                alert(reviewData.rating === 0 ? "Выберите рейтинг" : "Введите текст отзыва");
+                setLoadingSubmit(false);
+                return;
+            }
+            await dispatch(addReview({ ...reviewData, product: product?.id }));
+            setReviewData({ text: "", rating: reviewStar });
+            closeSearchModal();
+        } catch (error) {
+            console.error("Лови аптечку ->", error);
+        } finally {
+            setLoadingSubmit(false);
+        }
+    };
+
+    const handleNavigate = () => {
+        navigate('/auth')
+        alert('Вы не авторизованы')
+    }
+
+    useEscapeKey(closeSearchModal);
+
     return (
         <Flex onClick={closeSearchModal} style={{ flexDirection: `${isMobile ? 'column' : 'initial'}` }} justify={'space-between'} gap={15}>
             <Content style={{ width: '100%', backgroundColor: '#fff', padding: '20px', borderRadius: '20px', position: 'relative' }}>
@@ -73,7 +107,7 @@ function DetailReviewsDescription({ product }: any) {
                     <Menu mode="horizontal" defaultSelectedKeys={['1']} items={item1} className={styles.CustomRewDesMenu} />
                 </Header>
                 <Title style={{ fontSize: '32px', color: '#1B81E7', fontWeight: '1000', marginTop: '20px' }}>О товаре</Title>
-                <Paragraph style={{ fontSize: `${isTablet ? '12px' : '16px'}`, fontWeight: '600', color: '#000', marginBottom: '10vh' }}>
+                <Paragraph style={{ fontSize: `${isTablet ? '12px' : '16px'}`, fontWeight: '600', color: '#000', marginBottom: '6vh' }}>
                     {isTablet ? isExpanded ? <div dangerouslySetInnerHTML={{ __html: text }} /> : truncateTextAfterWords(text, 40) : isExpanded ? <div dangerouslySetInnerHTML={{ __html: text }} /> : truncateTextAfterWords(text, 100)}
                 </Paragraph>
                 <Footer className={styles.CustomFooterFirst}>
@@ -86,7 +120,7 @@ function DetailReviewsDescription({ product }: any) {
                 <Header style={{ background: '#fff', padding: '0px' }}>
                     <Menu mode="horizontal" defaultSelectedKeys={['2']} items={item2} className={styles.CustomRewDesMenu} />
                 </Header>
-                <Flex style={{ flexDirection: 'column', rowGap: '15px', marginTop: '20px', marginBottom: '10vh' }}>
+                <Flex style={{ flexDirection: 'column', rowGap: '15px', marginTop: '20px', overflowY: 'scroll', maxHeight: '320px', marginBottom: '10vh' }}>
                     {product.reviews.map((reviews: ReviewType, index: number) => (
                         <Flex key={index} style={{ flexDirection: 'column', rowGap: '10px' }}>
                             <Flex align={'center'} justify={'space-between'}>
@@ -110,28 +144,44 @@ function DetailReviewsDescription({ product }: any) {
                         <Title style={{ color: '#1B81E7', fontSize: '14px', fontWeight: '700', cursor: 'pointer', margin: 0 }}>Большe...</Title>
                     </Flex>
                     <Flex onClick={handleStopClose}>
-                        <Button onClick={isAuth ? openSearchModal : () => alert("Пожалуйста зарегистрируйтесь")} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
+                        <Button onClick={isAuth ? openSearchModal : handleNavigate} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                     </Flex>
                 </Footer>
             </Content>
             {isModalVisible ? (
                 <Content className={styles.modalBackground}>
-                    <Card
-                        onClick={handleStopClose}
-                        classNames={{ body: styles.ReviewsBodyCustom, header: styles.ReviewsHeaderCustom }}
-                        className={styles.ReviewsCardCustom}
-                        cover={
-                            <Flex>
-                                <Title style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#7B7B7B' }}>Отзыв</Title>
-                                <TextArea placeholder='Отзыв...' rows={4} variant='filled' />
+                    {loadingSubmit ? (
+                        <Loading />
+                    ) : (
+                        <Card
+                            onClick={handleStopClose}
+                            classNames={{ body: styles.ReviewsBodyCustom, header: styles.ReviewsHeaderCustom }}
+                            className={styles.ReviewsCardCustom}
+                            cover={
+                                <Flex>
+                                    <Title style={{ margin: 0, fontSize: 16, fontWeight: 500, color: '#7B7B7B' }}>Отзыв</Title>
+                                    <TextArea
+                                        onChange={handleChange}
+                                        name='text'
+                                        placeholder='Отзыв...'
+                                        rows={4}
+                                        variant='filled'
+                                        value={reviewData.text}
+                                    />
+                                </Flex>
+                            }
+                            extra={
+                                <Flex>
+                                    <Rate onChange={handleRating} style={{ fontSize: 22 }} />
+                                    <CloseOutlined onClick={closeSearchModal} style={{ fontSize: 22, cursor: 'pointer' }} />
+                                </Flex>
+                            }
+                        >
+                            <Flex justify={'end'}>
+                                <Button onClick={handleSubmit} className={styles.ReviewsButtonCustom} appearance='yellow'>Оставить отзыв</Button>
                             </Flex>
-                        }
-                        extra={<RateDetail />}
-                    >
-                        <Flex justify={'end'}>
-                            <Button onClick={closeSearchModal} className={styles.ReviewsButtonCustom} appearance='yellow'>Оставить отзыв</Button>
-                        </Flex>
-                    </Card>
+                        </Card>
+                    )}
                 </Content>
             ) : null}
 

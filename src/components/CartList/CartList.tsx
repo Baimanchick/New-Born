@@ -9,30 +9,12 @@ import {
 import styles from "./cartList.module.scss";
 import { MinusOutlined } from "@ant-design/icons";
 import { Counter } from "../Counter/Counter";
-import agusha from "../../assets/card/agusha.png";
 import { Colors } from "../../helpers/enums/color.enum";
 import { formatNumberAndAddCurrency } from "../../helpers/functions/helperFunctions";
-const { Title, Text, Paragraph } = Typography;
-
-interface DataType {
-  gender?: string;
-  name: {
-    title?: string;
-    first?: string;
-    last?: string;
-  };
-  email?: string;
-  picture: {
-    large?: string;
-    medium?: string;
-    thumbnail?: string;
-  };
-  nat?: string;
-  loading: boolean;
-}
-
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { changeCountCartProduct, deleteCart, fetchCarts } from "../../store/features/cart/cartSlice";
+import { Cart } from "../../helpers/interfaces/cart.interface";
+const { Text, Paragraph } = Typography;
 
 const fontStyles: React.CSSProperties = {
   fontSize: "20px",
@@ -42,18 +24,52 @@ const fontStyles: React.CSSProperties = {
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
 
-export function CartList() {
-  const [data, setData] = useState<DataType[]>([]);
-  const [list, setList] = useState<DataType[]>([]);
+export function CartList({ carts }: any) {
+  const dispatch = useAppDispatch();
+  const [counts, setCounts] = useState<{ [key: string]: number }>(() => {
+    const storedCounts = localStorage.getItem("cartCounts");
+    if (storedCounts && storedCounts !== "{}") {
+      return JSON.parse(storedCounts);
+    } else {
+      const countObj = carts.reduce((acc: any, item: any) => {
+        return { ...acc, [item.id]: item.count };
+      }, {});
+      localStorage.setItem("cartCounts", JSON.stringify(countObj));
+      return countObj;
+    }
+  });
 
   useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setData(res.results);
-        setList(res.results);
-      });
-  }, []);
+    if (Object.keys(counts).length === 0) {
+      const countObj = carts.reduce((acc: any, item: any) => {
+        return { ...acc, [item.id]: item.count };
+      }, {});
+      localStorage.setItem("cartCounts", JSON.stringify(countObj));
+      setCounts(countObj);
+    }
+  }, [carts]);
+
+  console.log(counts)
+
+  const incrementCount = (id: string) => {
+    const newCounts = { ...counts };
+    newCounts[id] = (newCounts[id] || 0) + 1;
+    setCounts(newCounts);
+    localStorage.setItem("cartCounts", JSON.stringify(newCounts));
+    dispatch(changeCountCartProduct({ count: newCounts[id], product_id: +id }));
+  };
+
+  const decrementCount = (id: string) => {
+    const newCounts = { ...counts };
+    newCounts[id] = (newCounts[id] || 0) - 1;
+    setCounts(newCounts);
+    localStorage.setItem("cartCounts", JSON.stringify(newCounts));
+    dispatch(changeCountCartProduct({ count: newCounts[id], product_id: +id }));
+    if (newCounts[id] < 1) {
+      localStorage.removeItem("addedProducts");
+      dispatch(deleteCart(+id));
+    }
+  };
 
   return (
     <>
@@ -65,14 +81,14 @@ export function CartList() {
             justify={"space-between"}
             className={styles.headerItems}
           >
-            {headerItems.map((item) => {
-              return <Text className={styles.headerItem}>{item}</Text>;
+            {headerItems.map((item, index: number) => {
+              return <Text key={index} className={styles.headerItem}>{item}</Text>;
             })}
           </Flex>
         }
         itemLayout="horizontal"
-        dataSource={list}
-        renderItem={(item) => (
+        dataSource={carts}
+        renderItem={(cart: Cart, index: number) => (
           <List.Item
             actions={[
               <ButtonAnt
@@ -80,31 +96,46 @@ export function CartList() {
                 danger
                 icon={<MinusOutlined />}
                 shape={"circle"}
+                onClick={() => {
+                  const stringProducts = localStorage.getItem("addedProducts");
+                  const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
+
+                  const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
+
+                  if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
+                    localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                  }
+
+                  dispatch(deleteCart(cart.id));
+                  dispatch(fetchCarts())
+                }}
               />,
             ]}
+            key={index}
           >
             <List.Item.Meta
               className={styles.item}
               avatar={
                 <Flex align={"center"} gap={20}>
-                  <img src={agusha} width={100} height={100} />
+                  <img src={cart.product.default_image} width={100} height={100} />
                   <Text style={{ ...fontStyles, color: Colors.GREY }}>
-                    Смесь сухая Nutrilon Пепти Аллергия 800г с 0 месяцев
+                    {cart.product.name}
                   </Text>
                 </Flex>
               }
             />
             <List.Item.Meta
               className={styles.priceItemMeta}
-              title={"2 699 сом"}
+              title={formatNumberAndAddCurrency(cart.product.price, 'сом')}
             />
             <List.Item.Meta
               className={styles.counterItemMeta}
-              title={<Counter />}
+              title={<Counter initialValue={cart.count} onIncrement={() => incrementCount(cart.id)} onDecrement={() => decrementCount(cart.id)} />}
             />
             <List.Item.Meta
-              className={styles.priceItemMeta}
-              title={"2 699 сом"}
+              className={`${styles.priceItemMeta} ${styles.priceItemMetaYellow}`}
+              title={formatNumberAndAddCurrency(cart.product.price * cart.count, 'сом')}
+              style={{ color: '#FABC22' }}
             />
           </List.Item>
         )}
@@ -120,8 +151,9 @@ export function CartList() {
           <Paragraph
             style={{ color: Colors.YELLOW, fontWeight: 600, fontSize: "24px" }}
           >
-            {formatNumberAndAddCurrency(2699, "Сом")}
+            {formatNumberAndAddCurrency(carts.reduce((total: any, cart: any) => total + (cart.product.price * cart.count), 0), 'сом')}
           </Paragraph>
+
         </Flex>
       </Flex>
     </>

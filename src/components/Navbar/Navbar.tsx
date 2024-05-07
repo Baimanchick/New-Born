@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { MenuItem } from "./Navbar.props";
+import { MenuItem } from "../../helpers/interfaces/Navbar.props";
 import NavbarMenu from "./NavbarMenu";
 import MobileNavbar from "./MobileNavbar";
 import SearchModalMobile from "./SearchModalMobile";
