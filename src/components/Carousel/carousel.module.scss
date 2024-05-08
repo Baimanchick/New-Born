@@ -5,14 +5,7 @@
     margin: 15px auto;
 
     .banner_carousel__pages {
-        height: 481px;
-        width: 100%;
-
-        @media screen and (max-width: 620px) {
-            height: 281px;
-        }
-
-        border-radius: 20px !important;
+        border-radius: 20px;
 
         img {
             object-fit: contain;
@@ -23,12 +16,7 @@
     .banner_carousel__button {
         position: absolute;
         width: 100%;
-        height: 481px;
-
-        @media screen and (max-width: 620px) {
-            height: 281px;
-        }
-
+        height: 100%;
         bottom: 0;
         padding: 0 20px;
         display: flex;
