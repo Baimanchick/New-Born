@@ -13,8 +13,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../../store/features/cart/cartSlice';
-
-
+import openNotification from '../Notification/Notification';
 const { Content } = Layout;
 const { Text, Title, Paragraph } = Typography;
 
@@ -35,7 +34,7 @@ function InfoBlock({ product }: any) {
             dispatch(addFavorites(product_id));
         } else if (!isAuth) {
             navigate("/register");
-            alert('Вы не авторизованы');
+            openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
         }
     }
 
@@ -48,7 +47,7 @@ function InfoBlock({ product }: any) {
             localStorage.setItem('addedProducts', JSON.stringify(updatedProducts));
         } else {
             navigate("/register");
-            alert('Вы не авторизованы');
+            openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
         }
 
     };
@@ -129,7 +128,7 @@ function InfoBlock({ product }: any) {
                     }}
                     appearance='yellow'
                     className={styles.CustomButtonCart}
-                    onClick={() => addedToCart ? alert('Вы уже добавили в корзину') : handleAddToCart(product.id)}
+                    onClick={() => addedToCart ? openNotification('warning', 'Предупреждение', 'Вы уже добавили в корзину', 2) : handleAddToCart(product.id)}
                 >
                     {addedToCart ? "Добавлено в корзину" : 'В корзину'}
                 </Button>

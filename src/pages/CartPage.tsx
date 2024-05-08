@@ -13,6 +13,7 @@ import Payment from "../components/Payment/Payment";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchCarts } from "../store/features/cart/cartSlice";
 import Loading from "../components/Loader/Loading";
+import openNotification from "../components/Notification/Notification";
 
 function CartPage() {
   const { token } = theme.useToken();
@@ -117,7 +118,7 @@ function CartPage() {
 
   if (!isAuth) {
     navigate('/register')
-    alert('Вы не авторизованы');
+    openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
   }
 
   if (!carts) {
