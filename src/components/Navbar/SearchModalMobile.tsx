@@ -79,7 +79,7 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
                 popupMatchSelectWidth={325}
                 options={options}
                 size="large"
-                style={{ marginTop: 80 }}
+                style={{ marginTop: 80, }}
                 onSelect={onSelect}
                 onSearch={handleSearchAntd}
                 onClick={handleStopClose}

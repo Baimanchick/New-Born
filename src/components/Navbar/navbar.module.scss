@@ -282,6 +282,7 @@
         span>span>input {
             border: none;
             height: 40px;
+            border-radius: 20px !important;
         }
 
         // Input hover
@@ -292,6 +293,7 @@
         // InputRightIconContainer
         .input_modal>span>span {
             background-color: rgba(250, 188, 34, 1);
+            border-radius: 20px !important;
             height: 40px;
         }
 

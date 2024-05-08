@@ -108,7 +108,7 @@
 // BorderRadiusForCarousel
 :where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-slider .slick-track,
 :where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-slider .slick-list {
-    border-radius: 20px;
+    border-radius: 20px !important;
 }
 
 .ant-list-item {
