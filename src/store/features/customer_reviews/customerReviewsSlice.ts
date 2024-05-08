@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
-import { CustomerReviewsCarouselI } from "../../../helpers/interfaces/CustomerReviews.props";
+import { CustomerReviewsCarouselI } from "../../../components/Carousel/CustomerReviews.props";
 import { AxiosError } from "axios";
 
 const initialState: CustomerReviewsCarouselI = {

@@ -7,7 +7,7 @@ import {
   SelectProps,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { MenuItem, NavbarMenuProps } from "../../helpers/interfaces/Navbar.props";
+import { MenuItem, NavbarMenuProps } from "./Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
 import filter from "../../assets/svgs/navbar/filter.svg";
 import favourite from "../../assets/svgs/navbar/favourites.svg";

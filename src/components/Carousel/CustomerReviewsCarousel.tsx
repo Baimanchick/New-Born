@@ -5,7 +5,7 @@ import styles from "./carousel.module.scss";
 import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
 import arrowRight from "../../assets/svgs/carousel/arrowRight.svg";
 import { fetchCustomerReviews } from "../../store/features/customer_reviews/customerReviewsSlice";
-import { CustomerReviewsCarouselType } from "../../helpers/interfaces/CustomerReviews.props";
+import { CustomerReviewsCarouselType } from "./CustomerReviews.props";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import useWindowSize from "../../hooks/useWindowSize";
 import { formatDate } from "../../helpers/functions/helperFunctions";
