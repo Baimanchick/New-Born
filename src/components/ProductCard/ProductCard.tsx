@@ -20,6 +20,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
+import openNotification from "../Notification/Notification";
 
 const { Title, Text } = Typography;
 
@@ -52,7 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
       dispatch(addFavorites(product_id));
     } else if (!isAuth) {
       navigate("/register");
-      alert('Вы не авторизованы');
+      openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
   };
 

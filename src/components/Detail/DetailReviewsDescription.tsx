@@ -14,6 +14,7 @@ import Loading from '../Loader/Loading';
 import { CloseOutlined } from '@ant-design/icons';
 import { useAppSelector } from '../../hooks/hooks';
 import { useNavigate } from 'react-router-dom';
+import openNotification from '../Notification/Notification';
 const { Content, Header, Footer } = Layout;
 const { Paragraph, Title } = Typography;
 const { TextArea } = Input
@@ -79,7 +80,7 @@ function DetailReviewsDescription({ product }: any) {
         try {
             setLoadingSubmit(true);
             if (reviewData.rating === 0 || reviewData.text.trim() === "") {
-                alert(reviewData.rating === 0 ? "Выберите рейтинг" : "Введите текст отзыва");
+                openNotification('warning', 'Предупреждение', `${reviewData.rating === 0 ? "Выберите рейтинг" : "Введите текст отзыва"}`, 2);
                 setLoadingSubmit(false);
                 return;
             }
@@ -95,7 +96,7 @@ function DetailReviewsDescription({ product }: any) {
 
     const handleNavigate = () => {
         navigate('/register')
-        alert('Вы не авторизованы')
+        openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
 
     useEscapeKey(closeSearchModal);
