@@ -116,16 +116,6 @@
     background-color: white;
 }
 
-//DotsMobileCarousel
-
-:where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-dots li.slick-active button {
-    @media screen and (max-width: 660px) {
-        background: #000 !important;
-    }
-}
-
-:where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-dots li button {
-    @media screen and (max-width: 660px) {
-        background: #000 !important;
-    }
+:where(.css-42nv3w).ant-carousel .slick-dots li {
+    background-color: gray !important;
 }
