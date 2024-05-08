@@ -1,5 +1,5 @@
 import { AutoComplete, Input, SelectProps } from 'antd';
-import { SearchModalProps } from '../../helpers/interfaces/Navbar.props';
+import { SearchModalProps } from './Navbar.props';
 import styles from "./navbar.module.scss";
 import "../../styles/antd.scss";
 import { useEffect, useState } from 'react';

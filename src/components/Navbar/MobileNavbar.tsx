@@ -1,5 +1,5 @@
 import { Button, Drawer } from 'antd';
-import { MenuItem, MobileNavbarProps } from '../../helpers/interfaces/Navbar.props';
+import { MenuItem, MobileNavbarProps } from './Navbar.props';
 import styles from "./navbar.module.scss";
 import phoneWhite from "../../assets/svgs/navbar/phoneWhite.svg";
 import logo from "../../assets/svgs/navbar/logo.svg";
