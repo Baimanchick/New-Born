@@ -22,8 +22,8 @@ function MobileNavbar({ setIsDrawerOpen, menuItems, isDrawerOpen, openSearchModa
                     <img src={logo} alt={'logo'} onClick={() => navigate('/')} className={styles.logo_mobile__image} />
                 </div>
                 <div className={styles.icon_mobile}>
-                    <img src={favourite} className={styles.icon_mobile__item} alt="Избранное" />
-                    <img src={cart} className={styles.icon_mobile__item} alt="Корзина" />
+                    <img src={favourite} onClick={() => navigate('/favorite')} className={styles.icon_mobile__item} alt="Избранное" />
+                    <img src={cart} onClick={() => navigate('/cart')} className={styles.icon_mobile__item} alt="Корзина" />
                     <img src={burger} className={styles.icon_mobile__item} alt="Меню" onClick={() => setIsDrawerOpen && setIsDrawerOpen(true)} />
                 </div>
             </div>

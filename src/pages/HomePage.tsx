@@ -6,7 +6,6 @@ import RecommendedProductsList from '../components/RecommendedProductsList'
 import PopularProductsList from '../components/PopularProductsList'
 import BrandCardList from '../components/BrandCardList'
 import CustomerReviewsCarousel from '../components/Carousel/CustomerReviewsCarousel'
-import { Analytics } from "@vercel/analytics/react";
 
 function HomePage() {
     return (
@@ -27,7 +26,6 @@ function HomePage() {
                     <BrandCardList />
                 </div>
             </div>
-            <Analytics />
         </>
     )
 }
