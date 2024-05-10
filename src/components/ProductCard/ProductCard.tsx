@@ -10,7 +10,7 @@ import { Button } from "../Button/Button";
 import { ProductCardProps } from "./ProductCard.props";
 import {
   formatNumberAndAddCurrency,
-  truncateTitle,
+  truncateTextAfterWords,
 } from "../../helpers/functions/helperFunctions";
 import styles from "./productCard.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
@@ -118,7 +118,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </Flex>
         </Flex>
         <Text style={{ marginBottom: 20, fontSize: 14 }}>
-          {truncateTitle(product.name)}
+          {truncateTextAfterWords(product.name, 5)}
         </Text>
         {(isClicked && (
           <Counter initialValue={1} onDecrement={handleDecrement} />

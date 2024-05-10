@@ -1,6 +1,6 @@
 import { ProductCard } from "./ProductCard/ProductCard";
 import styles from "../styles/card.module.scss";
-import { Typography } from "antd";
+import { List, Typography } from "antd";
 import { Button } from "./Button/Button";
 import { useEffect } from "react";
 import { Product } from "../helpers/interfaces/product.interface";
@@ -46,9 +46,15 @@ function NewProductsList() {
           </Button>
         </div>
         <div className={styles.newProducts}>
-          {products.map((product: Product, index: number) => (
-            <ProductCard key={index} product={product} />
-          ))}
+          <List
+            grid={{ gutter: 16, column: 5 }}
+            dataSource={products}
+            renderItem={(product: Product, index: number) => (
+              <List.Item style={{ backgroundColor: 'initial' }}>
+                <ProductCard key={index} product={product} />
+              </List.Item>
+            )}
+          />
         </div>
       </div>
     </div>

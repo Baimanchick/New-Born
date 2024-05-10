@@ -158,15 +158,6 @@
         }
 
         .newProducts {
-            flex-wrap: wrap;
-            display: flex;
-            justify-content: space-between;
-
-            @media screen and (max-width: 345px) {
-                justify-content: center;
-            }
-
-            row-gap: 15px;
             margin-top: 15px;
         }
     }
@@ -177,15 +168,6 @@
 .recommendedProducts_main {
     .recommendedProducts_container {
         .recommendedProducts {
-            flex-wrap: wrap;
-            display: flex;
-            justify-content: space-between;
-
-            @media screen and (max-width: 345px) {
-                justify-content: center;
-            }
-
-            row-gap: 15px;
             margin-top: 15px;
         }
     }
@@ -214,15 +196,6 @@
         }
 
         .popularProducts {
-            flex-wrap: wrap;
-            display: flex;
-            justify-content: space-between;
-
-            @media screen and (max-width: 345px) {
-                justify-content: center;
-            }
-
-            row-gap: 15px;
             margin-top: 15px;
         }
     }
