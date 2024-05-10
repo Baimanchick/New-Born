@@ -71,6 +71,12 @@ export function CartList({ carts }: any) {
     }
   };
 
+  const sortCartsById = (carts: any) => {
+    return [...carts].sort((a, b) => a.id - b.id);
+  };
+
+  const sortedCarts = sortCartsById(carts);
+
   return (
     <>
       <List
@@ -87,7 +93,7 @@ export function CartList({ carts }: any) {
           </Flex>
         }
         itemLayout="horizontal"
-        dataSource={carts}
+        dataSource={sortedCarts}
         renderItem={(cart: Cart, index: number) => (
           <List.Item
             actions={[
