@@ -1,4 +1,3 @@
-import React from 'react';
 import { notification } from 'antd';
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';

@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
+import { Button, Flex, Form, Input, Typography } from "antd";
 import {
   ArrowLeftOutlined,
-  LockOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 
 import styles from "./auth.module.scss";
 import { Colors } from "../helpers/enums/color.enum";
 import { useNavigate } from "react-router-dom";
-function Register({}) {
+import { useAppSelector } from "../hooks/hooks";
+import openNotification from "../components/Notification/Notification";
+function Register({ }) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
   const navigate = useNavigate();
+  const isAuth = useAppSelector((state) => state.auth.user !== null)
 
   const handleGoBack = () => {
-    navigate(-1); // Go back one step in history
+    navigate(-1);
   };
 
-  // To disable submit button at the beginning.
   useEffect(() => {
     setClientReady(true);
   }, []);
