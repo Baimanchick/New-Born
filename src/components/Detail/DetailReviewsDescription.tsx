@@ -55,11 +55,11 @@ function DetailReviewsDescription({ product }: any) {
         setIsExpanded(!isExpanded);
     };
 
-    const openSearchModal = () => {
+    const openReviewsModal = () => {
         setIsModalVisible(true);
     };
 
-    const closeSearchModal = () => {
+    const closeReviewsModal = () => {
         setIsModalVisible(false);
     };
 
@@ -86,7 +86,7 @@ function DetailReviewsDescription({ product }: any) {
             }
             await dispatch(addReview({ ...reviewData, product: product?.id }));
             setReviewData({ text: "", rating: reviewStar });
-            closeSearchModal();
+            closeReviewsModal();
         } catch (error) {
             console.error("Лови аптечку ->", error);
         } finally {
@@ -99,10 +99,10 @@ function DetailReviewsDescription({ product }: any) {
         openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
 
-    useEscapeKey(closeSearchModal);
+    useEscapeKey(closeReviewsModal);
 
     return (
-        <Flex onClick={closeSearchModal} style={{ flexDirection: `${isMobile ? 'column' : 'initial'}` }} justify={'space-between'} gap={15}>
+        <Flex onClick={closeReviewsModal} style={{ flexDirection: `${isMobile ? 'column' : 'initial'}` }} justify={'space-between'} gap={15}>
             <Content style={{ width: '100%', backgroundColor: '#fff', padding: '20px', borderRadius: '20px', position: 'relative' }}>
                 <Header style={{ background: '#fff', padding: '0px' }}>
                     <Menu mode="horizontal" defaultSelectedKeys={['1']} items={item1} className={styles.CustomRewDesMenu} />
@@ -145,7 +145,7 @@ function DetailReviewsDescription({ product }: any) {
                         <Title style={{ color: '#1B81E7', fontSize: '14px', fontWeight: '700', cursor: 'pointer', margin: 0 }}>Большe...</Title>
                     </Flex>
                     <Flex onClick={handleStopClose}>
-                        <Button onClick={isAuth ? openSearchModal : handleNavigate} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
+                        <Button onClick={isAuth ? openReviewsModal : handleNavigate} style={{ fontSize: '16px' }} appearance='yellow'>Оставить отзыв</Button>
                     </Flex>
                 </Footer>
             </Content>
@@ -174,7 +174,7 @@ function DetailReviewsDescription({ product }: any) {
                             extra={
                                 <Flex>
                                     <Rate onChange={handleRating} style={{ fontSize: 22 }} />
-                                    <CloseOutlined onClick={closeSearchModal} style={{ fontSize: 22, cursor: 'pointer' }} />
+                                    <CloseOutlined onClick={closeReviewsModal} style={{ fontSize: 22, cursor: 'pointer' }} />
                                 </Flex>
                             }
                         >

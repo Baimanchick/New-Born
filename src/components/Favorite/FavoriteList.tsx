@@ -5,9 +5,9 @@ import { fetchFavorites } from "../../store/features/favorite/favoriteSlice"
 import { ProductCard } from "../ProductCard/ProductCard"
 import Loading from "../Loader/Loading"
 
-function FavoriteList() {
+function FavoriteList({ favoriteProducts }: any) {
     const dispatch = useAppDispatch()
-    const favoriteProducts = useAppSelector((state) => state.favorites.favorites)
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

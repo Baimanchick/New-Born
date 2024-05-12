@@ -58,12 +58,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state, action) => {});
-    // builder.addCase(
-    //   login.rejected,
-    //   (state: AuthState, action: PayloadAction<AuthState>) => {
-    //     state.error = payload;
-    //   }
-    // );
   },
 });
 
@@ -154,6 +148,31 @@ export const userMe = createAsyncThunk<unknown, void>(
         headers: { Authorization: `Bearer ${token}` },
       });
       dispatch(setUser(user));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response!.data.message);
+      }
+    }
+  }
+);
+
+export const changeName = createAsyncThunk<unknown, void>(
+  "auth/changeName",
+  async (name, { dispatch, rejectWithValue }) => {
+    try {
+      const data = {
+        name: name,
+      };
+      const response = await $axios.patch(`${API_URL}/users/me/`, data);
+      const responseFromUser = await $axios.get(`${API_URL}/user/me/`);
+      dispatch(authSlice.actions.setUser(responseFromUser.data));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...responseFromUser.data,
+        })
+      );
+      console.log(response, responseFromUser);
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);

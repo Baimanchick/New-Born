@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Flex, message, Result, Steps, theme } from "antd";
-import { ReactComponent as CartIcon } from "../assets/svgs/cart/cart.svg";
 import { ReactComponent as CardIcon } from "../assets/svgs/cart/card.svg";
 import { ReactComponent as SuccessIcon } from "../assets/svgs/cart/sucsess.svg";
 import { ReactComponent as BusIcon } from "../assets/svgs/cart/bus.svg";
@@ -19,16 +18,21 @@ function CartPage() {
   const { token } = theme.useToken();
   const navigate = useNavigate()
   const [current, setCurrent] = useState(0);
+  const [notificationShown, setNotificationShown] = useState(false);
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((states) => states.auth.user !== null)
+  const isAuth = useAppSelector((states) => states.auth.user !== null);
+  const carts = useAppSelector((state) => state.carts.carts);
+
+  useEffect(() => {
+    if (!isAuth) {
+      setNotificationShown(true)
+    }
+  }, [])
 
   useEffect(() => {
     dispatch(fetchCarts());
   }, [dispatch]);
-
-  const carts = useAppSelector((state) => state.carts.carts);
-  console.log(carts);
 
   const next = () => {
     setCurrent(current + 1);
@@ -38,6 +42,12 @@ function CartPage() {
     setCurrent(current - 1);
   };
 
+  useEffect(() => {
+    if (notificationShown) {
+      navigate('/register');
+      openNotification('warning', 'Предупреждение', 'Вы не авторизованы', 2);
+    }
+  }, [notificationShown]);
 
   const steps = [
     {
@@ -115,11 +125,6 @@ function CartPage() {
       )}
     </Flex>
   );
-
-  if (!isAuth) {
-    navigate('/register')
-    openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
-  }
 
   if (!carts) {
     return <Loading />
