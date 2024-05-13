@@ -72,6 +72,7 @@
 
 .TextAreaAnt {
     padding: 20px 0px 0px 15px !important;
+    font-weight: 700 !important;
 }
 
 .ProfileButton {
@@ -84,4 +85,22 @@
     @media screen and (max-width: 660px) {
         width: 100%;
     }
+}
+
+.CustomMainTitle {
+    font-size: 40px !important;
+    font-weight: 1000 !important;
+    color: #1B81E7 !important;
+
+    @media screen and (max-width: 660px) {
+        font-size: 32px !important;
+    }
+}
+
+.LogoutTitle {
+    margin: 10px 0px 0px 10px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #FF2F2F !important;
+    cursor: pointer !important;
 }

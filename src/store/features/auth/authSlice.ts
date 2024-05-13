@@ -156,15 +156,15 @@ export const userMe = createAsyncThunk<unknown, void>(
   }
 );
 
-export const changeName = createAsyncThunk<unknown, void>(
+export const changeName = createAsyncThunk<unknown, any>(
   "auth/changeName",
-  async (name, { dispatch, rejectWithValue }) => {
+  async (name: string, { dispatch, rejectWithValue }) => {
     try {
       const data = {
         name: name,
       };
       const response = await $axios.patch(`${API_URL}/users/me/`, data);
-      const responseFromUser = await $axios.get(`${API_URL}/user/me/`);
+      const responseFromUser = await $axios.get(`${API_URL}/users/me/`);
       dispatch(authSlice.actions.setUser(responseFromUser.data));
       localStorage.setItem(
         "user",
@@ -172,7 +172,7 @@ export const changeName = createAsyncThunk<unknown, void>(
           ...responseFromUser.data,
         })
       );
-      console.log(response, responseFromUser);
+      console.log(response);
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
