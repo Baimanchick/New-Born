@@ -60,9 +60,9 @@
 
 //HeightForFilterSideBar
 
-:where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider {
-    flex: none !important;
-}
+//:where(.css-dev-only-do-not-override-42nv3w).ant-layout .ant-layout-sider {
+//    flex: none !important;
+//}
 
 //BorderForFilterSideBar
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline,
@@ -128,4 +128,8 @@
     @media screen and (max-width: 660px) {
         background: #000 !important;
     }
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-head-wrapper{
+    display: block;
 }

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Flex, Layout, List } from "antd";
+import React, { useEffect, useState } from "react";
+import { Flex, Layout, List, theme } from "antd";
 import { ProductCard } from "../ProductCard/ProductCard";
 import FilterMenuSideBar from "./FilterMenuSideBar";
 import { fetchProducts } from "../../store/features/products/productSlice";
@@ -7,8 +7,9 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Product } from "../../helpers/interfaces/product.interface";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loading from "../Loader/Loading";
+import ProductList from "../ProductList/ProductList";
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
 function FilterSideBar() {
   const dispatch = useAppDispatch();
@@ -17,51 +18,28 @@ function FilterSideBar() {
   const isMobile = windowSize.width && windowSize.width < 660;
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     dispatch(
       fetchProducts({
         limit: 16,
         offset: 0,
       })
-    ).then(() => setLoading(false)).catch(() => setLoading(false));
+    )
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false));
   }, [dispatch]);
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
 
   return (
-    <Layout style={{ margin: "20px 0px 20px 0px" }}>
-      <Content
-        style={{
-          display: "flex",
-          gap: "20px",
-          maxWidth: "1420px",
-          margin: "40px auto",
-        }}
-      >
-        <Layout
-          style={{
-            padding: "0px",
-            background: "initial",
-            display: `${isMobile ? "none" : "flex"}`,
-            flexDirection: "column",
-            rowGap: "20px",
-          }}
-        >
-          <FilterMenuSideBar />
-        </Layout>
-        <Content>
-          <Flex style={{ gap: 20 }} wrap={"wrap"}>
-            {[1, 2, 3, 4, 5, 6, 7, 8,].map((indec: number) => (
-              products.map((product: Product, index: number) => (
-                <ProductCard key={index} product={product} />
-              ))
-            ))}
-
-          </Flex>
-        </Content>
+    <Layout style={{ margin: "20px auto", maxWidth: "1400px" }}>
+      <Sider width={400} theme={"light"}>
+        <FilterMenuSideBar />
+      </Sider>
+      <Content>
+        <ProductList products={products} />
       </Content>
     </Layout>
   );

@@ -20,18 +20,22 @@ import { useAppSelector } from "../../hooks/hooks";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
+import cn from "classnames";
 
-const { Title, Text } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
   const isAuth = useAppSelector((store) => store.auth.user !== null);
   const dispatch: AppDispatch = useDispatch();
-  const favorites = useAppSelector((state) => state.favorites.favorites)
+  const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
 
-  const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  const navigateToDetail = (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number
+  ) => {
     const target = e.target as HTMLElement;
     e.stopPropagation();
     if (e.currentTarget === target || e.target instanceof HTMLImageElement) {
@@ -52,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
       dispatch(addFavorites(product_id));
     } else if (!isAuth) {
       navigate("/register");
-      alert('Вы не авторизованы');
+      alert("Вы не авторизованы");
     }
   };
 
@@ -66,12 +70,8 @@ export function ProductCard({ product }: ProductCardProps) {
         extra: styles.extraCustom,
       }}
       extra={
-        <Flex align={"center"}>
-          <Flex
-            className={styles.wrapper}
-            align={"center"}
-            wrap={"wrap"}
-          >
+        <Flex align={"center"} justify={"space-between"}>
+          <Flex className={styles.wrapper} align={"center"} wrap={"wrap"}>
             {product.extra_info.map((tag: string, index: number) => (
               <Tag
                 key={index}
@@ -83,7 +83,9 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </Flex>
           <ButtonAnt
-            className={`${styles.favButton} ${isProductInFavorites ? styles.clickedHeartProduct : styles}`}
+            className={cn(styles.favButton, {
+              [styles.clickedHeartProduct]: isProductInFavorites,
+            })}
             icon={isProductInFavorites ? <FavFill /> : <Fav />}
             shape="circle"
             danger
@@ -91,13 +93,21 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         </Flex>
       }
-      cover={<img style={{ width: '100%', height: 'auto' }} src={product.default_image} alt={product.name} />}
+      cover={
+        <img
+          style={{ width: "100%", height: "auto" }}
+          src={product.default_image}
+          alt={product.name}
+        />
+      }
       actions={[
         !isClicked ? (
           <Button onClick={handleBuyClick} appearance={"blue"} block>
             Купить
           </Button>
-        ) : null,
+        ) : (
+          <Counter initialValue={1} onDecrement={handleDecrement} />
+        ),
       ]}
     >
       <Flex vertical align={"center"}>
@@ -116,13 +126,9 @@ export function ProductCard({ product }: ProductCardProps) {
             </Text>
           </Flex>
         </Flex>
-        <Text style={{ marginBottom: 20, fontSize: 14 }}>
+        <Paragraph style={{ minHeight: "45px", fontSize: 14 }}>
           {truncateTitle(product.name)}
-        </Text>
-        {(isClicked && (
-          <Counter initialValue={1} onDecrement={handleDecrement} />
-        )) ||
-          null}
+        </Paragraph>
       </Flex>
     </Card>
   );

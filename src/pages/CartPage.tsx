@@ -16,11 +16,11 @@ import Loading from "../components/Loader/Loading";
 
 function CartPage() {
   const { token } = theme.useToken();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const navigation = useNavigate();
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((states) => states.auth.user !== null)
+  const isAuth = useAppSelector((states) => states.auth.user !== null);
 
   useEffect(() => {
     dispatch(fetchCarts());
@@ -36,7 +36,6 @@ function CartPage() {
   const prev = () => {
     setCurrent(current - 1);
   };
-
 
   const steps = [
     {
@@ -115,15 +114,9 @@ function CartPage() {
     </Flex>
   );
 
-  if (!isAuth) {
-    navigate('/register')
-    alert('Вы не авторизованы');
-  }
-
   if (!carts) {
-    return <Loading />
+    return <Loading />;
   }
-
 
   return (
     <div className="container">

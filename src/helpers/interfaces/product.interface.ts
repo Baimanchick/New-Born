@@ -20,11 +20,11 @@ export interface Product {
 }
 
 export interface FilterProduct {
-  limit: number;
-  offset: number;
+  limit?: number;
+  offset?: number;
   min_price?: number;
   max_price?: number;
-  brand?: number;
+  brand?: number | string;
   category?: number;
   product_name?: string;
 }

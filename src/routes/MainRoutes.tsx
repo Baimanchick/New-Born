@@ -12,14 +12,18 @@ const FavoritePage = lazy(() => import("../pages/FavoritePage"));
 const NotFoundedPage = lazy(() => import("../pages/NotFoundedPage"));
 
 function MainRoutes() {
-  const isAuth = useAppSelector((store) => store.auth.user !== null);
+  const isAuth = useAppSelector((store) => store.auth.isAuth);
+  console.log(isAuth);
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/filter" element={<FilterPage />} />
         <Route path="/detail/:id" element={<DetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route
+          path="/cart"
+          element={!isAuth ? <Navigate to={"/register"} /> : <CartPage />}
+        />
         <Route path="/favorite" element={<FavoritePage />} />
         <Route
           path="/auth"

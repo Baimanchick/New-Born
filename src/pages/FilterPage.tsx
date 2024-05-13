@@ -1,16 +1,10 @@
-import React from 'react'
-import "../styles/main.scss"
-import FilterSideBar from '../components/FilterSideBar/FilterSideBar'
-import { Col, Flex, Row } from 'antd'
+import React from "react";
+import "../styles/main.scss";
+import FilterSideBar from "../components/FilterSideBar/FilterSideBar";
+import { Col, Flex, Row } from "antd";
 
 function FilterPage() {
-    return (
-        <div className='container-gray'>
-            <div className='gray'>
-                <FilterSideBar />
-            </div>
-        </div>
-    )
+  return <FilterSideBar />;
 }
 
-export default FilterPage
+export default FilterPage;
