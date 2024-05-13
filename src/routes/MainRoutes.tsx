@@ -30,7 +30,7 @@ function MainRoutes() {
         />
         <Route
           path="/profile"
-          element={<ProfilePage />}
+          element={!isAuth ? <Navigate to={"/"} /> : <ProfilePage />}
         />
         <Route
           path="/delivery"

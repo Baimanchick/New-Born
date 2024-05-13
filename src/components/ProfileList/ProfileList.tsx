@@ -3,12 +3,13 @@ import { Card, Divider, Flex, Layout, List, Typography, Button as ButtonAntd } f
 import { EditOutlined } from '@ant-design/icons';
 import styles from "./profile.module.scss";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Loading from '../Loader/Loading';
 import TextArea from 'antd/es/input/TextArea';
 import { Button } from '../Button/Button';
 import useEscapeKey from '../../hooks/useKeyDown';
 import openNotification from '../Notification/Notification';
+import { useAppDispatch } from '../../hooks/hooks';
+import { changeName, setLogout } from '../../store/features/auth/authSlice';
 
 const { Title } = Typography;
 const { Content } = Layout
@@ -17,11 +18,10 @@ function ProfileList() {
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
     const navigate = useNavigate();
-    const [changedName, setChangedName] = useState(user?.name);
+    const [modifiedName, setModifiedName] = useState(user?.name);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const [loading, setLoading] = useState(false);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const dataSource = [
         {
@@ -31,7 +31,7 @@ function ProfileList() {
         {
             title: 'Имя',
             info: user?.name,
-        }
+        },
     ];
 
     const openProfileModal = () => {
@@ -45,6 +45,24 @@ function ProfileList() {
     const handleStopClose = (event: React.MouseEvent<HTMLInputElement>) => {
         event.stopPropagation();
     };
+
+    const handleChangeName = (e: any) => {
+        const { value } = e.target;
+        setModifiedName(value)
+    }
+
+    const handleSave = async () => {
+        closeProfileModal()
+        setLoadingSubmit(true);
+        try {
+            await dispatch(changeName(modifiedName))
+            openNotification('success', 'Успешно', 'Вы успешно поменяли имя!', 2)
+        } catch (error) {
+            console.error("Ошибка сохранения:", error);
+            openNotification('error', 'Ошибка', 'Что-то пошло не так. Пожалуйста, попробуйте еще раз.', 2)
+        }
+        setLoadingSubmit(false);
+    }
 
     useEscapeKey(closeProfileModal)
 
@@ -77,6 +95,16 @@ function ProfileList() {
                 )}
             />
             <Divider style={{ margin: 0 }} />
+            <Title
+                onClick={() => {
+                    dispatch(setLogout())
+                    navigate('/auth')
+                    openNotification('success', 'Успешно', 'Вы успешно вышли из акканута!', 2)
+                }}
+                className={styles.LogoutTitle}
+            >
+                Выйти
+            </Title>
             {isModalVisible ? (
                 <Content onClick={closeProfileModal} className={styles.modalBackground}>
                     {loadingSubmit ? (
@@ -97,28 +125,31 @@ function ProfileList() {
                                     <Flex style={{ marginTop: 35 }}>
                                         <Title style={{ margin: 0, marginBottom: 10, fontSize: 16, fontWeight: 500, color: '#7B7B7B' }}>Новое имя</Title>
                                         <TextArea
-                                            name='text'
-                                            placeholder='Имя...'
+                                            name='name'
                                             rows={2}
+                                            itemType='text'
+                                            placeholder='Новое имя'
                                             variant='filled'
                                             className={styles.TextAreaAnt}
+                                            onChange={handleChangeName}
                                         />
                                     </Flex>
                                 </>
                             }
                             extra={
-                                <Title style={{
-                                    fontSize: 40,
-                                    fontWeight: 1000,
-                                    color: '#1B81E7'
-                                }}
+                                <Title
+                                    className={styles.CustomMainTitle}
                                 >
                                     Изменить имя
                                 </Title>
                             }
                         >
                             <Flex justify={'end'}>
-                                <Button className={styles.ProfileButton} appearance='yellow'>Оставить отзыв</Button>
+                                {loadingSubmit ? (
+                                    <Loading />
+                                ) : (
+                                    <Button className={styles.ProfileButton} onClick={handleSave} appearance='yellow'>Сохранить</Button>
+                                )}
                             </Flex>
                         </Card>
                     )}
