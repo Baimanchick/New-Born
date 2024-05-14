@@ -10,35 +10,20 @@
     }
 }
 
-.counterItemMeta {
-    flex-grow: 0.5 !important;
+.blackProfileFont {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: black !important;
+    margin: 0 !important;
 }
 
-.item {
-    flex-grow: 1.1 !important;
+.yellowProfileFont {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #FABC22 !important;
+    margin: 0 !important;
 }
 
-.priceItemMeta {
-    div>h4 {
-        font-size: 17px !important;
-        font-weight: 700 !important;
-        line-height: 23px !important;
-    }
-}
-
-.priceItemMetaYellow {
-    div>h4 {
-        color: #FABC22 !important;
-    }
-}
-
-.counterItemMeta {
-    div>h4>h1 {
-        font-size: 17px !important;
-        font-weight: 700 !important;
-        line-height: 23px !important;
-    }
-}
 
 .headerItems {
     padding-inline: 10px;

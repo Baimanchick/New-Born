@@ -4,7 +4,7 @@ import { fetchCategory } from "../store/features/category/categorySlice";
 import { CategoryType } from "./CategoryCard/CategoryCard.props";
 import CategoryCard from "./CategoryCard/CategoryCard";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
-import { useNavigate } from "react-router-dom";
+import Loading from "./Loader/Loading";
 
 function CategoryCardList() {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ function CategoryCardList() {
     dispatch(fetchCategory());
   }, [dispatch]);
   if (!category || !category?.length) {
-    return <div> no content</div>;
+    return <Loading />;
   }
   return (
     <div className={styles.categoryCard_main}>

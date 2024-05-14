@@ -9,6 +9,7 @@ import oneProductReducer from "./features/products/oneProductSlice";
 import authSlice from "./features/auth/authSlice";
 import favoritesReducer from "./features/favorite/favoriteSlice";
 import cartReducer from "./features/cart/cartSlice";
+import deliveryReducer from "./features/delivery/deliveryDetailSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     ad: adReducer,
     brand: brandReducer,
     favorites: favoritesReducer,
+    deliveryDetail: deliveryReducer,
     carts: cartReducer,
     auth: authSlice,
     customerReviews: reviewsReducer,
