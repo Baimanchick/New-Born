@@ -17,7 +17,7 @@ function BrandCardList() {
     dispatch(fetchBrand());
   }, [dispatch]);
   if (!brand || !brand?.length) {
-    return <div> no content</div>;
+    return <Loading />;
   }
 
   return (

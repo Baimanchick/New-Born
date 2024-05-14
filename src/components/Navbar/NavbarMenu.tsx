@@ -51,7 +51,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
   const navigate = useNavigate();
   const isOnFilterPage = window.location.pathname === "/filter";
   const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
-  const [activeMenuItem, setActiveMenuItem] = useState<string>("");
+  const [activeMenuItem, setActiveMenuItem] = useState<string>();
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
 
