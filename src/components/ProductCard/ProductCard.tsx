@@ -34,18 +34,12 @@ export function ProductCard({ product }: ProductCardProps) {
   const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
 
-  //TODO separate logic with localstorage to slice
   const handleAddToCart = (productId: number) => {
     if (isAuth) {
       dispatch(addToCart({ count: 1, product_id: productId }));
-      const addedProducts = JSON.parse(
-        localStorage.getItem("addedProducts") || "[]"
-      );
-      const updatedProducts = [...addedProducts, productId];
-      localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
     } else {
       navigate("/register");
-      openNotification("error", "Ошибка", "Вы не авторизованы", 2);
+      openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
   };
 
@@ -113,9 +107,9 @@ export function ProductCard({ product }: ProductCardProps) {
       }
       cover={
         <img
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
           src={product.default_image}
           alt={product.name}
+          className={styles.productCardImage}
         />
       }
       actions={[
@@ -138,17 +132,17 @@ export function ProductCard({ product }: ProductCardProps) {
           align={"center"}
           style={{ width: "100%" }}
         >
-          <Title style={{ margin: 0 }} level={4}>
+          <Title className={styles.priceTitle} style={{ margin: 0 }} level={4}>
             {formatNumberAndAddCurrency(product.price, "сом")}
           </Title>
           <Flex align={"center"}>
             <Star />
-            <Text style={{ fontSize: 18, marginLeft: 3 }}>
+            <Text className={styles.productRating} style={{ fontSize: 18, marginLeft: 3 }}>
               {product.rating}
             </Text>
           </Flex>
         </Flex>
-        <Paragraph style={{ minHeight: "45px", fontSize: 14 }}>
+        <Paragraph className={styles.productParagraph} style={{ minHeight: "45px", fontSize: 14 }}>
           {truncateTextAfterWords(product.name, 5)}
         </Paragraph>
       </Flex>
