@@ -1,14 +1,12 @@
 import { useMemo, useState } from "react";
-import { MenuItem } from "../../helpers/interfaces/Navbar.props";
+import { MenuItem } from "./Navbar.props";
 import NavbarMenu from "./NavbarMenu";
 import MobileNavbar from "./MobileNavbar";
 import SearchModalMobile from "./SearchModalMobile";
 import useWindowSize from "../../hooks/useWindowSize";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { setLogout } from "../../store/features/auth/authSlice";
+import { useAppSelector } from "../../hooks/hooks";
 
 function Navbar() {
-  const dispatch = useAppDispatch();
   const isAuth = useAppSelector((store) => store.auth.user !== null);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [isFilterDrawerOpen, setFilterIsDrawerOpen] = useState<boolean>(false);
@@ -20,17 +18,11 @@ function Navbar() {
   const menuItems: MenuItem[] = useMemo(() => {
     const items: MenuItem[] = [
       { label: "Главная", link: "/" },
-      { label: "Акции", link: "/stock" },
-      { label: "Все Бренды", link: "/brands" },
+      { label: "Доставка", link: "/delivery" },
     ];
 
     if (isAuth) {
       items.push({ label: "Личный кабинет", link: "/profile" });
-      items.push({
-        label: "Выйти",
-        link: "",
-        action: () => dispatch(setLogout()),
-      });
     } else {
       items.push({ label: "Войти", link: "/register" });
     }

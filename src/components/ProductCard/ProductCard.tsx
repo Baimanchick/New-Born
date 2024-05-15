@@ -7,10 +7,10 @@ import { ReactComponent as Fav } from "../../assets/svgs/card/heart.svg";
 import { ReactComponent as FavFill } from "../../assets/svgs/card/filHeart.svg";
 
 import { Button } from "../Button/Button";
-import { ProductCardProps } from "../../helpers/interfaces/ProductCard.props";
+import { ProductCardProps } from "./ProductCard.props";
 import {
   formatNumberAndAddCurrency,
-  truncateTitle,
+  truncateTextAfterWords,
 } from "../../helpers/functions/helperFunctions";
 import styles from "./productCard.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
@@ -20,7 +20,9 @@ import { useAppSelector } from "../../hooks/hooks";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
+import openNotification from "../Notification/Notification";
 import cn from "classnames";
+import { addToCart } from "../../store/features/cart/cartSlice";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -31,6 +33,21 @@ export function ProductCard({ product }: ProductCardProps) {
   const dispatch: AppDispatch = useDispatch();
   const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
+
+  //TODO separate logic with localstorage to slice
+  const handleAddToCart = (productId: number) => {
+    if (isAuth) {
+      dispatch(addToCart({ count: 1, product_id: productId }));
+      const addedProducts = JSON.parse(
+        localStorage.getItem("addedProducts") || "[]"
+      );
+      const updatedProducts = [...addedProducts, productId];
+      localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+    } else {
+      navigate("/register");
+      openNotification("error", "Ошибка", "Вы не авторизованы", 2);
+    }
+  };
 
   const navigateToDetail = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -47,8 +64,9 @@ export function ProductCard({ product }: ProductCardProps) {
     if (newCount === 0) setIsClicked(false);
   };
 
-  const handleBuyClick = () => {
+  const handleBuyClick = (productId: number) => {
     setIsClicked(true);
+    handleAddToCart(productId);
   };
 
   const handleClickFavorite = (product_id: number) => {
@@ -70,8 +88,8 @@ export function ProductCard({ product }: ProductCardProps) {
         extra: styles.extraCustom,
       }}
       extra={
-        <Flex align={"center"} justify={"space-between"}>
-          <Flex className={styles.wrapper} align={"center"} wrap={"wrap"}>
+        <Flex align={"flex-start"} justify={"space-between"}>
+          <Flex align={"center"} wrap={"wrap"}>
             {product.extra_info.map((tag: string, index: number) => (
               <Tag
                 key={index}
@@ -95,14 +113,18 @@ export function ProductCard({ product }: ProductCardProps) {
       }
       cover={
         <img
-          style={{ width: "100%", height: "auto" }}
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
           src={product.default_image}
           alt={product.name}
         />
       }
       actions={[
         !isClicked ? (
-          <Button onClick={handleBuyClick} appearance={"blue"} block>
+          <Button
+            onClick={() => handleBuyClick(product.id)}
+            appearance={"blue"}
+            block
+          >
             Купить
           </Button>
         ) : (
@@ -127,7 +149,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </Flex>
         </Flex>
         <Paragraph style={{ minHeight: "45px", fontSize: 14 }}>
-          {truncateTitle(product.name)}
+          {truncateTextAfterWords(product.name, 5)}
         </Paragraph>
       </Flex>
     </Card>

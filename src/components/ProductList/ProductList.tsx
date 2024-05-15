@@ -4,12 +4,12 @@ import { ProductProps } from "./Product.props";
 import { ProductCard } from "../ProductCard/ProductCard";
 
 function ProductList({ products }: ProductProps) {
-  const p = [...products, ...products, ...products];
+  // const p = [...products, ...products, ...products];
   return (
     <List
       size={"small"}
-      grid={{ column: 4, md: 2, sm: 2, lg: 2, xl: 3 }}
-      dataSource={p}
+      grid={{ column: 4, md: 2, sm: 2, lg: 3, xl: 3 }}
+      dataSource={products}
       renderItem={(item) => (
         <List.Item
           style={{

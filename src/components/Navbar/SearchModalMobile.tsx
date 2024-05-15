@@ -1,5 +1,5 @@
 import { AutoComplete, Input, SelectProps } from 'antd';
-import { SearchModalProps } from '../../helpers/interfaces/Navbar.props';
+import { SearchModalProps } from './Navbar.props';
 import styles from "./navbar.module.scss";
 import "../../styles/antd.scss";
 import { useEffect, useState } from 'react';
@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { fetchProducts } from '../../store/features/products/productSlice';
 import { useNavigate } from 'react-router-dom';
 
-const searchResult = (products: Product[], query: string, navigate: any) =>
+const searchResult = (products: Product[], query: string, navigate: any, handleCloseModal: () => void) =>
     products
         .filter(product => product.name.toLowerCase().includes(query.toLowerCase()))
         .map(product => ({
@@ -20,9 +20,13 @@ const searchResult = (products: Product[], query: string, navigate: any) =>
                         display: 'flex',
                         justifyContent: 'space-between',
                     }}
+                    onClick={() => {
+                        navigate(`/detail/${product.id}`)
+                        handleCloseModal()
+                    }}
                 >
-                    <span style={{ cursor: 'pointer' }} onClick={() => navigate(`/detail/${product.id}`)}>
-                        {product.name}
+                    <span style={{ cursor: 'pointer' }} >
+                        <strong>Найдено:</strong> {product.name}
                     </span>
                 </div>
             ),
@@ -43,7 +47,7 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
 
     const handleSearchAntd = (value: string) => {
         if (value.trim() !== '') {
-            setOptions(searchResult(products, value.trim(), navigate));
+            setOptions(searchResult(products, value.trim(), navigate, handleCloseModal));
         } else {
             setOptions([]);
         }
@@ -75,7 +79,7 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
                 popupMatchSelectWidth={325}
                 options={options}
                 size="large"
-                style={{ marginTop: 80 }}
+                style={{ marginTop: 80, borderRadius: '20px' }}
                 onSelect={onSelect}
                 onSearch={handleSearchAntd}
                 onClick={handleStopClose}

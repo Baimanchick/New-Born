@@ -2,7 +2,7 @@ import AdCard from "./AdCard/AdCard";
 import styles from "../styles/card.module.scss";
 import { useEffect, useState } from "react";
 import { fetchAd } from "../store/features/ad/adSlice";
-import { AdType } from "../helpers/interfaces/AdCard.props";
+import { AdType } from "./AdCard/AdCard.props";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 
 function AdCardList() {

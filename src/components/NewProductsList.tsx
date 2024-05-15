@@ -1,13 +1,12 @@
 import { ProductCard } from "./ProductCard/ProductCard";
 import styles from "../styles/card.module.scss";
-import { Typography } from "antd";
+import { List, Typography } from "antd";
 import { Button } from "./Button/Button";
 import { useEffect } from "react";
 import { Product } from "../helpers/interfaces/product.interface";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchNewProducts } from "../store/features/products/productSlice";
 import { default_filters } from "../utils/consts";
-
 
 const { Title } = Typography;
 
@@ -46,9 +45,15 @@ function NewProductsList() {
           </Button>
         </div>
         <div className={styles.newProducts}>
-          {products.map((product: Product, index: number) => (
-            <ProductCard key={index} product={product} />
-          ))}
+          <List
+            grid={{ gutter: 16, column: 5, xl: 4, lg: 4, md: 3, sm: 2, xs: 2 }}
+            dataSource={products}
+            renderItem={(product: Product, index: number) => (
+              <List.Item style={{ backgroundColor: "initial" }}>
+                <ProductCard key={index} product={product} />
+              </List.Item>
+            )}
+          />
         </div>
       </div>
     </div>

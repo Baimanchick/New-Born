@@ -1,6 +1,6 @@
 import styles from "../styles/card.module.scss";
 import { ProductCard } from "./ProductCard/ProductCard";
-import { Typography } from "antd";
+import { List, Typography } from "antd";
 import { useEffect } from "react";
 import { fetchRecAndPopProducts } from "../store/features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
@@ -29,9 +29,15 @@ function RecommendedProductsList() {
           Рекомендуем вам
         </Title>
         <div className={styles.recommendedProducts}>
-          {products.map((product: Product, index: number) => (
-            <ProductCard key={index} product={product} />
-          ))}
+          <List
+            grid={{ gutter: 16, column: 5 }}
+            dataSource={products}
+            renderItem={(product: Product, index: number) => (
+              <List.Item style={{ backgroundColor: 'initial' }}>
+                <ProductCard key={index} product={product} />
+              </List.Item>
+            )}
+          />
         </div>
       </div>
     </div>

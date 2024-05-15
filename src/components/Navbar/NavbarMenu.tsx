@@ -7,7 +7,7 @@ import {
   SelectProps,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { MenuItem, NavbarMenuProps } from "../../helpers/interfaces/Navbar.props";
+import { MenuItem, NavbarMenuProps } from "./Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
 import filter from "../../assets/svgs/navbar/filter.svg";
 import favourite from "../../assets/svgs/navbar/favourites.svg";
@@ -19,6 +19,7 @@ import {
   fetchProducts,
 } from "../../store/features/products/productSlice";
 import { Product } from "../../helpers/interfaces/product.interface";
+import openNotification from "../Notification/Notification";
 
 const searchResult = (products: Product[], query: string, navigate: any) =>
   products
@@ -34,11 +35,12 @@ const searchResult = (products: Product[], query: string, navigate: any) =>
             display: "flex",
             justifyContent: "space-between",
           }}
+          onClick={() => {
+            navigate(`/detail/${product.id}`);
+          }}
         >
           <span
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate(`/detail/${product.id}`)}
-          >
+            style={{ cursor: "pointer" }}>
             <strong>Найдено:</strong> {product.name}
           </span>
         </div>
@@ -76,7 +78,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
 
   const handleFilterButtonClick = () => {
     if (isOnFilterPage) {
-      alert("Вы уже на странице фильтров");
+      openNotification('warning', 'Предупреждение', "Вы уже на странице фильтров", 2);
     } else {
       navigate("/filter");
     }

@@ -1,7 +1,7 @@
 import styles from "../styles/card.module.scss";
 import { useEffect } from "react";
 import { fetchCategory } from "../store/features/category/categorySlice";
-import { CategoryType } from "../helpers/interfaces/CategoryCard.props";
+import { CategoryType } from "./CategoryCard/CategoryCard.props";
 import CategoryCard from "./CategoryCard/CategoryCard";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { useNavigate } from "react-router-dom";

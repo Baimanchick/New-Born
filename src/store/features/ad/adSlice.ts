@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
-import { AdI } from "../../../helpers/interfaces/AdCard.props";
+import { AdI } from "../../../components/AdCard/AdCard.props";
 import { AxiosError } from "axios";
 
 const initialState: AdI = {

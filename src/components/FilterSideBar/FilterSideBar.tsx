@@ -8,6 +8,7 @@ import { Product } from "../../helpers/interfaces/product.interface";
 import useWindowSize from "../../hooks/useWindowSize";
 import Loading from "../Loader/Loading";
 import ProductList from "../ProductList/ProductList";
+import { useSearchParams } from "react-router-dom";
 
 const { Content, Sider } = Layout;
 
@@ -15,7 +16,7 @@ function FilterSideBar() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((states) => states.products.products);
   const windowSize = useWindowSize();
-  const isMobile = windowSize.width && windowSize.width < 660;
+  const isTablet = windowSize.width && windowSize.width < 1400;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,8 +35,17 @@ function FilterSideBar() {
   }
 
   return (
-    <Layout style={{ margin: "20px auto", maxWidth: "1400px" }}>
-      <Sider width={400} theme={"light"}>
+    <Layout
+      style={{
+        margin: "20px auto",
+        maxWidth: "1400px",
+      }}
+    >
+      <Sider
+        width={isTablet ? 300 : 400}
+        theme={"light"}
+        style={{ background: "transparent" }}
+      >
         <FilterMenuSideBar />
       </Sider>
       <Content>
