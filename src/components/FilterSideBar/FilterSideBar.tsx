@@ -16,6 +16,7 @@ function FilterSideBar() {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width && windowSize.width < 660;
   const [loading, setLoading] = useState(true);
+  const carts = useAppSelector((state) => state.carts.carts)
 
 
   useEffect(() => {
@@ -56,7 +57,7 @@ function FilterSideBar() {
           <Flex style={{ gap: 20 }} wrap={"wrap"}>
             {[1, 2, 3, 4, 5, 6, 7, 8,].map((indec: number) => (
               products.map((product: Product, index: number) => (
-                <ProductCard key={index} product={product} />
+                <ProductCard carts={carts} key={index} product={product} />
               ))
             ))}
 

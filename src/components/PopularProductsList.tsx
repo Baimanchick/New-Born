@@ -13,6 +13,7 @@ const { Title } = Typography;
 function PopularProductsList() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
+  const carts = useAppSelector((state) => state.carts.carts)
 
   useEffect(() => {
     dispatch(
@@ -45,11 +46,19 @@ function PopularProductsList() {
         </div>
         <div className={styles.popularProducts}>
           <List
-            grid={{ gutter: 16, column: 5 }}
+            grid={{
+              gutter: 16,
+              xs: 2,
+              sm: 2,
+              md: 4,
+              lg: 6,
+              xl: 6,
+              xxl: 6,
+            }}
             dataSource={products}
             renderItem={(product: Product, index: number) => (
               <List.Item style={{ backgroundColor: 'initial' }}>
-                <ProductCard key={index} product={product} />
+                <ProductCard carts={carts} key={index} product={product} />
               </List.Item>
             )}
           />

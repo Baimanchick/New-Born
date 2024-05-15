@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-    width: 85vw;
+    padding: 0px 20px 0px 20px;
     max-width: 1420px;
     margin: 0 auto;
 }
@@ -25,7 +25,8 @@ body {
 }
 
 .gray {
-    max-width: 85vw;
+    padding: 0px 20px 0px 20px;
+    max-width: 1420px;
     margin: 0 auto;
 }
 
@@ -34,7 +35,7 @@ body {
     border-radius: 20px;
     max-width: 1420px;
     margin: 40px auto;
-    padding: 20px;
+    padding: 5px 15px 5px 15px;
 }
 
 .footer-white {

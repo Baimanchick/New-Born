@@ -9,6 +9,7 @@ function FavoriteList({ favoriteProducts }: any) {
     const dispatch = useAppDispatch()
 
     const [loading, setLoading] = useState(true);
+    const carts = useAppSelector((state) => state.carts.carts)
 
     useEffect(() => {
         dispatch(fetchFavorites())
@@ -24,7 +25,7 @@ function FavoriteList({ favoriteProducts }: any) {
             ) : (
                 <Flex>
                     {favoriteProducts.map((cardItem: any) => (
-                        <ProductCard key={cardItem.id} product={cardItem} />
+                        <ProductCard carts={carts} key={cardItem.id} product={cardItem} />
                     ))}
                 </Flex>
             )}
