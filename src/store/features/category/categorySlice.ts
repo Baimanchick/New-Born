@@ -1,19 +1,34 @@
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
-import { CategoryI } from "../../../components/CategoryCard/CategoryCard.props";
 import { AxiosError } from "axios";
+import {
+  CategoryI,
+  CategoryType,
+} from "../../../components/CategoryCard/CategoryCard.props";
 
-const initialState: CategoryI = {
+interface CategoryState {
+  category: CategoryType[];
+  subcategories: any[];
+}
+
+const initialState = {
   category: [],
+  subcategories: [],
 };
 
 const categoryCardlSlice = createSlice({
   name: "category",
   initialState,
   reducers: {
-    setCategoryCard: (state, action: PayloadAction<CategoryI>) => {
-      state.category = action.payload.category;
+    setCategoryCard: (
+      state: CategoryState,
+      action: PayloadAction<CategoryType[]>
+    ) => {
+      state.category = action.payload;
+    },
+    setSubcategories: (state: CategoryState, action: PayloadAction<any[]>) => {
+      state.subcategories = action.payload;
     },
   },
 });
@@ -22,9 +37,22 @@ export const fetchCategory = createAsyncThunk<unknown, void>(
   "category/fetchCategory",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await $axios.get(`${API_URL}/categories/`);
-      const data: CategoryI = { category: response.data };
+      const { data } = await $axios.get(`${API_URL}/categories/`);
       dispatch(categoryCardlSlice.actions.setCategoryCard(data));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response!.data.message);
+      }
+    }
+  }
+);
+
+export const fetchSubcategory = createAsyncThunk<unknown, void>(
+  "category/fetchCategory",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const { data } = await $axios.get(`${API_URL}/subcategories/`);
+      dispatch(categoryCardlSlice.actions.setSubcategories(data.results));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);

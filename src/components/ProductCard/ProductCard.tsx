@@ -21,18 +21,38 @@ import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
 import openNotification from "../Notification/Notification";
+import cn from "classnames";
+import { addToCart } from "../../store/features/cart/cartSlice";
 
-const { Title, Text } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
   const isAuth = useAppSelector((store) => store.auth.user !== null);
   const dispatch: AppDispatch = useDispatch();
-  const favorites = useAppSelector((state) => state.favorites.favorites)
+  const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
 
-  const navigateToDetail = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+  //TODO separate logic with localstorage to slice
+  const handleAddToCart = (productId: number) => {
+    if (isAuth) {
+      dispatch(addToCart({ count: 1, product_id: productId }));
+      const addedProducts = JSON.parse(
+        localStorage.getItem("addedProducts") || "[]"
+      );
+      const updatedProducts = [...addedProducts, productId];
+      localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+    } else {
+      navigate("/register");
+      openNotification("error", "Ошибка", "Вы не авторизованы", 2);
+    }
+  };
+
+  const navigateToDetail = (
+    e: React.MouseEvent<HTMLDivElement>,
+    id: number
+  ) => {
     const target = e.target as HTMLElement;
     e.stopPropagation();
     if (e.currentTarget === target || e.target instanceof HTMLImageElement) {
@@ -44,8 +64,9 @@ export function ProductCard({ product }: ProductCardProps) {
     if (newCount === 0) setIsClicked(false);
   };
 
-  const handleBuyClick = () => {
+  const handleBuyClick = (productId: number) => {
     setIsClicked(true);
+    handleAddToCart(productId);
   };
 
   const handleClickFavorite = (product_id: number) => {
@@ -53,7 +74,7 @@ export function ProductCard({ product }: ProductCardProps) {
       dispatch(addFavorites(product_id));
     } else if (!isAuth) {
       navigate("/register");
-      openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
+      alert("Вы не авторизованы");
     }
   };
 
@@ -67,12 +88,8 @@ export function ProductCard({ product }: ProductCardProps) {
         extra: styles.extraCustom,
       }}
       extra={
-        <Flex align={"center"}>
-          <Flex
-            className={styles.wrapper}
-            align={"center"}
-            wrap={"wrap"}
-          >
+        <Flex align={"flex-start"} justify={"space-between"}>
+          <Flex align={"center"} wrap={"wrap"}>
             {product.extra_info.map((tag: string, index: number) => (
               <Tag
                 key={index}
@@ -84,7 +101,9 @@ export function ProductCard({ product }: ProductCardProps) {
             ))}
           </Flex>
           <ButtonAnt
-            className={`${styles.favButton} ${isProductInFavorites ? styles.clickedHeartProduct : styles}`}
+            className={cn(styles.favButton, {
+              [styles.clickedHeartProduct]: isProductInFavorites,
+            })}
             icon={isProductInFavorites ? <FavFill /> : <Fav />}
             shape="circle"
             danger
@@ -92,13 +111,25 @@ export function ProductCard({ product }: ProductCardProps) {
           />
         </Flex>
       }
-      cover={<img style={{ width: '100%', height: 'auto' }} src={product.default_image} alt={product.name} />}
+      cover={
+        <img
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          src={product.default_image}
+          alt={product.name}
+        />
+      }
       actions={[
         !isClicked ? (
-          <Button onClick={handleBuyClick} appearance={"blue"} block>
+          <Button
+            onClick={() => handleBuyClick(product.id)}
+            appearance={"blue"}
+            block
+          >
             Купить
           </Button>
-        ) : null,
+        ) : (
+          <Counter initialValue={1} onDecrement={handleDecrement} />
+        ),
       ]}
     >
       <Flex vertical align={"center"}>
@@ -117,13 +148,9 @@ export function ProductCard({ product }: ProductCardProps) {
             </Text>
           </Flex>
         </Flex>
-        <Text style={{ marginBottom: 20, fontSize: 14 }}>
+        <Paragraph style={{ minHeight: "45px", fontSize: 14 }}>
           {truncateTextAfterWords(product.name, 5)}
-        </Text>
-        {(isClicked && (
-          <Counter initialValue={1} onDecrement={handleDecrement} />
-        )) ||
-          null}
+        </Paragraph>
       </Flex>
     </Card>
   );

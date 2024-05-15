@@ -27,12 +27,17 @@ const productSlice = createSlice({
 
 export const fetchProducts = createAsyncThunk<unknown, FilterProduct>(
   "products/fetchProducts",
-  async (filters, { dispatch, rejectWithValue }) => {
+  async (filters: FilterProduct, { dispatch, rejectWithValue }) => {
     try {
-      const queryParams = {
+      const queryParams: FilterProduct = {
         limit: filters.limit || 100,
         offset: filters.offset || 0,
       };
+
+      if (filters.brand) {
+        queryParams.brand = filters.brand;
+      }
+
       const response = await $axios.get(`${API_URL}/products/`, {
         params: queryParams,
       });
@@ -88,7 +93,7 @@ export const fetchNewProducts = createAsyncThunk<unknown, FilterProduct>(
       const response = await $axios.get(`${API_URL}/products/new_products/`, {
         params: queryParams,
       });
-      const data: ProductState = { products: response.data.products };      
+      const data: ProductState = { products: response.data.products };
       dispatch(productSlice.actions.setProduct(data));
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -98,24 +103,32 @@ export const fetchNewProducts = createAsyncThunk<unknown, FilterProduct>(
   }
 );
 
-export const searchProducts = createAsyncThunk<ProductState, any, {rejectValue: unknown}>(
+export const searchProducts = createAsyncThunk<
+  ProductState,
+  any,
+  { rejectValue: unknown }
+>(
   "products/searchProducts",
-  async (search_filters, {dispatch, rejectWithValue}) => {
+  async (search_filters, { dispatch, rejectWithValue }) => {
     try {
-      const response = await $axios.get(`${API_URL}/products/`, {params : {
-        search: search_filters
-      }})
-      const data: ProductState = { products: response.data.results } 
-      dispatch(productSlice.actions.setProduct(data))
-      return data
+      const response = await $axios.get(`${API_URL}/products/`, {
+        params: {
+          search: search_filters,
+        },
+      });
+      const data: ProductState = { products: response.data.results };
+      dispatch(productSlice.actions.setProduct(data));
+      return data;
     } catch (error) {
-      if(error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data?.message || "Failed to fetch searchProducts")
+      if (error instanceof AxiosError) {
+        return rejectWithValue(
+          error.response?.data?.message || "Failed to fetch searchProducts"
+        );
       }
-      throw error
+      throw error;
     }
   }
-)
+);
 
 export const { setProduct } = productSlice.actions;
 export default productSlice.reducer;

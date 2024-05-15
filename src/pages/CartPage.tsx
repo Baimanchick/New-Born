@@ -16,7 +16,7 @@ import openNotification from "../components/Notification/Notification";
 
 function CartPage() {
   const { token } = theme.useToken();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [notificationShown, setNotificationShown] = useState(false);
   const navigation = useNavigate();
@@ -26,9 +26,9 @@ function CartPage() {
 
   useEffect(() => {
     if (!isAuth) {
-      setNotificationShown(true)
+      setNotificationShown(true);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     dispatch(fetchCarts());
@@ -41,11 +41,10 @@ function CartPage() {
   const prev = () => {
     setCurrent(current - 1);
   };
-
   useEffect(() => {
     if (notificationShown) {
-      navigate('/register');
-      openNotification('warning', 'Предупреждение', 'Вы не авторизованы', 2);
+      navigate("/register");
+      openNotification("warning", "Предупреждение", "Вы не авторизованы", 2);
     }
   }, [notificationShown]);
 
@@ -127,9 +126,8 @@ function CartPage() {
   );
 
   if (!carts) {
-    return <Loading />
+    return <Loading />;
   }
-
 
   return (
     <div className="container">

@@ -13,10 +13,8 @@ const NotFoundedPage = lazy(() => import("../pages/NotFoundedPage"));
 const ProfilePage = lazy(() => import("../pages/ProfilePage"));
 const DeliveryPage = lazy(() => import("../pages/DeliveryPage"));
 
-
-
 function MainRoutes() {
-  const isAuth = useAppSelector((store) => store.auth.user !== null);
+  const isAuth = useAppSelector((store) => store.auth.isAuth);
 
   return (
     <Routes>
@@ -26,16 +24,14 @@ function MainRoutes() {
         <Route path="/detail/:id" element={<DetailPage />} />
         <Route
           path="/cart"
-          element={<CartPage />}
+          element={!isAuth ? <Navigate to={"/register"} /> : <CartPage />}
         />
+        <Route path="/cart" element={<CartPage />} />
         <Route
           path="/profile"
           element={!isAuth ? <Navigate to={"/"} /> : <ProfilePage />}
         />
-        <Route
-          path="/delivery"
-          element={<DeliveryPage />}
-        />
+        <Route path="/delivery" element={<DeliveryPage />} />
         <Route path="/favorite" element={<FavoritePage />} />
         <Route path="/profile" element={<FavoritePage />} />
         <Route
@@ -51,6 +47,5 @@ function MainRoutes() {
     </Routes>
   );
 }
-
 
 export default MainRoutes;

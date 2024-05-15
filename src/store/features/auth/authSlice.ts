@@ -22,6 +22,7 @@ interface AuthState {
   tokens: Tokens | null;
   isValidToken: boolean;
   error: ErrorMessage;
+  isAuth: boolean;
 }
 
 const initialState: AuthState = {
@@ -29,6 +30,9 @@ const initialState: AuthState = {
   tokens: JSON.parse(localStorage.getItem("tokens") || "null"),
   isValidToken: true,
   error: null,
+  isAuth:
+    !!JSON.parse(localStorage.getItem("tokens") || "null") &&
+    !!JSON.parse(localStorage.getItem("user") || "null"),
 };
 
 const authSlice = createSlice({
@@ -50,6 +54,7 @@ const authSlice = createSlice({
       localStorage.removeItem("user");
       state.tokens = null;
       state.user = null;
+      state.isAuth = false;
     },
 
     setIsValidToken(state: AuthState, action: PayloadAction<boolean>) {
@@ -58,6 +63,12 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state, action) => {});
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.isAuth = true;
+    });
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.isAuth = true;
+    });
   },
 });
 
