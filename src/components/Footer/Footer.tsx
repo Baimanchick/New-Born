@@ -13,6 +13,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 function Footer() {
     const windowSize = useWindowSize();
 
+    // TODO Change to Grid
     const isMobile = windowSize.width && windowSize.width < 755;
 
     return (

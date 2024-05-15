@@ -5,13 +5,25 @@
 .cardCustom {
   width: 225px !important;
 
-  @media screen and (max-width: 12000px) {
-    width: 200px !important;
+  @media screen and (max-width: 660px) {
+    width: 165px !important;
   }
 
   border-radius: 20px !important;
   padding: 10px !important;
   cursor: pointer;
+}
+
+.productCardImage {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+
+  @media screen and (max-width: 660px) {
+    width: 131px !important;
+    height: auto !important;
+    object-fit: cover !important;
+  }
 }
 
 .bodyCustom {
@@ -71,5 +83,23 @@
 
   &:hover {
     color: red !important;
+  }
+}
+
+.priceTitle {
+  @media screen and (max-width: 660px) {
+    font-size: 14px !important;
+  }
+}
+
+.productRating {
+  @media screen and (max-width: 660px) {
+    font-size: 14px !important;
+  }
+}
+
+.productParagraph {
+  @media screen and (max-width: 660px) {
+    font-size: 12px !important;
   }
 }

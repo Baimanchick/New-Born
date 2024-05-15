@@ -18,9 +18,7 @@ function HomePage() {
                 <div className='gray'>
                     <AdCardList />
                     <NewProductsList />
-                    <div className='turquoise'>
-                        <RecommendedProductsList />
-                    </div>
+                    <RecommendedProductsList />
                     <PopularProductsList />
                     <CustomerReviewsCarousel />
                     <BrandCardList />
