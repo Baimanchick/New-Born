@@ -42,9 +42,6 @@ function InfoBlock({ product }: any) {
         if (isAuth) {
             dispatch(addToCart({ count: 1, product_id: productId }));
             setAddedToCart(true);
-            const addedProducts = JSON.parse(localStorage.getItem('addedProducts') || '[]');
-            const updatedProducts = [...addedProducts, productId];
-            localStorage.setItem('addedProducts', JSON.stringify(updatedProducts));
         } else {
             navigate("/register");
             openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
@@ -90,7 +87,7 @@ function InfoBlock({ product }: any) {
                         justify={'center'}
                         className={styles.CustomFlexInfoBlock}
                     >
-                        <img width={100} src={`${API_URL}${product.brand_image}`} />
+                        <img style={{ objectFit: 'contain', width: 'auto', height: 40 }} src={`${API_URL}${product.brand_image}`} />
                     </Flex>
                     <Button
                         appearance='lightBlue'

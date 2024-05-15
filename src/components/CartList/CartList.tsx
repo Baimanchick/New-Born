@@ -49,7 +49,7 @@ export function CartList({ carts }: any) {
     }
   }, [carts]);
 
-  console.log(counts)
+  console.log(carts)
 
   const incrementCount = (id: string) => {
     const newCounts = { ...counts };

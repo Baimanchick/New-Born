@@ -4,6 +4,11 @@
 
 .cardCustom {
   width: 225px !important;
+
+  @media screen and (max-width: 12000px) {
+    width: 200px !important;
+  }
+
   border-radius: 20px !important;
   padding: 10px !important;
   cursor: pointer;

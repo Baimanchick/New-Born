@@ -69,6 +69,11 @@ export const addToCart = createAsyncThunk<unknown, any>(
         product: product_id,
       };
       const response = await $axios.post(`${API_URL}/carts/`, obj);
+      const addedProducts = JSON.parse(
+        localStorage.getItem("addedProducts") || "[]"
+      );
+      const updatedProducts = [...addedProducts, product_id];
+      localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
       dispatch(fetchCarts());
       console.log(response);
 
@@ -91,7 +96,8 @@ export const changeCountCartProduct = createAsyncThunk<
       const response = await $axios.patch(`${API_URL}/carts/${product_id}/`, {
         count: count,
       });
-      console.log(response.data)
+      console.log(product_id);
+      console.log(response.data);
       dispatch(fetchCarts());
       return response.data;
     } catch (error) {
