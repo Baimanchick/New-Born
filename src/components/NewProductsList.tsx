@@ -8,11 +8,13 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchNewProducts } from "../store/features/products/productSlice";
 import { default_filters } from "../utils/consts";
 
+
 const { Title } = Typography;
 
 function NewProductsList() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
+  const carts = useAppSelector((state) => state.carts.carts)
 
   useEffect(() => {
     dispatch(
@@ -46,11 +48,19 @@ function NewProductsList() {
         </div>
         <div className={styles.newProducts}>
           <List
-            grid={{ gutter: 16, column: 5, xl: 4, lg: 4, md: 3, sm: 2, xs: 2 }}
+            grid={{
+              gutter: 16,
+              xs: 2,
+              sm: 2,
+              md: 4,
+              lg: 6,
+              xl: 6,
+              xxl: 6,
+            }}
             dataSource={products}
             renderItem={(product: Product, index: number) => (
-              <List.Item style={{ backgroundColor: "initial" }}>
-                <ProductCard key={index} product={product} />
+              <List.Item style={{ backgroundColor: 'initial' }}>
+                <ProductCard carts={carts} key={index} product={product} />
               </List.Item>
             )}
           />

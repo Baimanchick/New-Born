@@ -14,9 +14,7 @@ import { changeName, setLogout } from '../../store/features/auth/authSlice';
 const { Title } = Typography;
 const { Content } = Layout
 
-function ProfileList() {
-    const userString = localStorage.getItem('user');
-    const user = userString ? JSON.parse(userString) : null;
+function ProfileList({ user }: any) {
     const navigate = useNavigate();
     const [modifiedName, setModifiedName] = useState(user?.name);
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
