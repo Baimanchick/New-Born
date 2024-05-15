@@ -26,7 +26,7 @@ function RecommendedProductsList() {
   return (
     <div className={styles.recommendedProducts_main}>
       <div className={styles.recommendedProducts_container}>
-        <Title style={{ fontSize: "24px", fontWeight: "1000", color: "#fff" }}>
+        <Title style={{ fontSize: "24px", fontWeight: "1000", color: "#FABC22" }}>
           Рекомендуем вам
         </Title>
         <div className={styles.recommendedProducts}>
