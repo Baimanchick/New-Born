@@ -26,18 +26,10 @@
 }
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-card-bordered .ant-card-cover {
-  margin: 0;
-  width: 200px;
-  height: 240px;
-  overflow: hidden;
-
-  @media screen and (max-width: 480px) {
-    width: initial;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  margin: 0 !important;
+  //width: 200px !important;
+  height: 240px !important;
+  overflow: hidden !important;
 }
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions {
@@ -132,11 +124,18 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-col{
   @media screen and (max-width: 480px) {
     padding: 0 !important;
-
   }
 }
 
-
+@media(max-width: 480px) {
+  :where(.css-dev-only-do-not-override-42nv3w).ant-card-bordered .ant-card-cover{
+    width: initial !important;
+    height: 140px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
 //.ant-list .ant-row > div,
 //.ant-list .ant-row .ant-col:first-child {
 //  display: flex !important;
