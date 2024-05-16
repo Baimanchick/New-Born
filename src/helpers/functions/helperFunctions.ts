@@ -41,3 +41,18 @@ export const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString("ru-RU", options);
 };
+
+export function truncateTextAfterSymbols(
+  text: string,
+  numSymbols: number
+): string {
+  // Parse the HTML to get plain text content
+  const htmlText = new DOMParser().parseFromString(text, "text/html");
+  const textContent = htmlText.body.textContent || "";
+
+  // Check if text length exceeds the specified number of symbols
+  if (textContent.length > numSymbols) {
+    return textContent.slice(0, numSymbols) + "...";
+  }
+  return textContent;
+}
