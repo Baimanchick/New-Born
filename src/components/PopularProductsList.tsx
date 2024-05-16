@@ -1,11 +1,9 @@
-import { ProductCard } from "./ProductCard/ProductCard";
 import styles from "../styles/card.module.scss";
 import { Button } from "./Button/Button";
-import { List, Typography } from "antd";
-import React, { useEffect } from "react";
+import { Typography } from "antd";
+import { useEffect } from "react";
 import { fetchRecAndPopProducts } from "../store/features/products/productSlice";
 import { default_filters } from "../utils/consts";
-import { Product } from "../helpers/interfaces/product.interface";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import ProductList from "./ProductList/ProductList";
 
@@ -14,7 +12,6 @@ const { Title } = Typography;
 function PopularProductsList() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
-  const carts = useAppSelector((state) => state.carts.carts);
 
   useEffect(() => {
     dispatch(

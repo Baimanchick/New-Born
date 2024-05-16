@@ -80,6 +80,7 @@ export function ProductCard({ product }: ProductCardProps) {
       classNames={{
         body: styles.bodyCustom,
         header: styles.headCustom,
+        cover: styles.coverCustom,
         extra: styles.extraCustom,
       }}
       extra={

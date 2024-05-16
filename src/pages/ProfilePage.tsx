@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchCarts } from "../store/features/cart/cartSlice";
 import { Flex, Typography } from "antd";
 import Loading from "../components/Loader/Loading";
+import useWindowSize from "../hooks/useWindowSize";
 
 const { Title } = Typography
 
@@ -13,7 +14,9 @@ function ProfilePage() {
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
     const dispatch = useAppDispatch()
+    const windowSize = useWindowSize();
     const [loading, setLoading] = useState(true)
+    const isMobile = windowSize.width && windowSize.width < 660;
     useEffect(() => {
         dispatch(fetchCarts())
             .then(() => setLoading(false))

@@ -26,6 +26,11 @@
   max-height: 30px !important;
   border: none !important;
 }
+.coverCustom{
+  margin: 0 !important;
+  height: 240px !important;
+  overflow: hidden !important;
+}
 
 .tag {
   margin-block: 3px !important;
@@ -114,5 +119,13 @@
     width: 131px !important;
     height: auto !important;
     object-fit: cover !important;
+  }
+
+  .coverCustom{
+    width: initial;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
