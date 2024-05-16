@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styles from "../styles/card.module.scss";
 import BrandCard from "./BrandCard/BrandCard";
-import { Flex, Typography } from "antd";
+import { Flex, List, Typography } from "antd";
 import { fetchBrand } from "../store/features/brand/brandSlice";
 import { BrandType } from "./BrandCard/BrandCard.props";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
@@ -38,9 +38,23 @@ function BrandCardList() {
           style={{ rowGap: "15px" }}
           gap={15}
         >
-          {brand.map((brand: BrandType, index: number) => (
-            <BrandCard key={index} brand={brand} />
-          ))}
+          <List
+            grid={{
+              gutter: 16,
+              xs: 2,
+              sm: 3,
+              md: 4,
+              lg: 5,
+              xl: 6,
+              xxl: 6,
+            }}
+            dataSource={brand}
+            renderItem={(brand: BrandType, index: number) => (
+              <List.Item style={{ backgroundColor: 'initial' }}>
+                <BrandCard key={index} brand={brand} />
+              </List.Item>
+            )}
+          />
 
         </Flex>
       </div>
