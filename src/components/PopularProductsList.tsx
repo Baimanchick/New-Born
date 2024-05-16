@@ -49,9 +49,9 @@ function PopularProductsList() {
             grid={{
               gutter: 16,
               xs: 2,
-              sm: 2,
+              sm: 3,
               md: 4,
-              lg: 6,
+              lg: 4,
               xl: 6,
               xxl: 6,
             }}

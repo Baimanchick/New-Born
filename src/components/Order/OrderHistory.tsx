@@ -46,7 +46,7 @@ export function OrderHistory({ carts }: any) {
                 itemLayout="horizontal"
                 dataSource={sortedCarts}
                 renderItem={(cart: Cart, index: number) => (
-                    <Flex justify={'space-between'} align={'center'}>
+                    <Flex key={index} justify={'space-between'} align={'center'}>
                         <Flex>
                             <Image width={100} height={100} src={cart.product.default_image} />
                             <Text style={{ ...fontStyles, color: Colors.GREY, width: 214 }} >{truncateTextAfterWords(cart.product.name, 5)}</Text>

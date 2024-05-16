@@ -24,6 +24,10 @@
             width: 100%;
             height: auto;
 
+            @media screen and (max-width: 1160px) {
+                width: 220px !important;
+            }
+
             @media screen and (max-width: 660px) {
                 height: 190px;
             }
@@ -33,6 +37,7 @@
             cursor: pointer;
 
             .categoryCardAntBody {
+
                 padding: 26px 15px 26px 15px;
 
                 div {
@@ -62,6 +67,10 @@
 .adCardList_main {
     margin-top: 50px;
     padding-top: 40px;
+
+    @media screen and (max-width: 660px) {
+        margin-top: initial;
+    }
 
 
     .adCardList_container {
