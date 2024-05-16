@@ -10,6 +10,7 @@ import { Button } from "../Button/Button";
 import { ProductCardProps } from "./ProductCard.props";
 import {
   formatNumberAndAddCurrency,
+  truncateTextAfterSymbols,
   truncateTextAfterWords,
 } from "../../helpers/functions/helperFunctions";
 import styles from "./productCard.module.scss";
@@ -39,7 +40,7 @@ export function ProductCard({ product }: ProductCardProps) {
       dispatch(addToCart({ count: 1, product_id: productId }));
     } else {
       navigate("/register");
-      openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
+      openNotification("error", "Ошибка", "Вы не авторизованы", 2);
     }
   };
 
@@ -115,6 +116,7 @@ export function ProductCard({ product }: ProductCardProps) {
       actions={[
         !isClicked ? (
           <Button
+            className={styles.btnBuy}
             onClick={() => handleBuyClick(product.id)}
             appearance={"blue"}
             block
@@ -137,13 +139,16 @@ export function ProductCard({ product }: ProductCardProps) {
           </Title>
           <Flex align={"center"}>
             <Star />
-            <Text className={styles.productRating} style={{ fontSize: 18, marginLeft: 3 }}>
+            <Text
+              className={styles.productRating}
+              style={{ fontSize: 18, marginLeft: 3 }}
+            >
               {product.rating}
             </Text>
           </Flex>
         </Flex>
-        <Paragraph className={styles.productParagraph} style={{ minHeight: "45px", fontSize: 14 }}>
-          {truncateTextAfterWords(product.name, 5)}
+        <Paragraph className={styles.productParagraph}>
+          {product.name}
         </Paragraph>
       </Flex>
     </Card>

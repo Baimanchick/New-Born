@@ -49,7 +49,10 @@ function FilterSideBar() {
         <FilterMenuSideBar />
       </Sider>
       <Content>
-        <ProductList products={products} />
+        <ProductList
+          products={products}
+          grid={{ column: 4, md: 2, sm: 2, lg: 4, xl: 4, xs: 2 }}
+        />
       </Content>
     </Layout>
   );

@@ -31,9 +31,12 @@
   height: 240px;
   overflow: hidden;
 
-  @media screen and (max-width: 660px) {
+  @media screen and (max-width: 480px) {
     width: initial;
-    height: initial;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -113,10 +116,10 @@
   border-radius: 20px !important;
 }
 
-.ant-list-item {
-  padding: 10px !important;
-  background-color: white;
-}
+//.ant-list-item {
+//  padding: 10px !important;
+//  background-color: white;
+//}
 
 :where(.css-42nv3w).ant-carousel .slick-dots li {
   background-color: gray !important;
@@ -126,6 +129,12 @@
   display: block;
 }
 
+:where(.css-dev-only-do-not-override-42nv3w).ant-col{
+  @media screen and (max-width: 480px) {
+    padding: 0 !important;
+
+  }
+}
 
 
 //.ant-list .ant-row > div,
