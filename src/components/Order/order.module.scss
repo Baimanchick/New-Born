@@ -15,6 +15,23 @@
     font-weight: 700 !important;
     color: black !important;
     margin: 0 !important;
+
+    @media screen and (max-width: 850px) {
+        font-size: 16px !important;
+    }
+}
+
+.profileProductName {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 23px !important;
+    color: #C3C3C3 !important;
+    width: 214px !important;
+
+    @media screen and (max-width: 850px) {
+        font-size: 14px !important;
+        width: 114px !important;
+    }
 }
 
 .yellowProfileFont {
@@ -22,6 +39,10 @@
     font-weight: 700 !important;
     color: #FABC22 !important;
     margin: 0 !important;
+
+    @media screen and (max-width: 850px) {
+        font-size: 16px !important;
+    }
 }
 
 

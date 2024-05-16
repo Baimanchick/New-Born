@@ -17,6 +17,7 @@ function ProductList({ products, grid }: ProductProps) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            gap: '10px',
             padding: 0,
           }}
         >
