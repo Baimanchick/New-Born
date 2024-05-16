@@ -10,12 +10,6 @@ import { formatNumberAndAddCurrency, truncateTextAfterWords } from "../../helper
 import { Cart } from "../../helpers/interfaces/cart.interface";
 const { Text, Title } = Typography;
 
-const fontStyles: React.CSSProperties = {
-    fontSize: "20px",
-    fontWeight: 700,
-    lineHeight: "23px",
-};
-
 const headerItems = ["Товар", "Цена", "Количество", "Адрес", "В общем"];
 
 export function OrderHistory({ carts }: any) {
@@ -49,7 +43,7 @@ export function OrderHistory({ carts }: any) {
                     <Flex key={index} justify={'space-between'} align={'center'}>
                         <Flex>
                             <Image width={100} height={100} src={cart.product.default_image} />
-                            <Text style={{ ...fontStyles, color: Colors.GREY, width: 214 }} >{truncateTextAfterWords(cart.product.name, 5)}</Text>
+                            <Text className={styles.profileProductName} >{truncateTextAfterWords(cart.product.name, 5)}</Text>
                         </Flex>
                         <Flex>
                             <Title className={styles.blackProfileFont} >{formatNumberAndAddCurrency(cart.product.price, 'сом')}</Title>

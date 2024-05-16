@@ -3,7 +3,8 @@ import FavoriteList from "../components/Favorite/FavoriteList"
 import { useAppSelector } from "../hooks/hooks"
 import { useNavigate } from "react-router-dom";
 import openNotification from "../components/Notification/Notification";
-import { Button, Result } from "antd";
+import { Flex, Result } from "antd";
+import { Button } from "../components";
 
 
 function FavoritePage() {
@@ -32,7 +33,11 @@ function FavoritePage() {
                 <Result
                     title="Нет товаров"
                     subTitle="Извините но вы еще не добавили продукты в избранное"
-                    extra={<Button onClick={() => navigate('/')} type="primary">На галвную страничку</Button>}
+                    extra={
+                        <Flex justify={'center'}>
+                            <Button appearance="yellow" onClick={() => navigate('/')}>К покупкам</Button>
+                        </Flex>
+                    }
                 />
             ) : (
                 <FavoriteList favoriteProducts={favoriteProducts} />
