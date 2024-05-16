@@ -122,10 +122,10 @@
   }
 
   .coverCustom{
-    width: initial;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: initial !important;
+    height: 140px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
