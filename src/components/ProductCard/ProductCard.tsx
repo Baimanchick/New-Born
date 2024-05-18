@@ -10,8 +10,6 @@ import { Button } from "../Button/Button";
 import { ProductCardProps } from "./ProductCard.props";
 import {
   formatNumberAndAddCurrency,
-  truncateTextAfterSymbols,
-  truncateTextAfterWords,
 } from "../../helpers/functions/helperFunctions";
 import styles from "./productCard.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";

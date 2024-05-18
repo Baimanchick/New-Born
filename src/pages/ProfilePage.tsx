@@ -6,6 +6,8 @@ import { fetchCarts } from "../store/features/cart/cartSlice";
 import { Flex, Typography } from "antd";
 import Loading from "../components/Loader/Loading";
 import useWindowSize from "../hooks/useWindowSize";
+import OrderHistoryMobile from "../components/Order/OrderHistoryMobile";
+import styles from "../components/ProfileList/profile.module.scss"
 
 const { Title } = Typography
 
@@ -28,18 +30,18 @@ function ProfilePage() {
         <div className="container">
             <ProfileList user={user} />
             <Flex style={{ marginTop: 30, marginBottom: 30 }} justify={'center'}>
-                <Title
-                    style={{
-                        fontWeight: 1000,
-                        fontSize: 40,
-                        color: '#1B81E7'
-                    }}
-                >
+                <Title className={styles.profileTitlePage}>
                     История заказов
                 </Title>
             </Flex>
-            <OrderHistory carts={carts} />
-        </div>
+            {
+                isMobile ? (
+                    <OrderHistoryMobile carts={carts} />
+                ) : (
+                    <OrderHistory carts={carts} />
+                )
+            }
+        </div >
     )
 }
 

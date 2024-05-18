@@ -95,7 +95,6 @@
   display: none;
 }
 
-// TODO потом я исправлю
 //UnderLineAboveUlLiInNavbarAndFilter
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-horizontal>.ant-menu-item-selected::after,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-horizontal>.ant-menu-item-selected::after,
@@ -117,10 +116,6 @@
   border-radius: 20px !important;
 }
 
-//.ant-list-item {
-//  padding: 10px !important;
-//  background-color: white;
-//}
 
 :where(.css-42nv3w).ant-carousel .slick-dots li {
   background-color: gray !important;
@@ -137,14 +132,26 @@
   }
 }
 
+//ArrowInCartList
+:where(.css-dev-only-do-not-override-42nv3w).ant-steps.ant-steps-navigation .ant-steps-item::after {
+  @media screen and (max-width: 660px) {
+    width: 5px !important;
+    height: 5px !important;
+    top: calc(50% - 1px)
+  }
+}
 
-//.ant-list .ant-row > div,
-//.ant-list .ant-row .ant-col:first-child {
-//  display: flex !important;
-//}
-// .ant-list .ant-row .ant-list-item {
-//  flex: 1 1 auto !important;
-//}
-//.ant-list .ant-row .ant-list-item .ant-card {
-//  height: 100% !important;
-//}
+//StepsInCartList
+:where(.css-dev-only-do-not-override-42nv3w).ant-steps.ant-steps-navigation .ant-steps-item-container {
+  @media screen and (max-width: 660px) {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+//HeightForStepsInCartList
+:where(.css-dev-only-do-not-override-42nv3w).ant-steps:not(.ant-steps-vertical) .ant-steps-item-custom .ant-steps-item-icon {
+  @media screen and (max-width: 660px) {
+    height: 10px !important;
+  }
+}

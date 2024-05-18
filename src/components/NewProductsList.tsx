@@ -1,9 +1,7 @@
-import { ProductCard } from "./ProductCard/ProductCard";
 import styles from "../styles/card.module.scss";
-import { List, Typography } from "antd";
+import { Typography } from "antd";
 import { Button } from "./Button/Button";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Product } from "../helpers/interfaces/product.interface";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchNewProducts } from "../store/features/products/productSlice";
 import { default_filters } from "../utils/consts";

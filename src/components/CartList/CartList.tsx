@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button as ButtonAnt,
   Divider,
@@ -14,18 +14,17 @@ import { formatNumberAndAddCurrency } from "../../helpers/functions/helperFuncti
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { changeCountCartProduct, deleteCart, fetchCarts } from "../../store/features/cart/cartSlice";
 import { Cart } from "../../helpers/interfaces/cart.interface";
+import useWindowSize from "../../hooks/useWindowSize";
+import ProductList from "../ProductList/ProductList";
 const { Text, Paragraph } = Typography;
-
-const fontStyles: React.CSSProperties = {
-  fontSize: "20px",
-  fontWeight: 700,
-  lineHeight: "23px",
-};
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
 
 export function CartList({ carts }: any) {
   const dispatch = useAppDispatch();
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width && windowSize.width < 660;
+  const products = useAppSelector((state) => state.products.products)
   const [counts, setCounts] = useState<{ [key: string]: number }>(() => {
     const storedCounts = localStorage.getItem("cartCounts");
     if (storedCounts && storedCounts !== "{}") {
@@ -79,74 +78,93 @@ export function CartList({ carts }: any) {
 
   return (
     <>
-      <List
-        className={styles.list}
-        header={
-          <Flex
-            align={"center"}
-            justify={"space-between"}
-            className={styles.headerItems}
-          >
-            {headerItems.map((item, index: number) => {
-              return <Text key={index} className={styles.headerItem}>{item}</Text>;
-            })}
-          </Flex>
-        }
-        itemLayout="horizontal"
-        dataSource={sortedCarts}
-        renderItem={(cart: Cart, index: number) => (
-          <List.Item
-            actions={[
-              <ButtonAnt
-                type={"primary"}
-                danger
-                icon={<MinusOutlined />}
-                shape={"circle"}
-                onClick={() => {
-                  const stringProducts = localStorage.getItem("addedProducts");
-                  const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
+      {isMobile ?
+        <div>
+          <ProductList
+            products={products}
+            grid={{
+              gutter: 16,
+              column: 6,
+              xxl: 6,
+              xl: 6,
+              lg: 4,
+              md: 3,
+              sm: 2,
+              xs: 2,
+            }}
+          />
+        </div> :
+        <>
+          <List
+            className={styles.list}
+            header={
+              <Flex
+                align={"center"}
+                justify={"space-between"}
+                className={styles.headerItems}
+              >
+                {headerItems.map((item, index: number) => {
+                  return <Text key={index} className={styles.headerItem}>{item}</Text>;
+                })}
+              </Flex>
+            }
+            itemLayout="horizontal"
+            dataSource={sortedCarts}
+            renderItem={(cart: Cart, index: number) => (
+              <List.Item
+                actions={[
+                  <ButtonAnt
+                    type={"primary"}
+                    danger
+                    icon={<MinusOutlined />}
+                    shape={"circle"}
+                    onClick={() => {
+                      const stringProducts = localStorage.getItem("addedProducts");
+                      const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
 
-                  const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
+                      const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
 
-                  if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
-                    localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                      if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
+                        localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                      }
+
+                      dispatch(deleteCart(cart.id));
+                      dispatch(fetchCarts())
+                    }}
+                  />,
+                ]}
+                key={index}
+              >
+                <List.Item.Meta
+                  className={styles.item}
+                  avatar={
+                    <Flex align={"center"} gap={20}>
+                      <img src={cart.product.default_image} width={100} height={100} />
+                      <Text className={styles.cartProductName}>
+                        {cart.product.name}
+                      </Text>
+                    </Flex>
                   }
-
-                  dispatch(deleteCart(cart.id));
-                  dispatch(fetchCarts())
-                }}
-              />,
-            ]}
-            key={index}
-          >
-            <List.Item.Meta
-              className={styles.item}
-              avatar={
-                <Flex align={"center"} gap={20}>
-                  <img src={cart.product.default_image} width={100} height={100} />
-                  <Text style={{ ...fontStyles, color: Colors.GREY }}>
-                    {cart.product.name}
-                  </Text>
-                </Flex>
-              }
-            />
-            <List.Item.Meta
-              className={styles.priceItemMeta}
-              title={formatNumberAndAddCurrency(cart.product.price, 'сом')}
-            />
-            <List.Item.Meta
-              className={styles.counterItemMeta}
-              title={<Counter initialValue={cart.count} onIncrement={() => incrementCount(cart.id)} onDecrement={() => decrementCount(cart.id)} />}
-            />
-            <List.Item.Meta
-              className={`${styles.priceItemMeta} ${styles.priceItemMetaYellow}`}
-              title={formatNumberAndAddCurrency(cart.product.price * cart.count, 'сом')}
-              style={{ color: '#FABC22' }}
-            />
-          </List.Item>
-        )}
-      />
-      <Divider />
+                />
+                <List.Item.Meta
+                  className={styles.priceItemMeta}
+                  title={formatNumberAndAddCurrency(cart.product.price, 'сом')}
+                />
+                <List.Item.Meta
+                  className={styles.counterItemMeta}
+                  title={<Counter initialValue={cart.count} onIncrement={() => incrementCount(cart.id)} onDecrement={() => decrementCount(cart.id)} />}
+                />
+                <List.Item.Meta
+                  className={`${styles.priceItemMeta} ${styles.priceItemMetaYellow}`}
+                  title={formatNumberAndAddCurrency(cart.product.price * cart.count, 'сом')}
+                  style={{ color: '#FABC22' }}
+                />
+              </List.Item>
+            )}
+          />
+        </>
+      }
+      {isMobile ? null : <Divider />}
       <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>
           <Text

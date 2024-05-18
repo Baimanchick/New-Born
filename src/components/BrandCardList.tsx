@@ -51,7 +51,7 @@ function BrandCardList() {
             }}
             dataSource={brand}
             renderItem={(brand: BrandType, index: number) => (
-              <List.Item style={{ backgroundColor: 'initial' }}>
+              <List.Item style={{ backgroundColor: 'initial', display: 'flex', justifyContent: 'center' }}>
                 <BrandCard key={index} brand={brand} />
               </List.Item>
             )}

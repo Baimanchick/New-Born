@@ -104,3 +104,13 @@
     color: #FF2F2F !important;
     cursor: pointer !important;
 }
+
+.profileTitlePage {
+    font-weight: 1000 !important;
+    font-size: 40px !important;
+    color: #1B81E7 !important;
+
+    @media screen and (max-width: 660px) {
+        font-size: 24px !important;
+    }
+}
