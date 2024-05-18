@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import {
-  Button as ButtonAnt,
-  Divider,
-  Flex,
-  List,
-  Typography,
-} from "antd";
+import { Button as ButtonAnt, Divider, Flex, List, Typography } from "antd";
 import styles from "./cartList.module.scss";
 import { MinusOutlined } from "@ant-design/icons";
 import { Counter } from "../Counter/Counter";
 import { Colors } from "../../helpers/enums/color.enum";
 import { formatNumberAndAddCurrency } from "../../helpers/functions/helperFunctions";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { changeCountCartProduct, deleteCart, fetchCarts } from "../../store/features/cart/cartSlice";
+import {
+  changeCountCartProduct,
+  deleteCart,
+  fetchCarts,
+} from "../../store/features/cart/cartSlice";
 import { Cart } from "../../helpers/interfaces/cart.interface";
 import useWindowSize from "../../hooks/useWindowSize";
 import ProductList from "../ProductList/ProductList";
@@ -24,76 +22,34 @@ export function CartList({ carts }: any) {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const isMobile = windowSize.width && windowSize.width < 660;
-  const products = useAppSelector((state) => state.products.products)
-  const [counts, setCounts] = useState<{ [key: string]: number }>(() => {
-    const storedCounts = localStorage.getItem("cartCounts");
-    if (storedCounts && storedCounts !== "{}") {
-      return JSON.parse(storedCounts);
-    } else {
-      const countObj = carts.reduce((acc: any, item: any) => {
-        return { ...acc, [item.id]: item.count };
-      }, {});
-      localStorage.setItem("cartCounts", JSON.stringify(countObj));
-      return countObj;
-    }
-  });
 
-  useEffect(() => {
-    if (Object.keys(counts).length === 0) {
-      const countObj = carts.reduce((acc: any, item: any) => {
-        return { ...acc, [item.id]: item.count };
-      }, {});
-      localStorage.setItem("cartCounts", JSON.stringify(countObj));
-      setCounts(countObj);
-    }
-  }, [carts]);
-
-  console.log(carts)
-
-  const incrementCount = (id: string) => {
-    const newCounts = { ...counts };
-    newCounts[id] = (newCounts[id] || 0) + 1;
-    setCounts(newCounts);
-    localStorage.setItem("cartCounts", JSON.stringify(newCounts));
-    dispatch(changeCountCartProduct({ count: newCounts[id], product_id: +id }));
+  const incrementCount = ({ count, id }: { count: number; id: number }) => {
+    dispatch(changeCountCartProduct({ count, product_id: id }));
   };
 
-  const decrementCount = (id: string) => {
-    const newCounts = { ...counts };
-    newCounts[id] = (newCounts[id] || 0) - 1;
-    setCounts(newCounts);
-    localStorage.setItem("cartCounts", JSON.stringify(newCounts));
-    dispatch(changeCountCartProduct({ count: newCounts[id], product_id: +id }));
-    if (newCounts[id] < 1) {
-      localStorage.removeItem("addedProducts");
-      dispatch(deleteCart(+id));
-    }
+  const decrementCount = ({ count, id }: { count: number; id: number }) => {
+    dispatch(changeCountCartProduct({ count, product_id: id }));
   };
-
-  const sortCartsById = (carts: any) => {
-    return [...carts].sort((a, b) => a.id - b.id);
-  };
-
-  const sortedCarts = sortCartsById(carts);
 
   return (
     <>
-      {isMobile ?
+      {isMobile ? (
         <div>
-          <ProductList
-            products={products}
-            grid={{
-              gutter: 16,
-              column: 6,
-              xxl: 6,
-              xl: 6,
-              lg: 4,
-              md: 3,
-              sm: 2,
-              xs: 2,
-            }}
-          />
-        </div> :
+          {/*<ProductList*/}
+          {/*  products={products}*/}
+          {/*  grid={{*/}
+          {/*    gutter: 16,*/}
+          {/*    column: 6,*/}
+          {/*    xxl: 6,*/}
+          {/*    xl: 6,*/}
+          {/*    lg: 4,*/}
+          {/*    md: 3,*/}
+          {/*    sm: 2,*/}
+          {/*    xs: 2,*/}
+          {/*  }}*/}
+          {/*/>*/}
+        </div>
+      ) : (
         <>
           <List
             className={styles.list}
@@ -104,12 +60,16 @@ export function CartList({ carts }: any) {
                 className={styles.headerItems}
               >
                 {headerItems.map((item, index: number) => {
-                  return <Text key={index} className={styles.headerItem}>{item}</Text>;
+                  return (
+                    <Text key={index} className={styles.headerItem}>
+                      {item}
+                    </Text>
+                  );
                 })}
               </Flex>
             }
             itemLayout="horizontal"
-            dataSource={sortedCarts}
+            dataSource={carts}
             renderItem={(cart: Cart, index: number) => (
               <List.Item
                 actions={[
@@ -118,19 +78,7 @@ export function CartList({ carts }: any) {
                     danger
                     icon={<MinusOutlined />}
                     shape={"circle"}
-                    onClick={() => {
-                      const stringProducts = localStorage.getItem("addedProducts");
-                      const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
-
-                      const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
-
-                      if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
-                        localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
-                      }
-
-                      dispatch(deleteCart(cart.id));
-                      dispatch(fetchCarts())
-                    }}
+                    onClick={() => {}}
                   />,
                 ]}
                 key={index}
@@ -139,7 +87,11 @@ export function CartList({ carts }: any) {
                   className={styles.item}
                   avatar={
                     <Flex align={"center"} gap={20}>
-                      <img src={cart.product.default_image} width={100} height={100} />
+                      <img
+                        src={cart.product.default_image}
+                        width={100}
+                        height={100}
+                      />
                       <Text className={styles.cartProductName}>
                         {cart.product.name}
                       </Text>
@@ -148,22 +100,35 @@ export function CartList({ carts }: any) {
                 />
                 <List.Item.Meta
                   className={styles.priceItemMeta}
-                  title={formatNumberAndAddCurrency(cart.product.price, 'сом')}
+                  title={formatNumberAndAddCurrency(cart.product.price, "сом")}
                 />
                 <List.Item.Meta
                   className={styles.counterItemMeta}
-                  title={<Counter initialValue={cart.count} onIncrement={() => incrementCount(cart.id)} onDecrement={() => decrementCount(cart.id)} />}
+                  title={
+                    <Counter
+                      initialValue={cart.count}
+                      onIncrement={(newCount) =>
+                        incrementCount({ count: newCount, id: cart.id })
+                      }
+                      onDecrement={(newCount) =>
+                        decrementCount({ count: newCount, id: cart.id })
+                      }
+                    />
+                  }
                 />
                 <List.Item.Meta
                   className={`${styles.priceItemMeta} ${styles.priceItemMetaYellow}`}
-                  title={formatNumberAndAddCurrency(cart.product.price * cart.count, 'сом')}
-                  style={{ color: '#FABC22' }}
+                  title={formatNumberAndAddCurrency(
+                    cart.product.price * cart.count,
+                    "сом"
+                  )}
+                  style={{ color: "#FABC22" }}
                 />
               </List.Item>
             )}
           />
         </>
-      }
+      )}
       {isMobile ? null : <Divider />}
       <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>
@@ -175,9 +140,15 @@ export function CartList({ carts }: any) {
           <Paragraph
             style={{ color: Colors.YELLOW, fontWeight: 600, fontSize: "24px" }}
           >
-            {formatNumberAndAddCurrency(carts.reduce((total: any, cart: any) => total + (cart.product.price * cart.count), 0), 'сом')}
+            {formatNumberAndAddCurrency(
+              carts.reduce(
+                (total: any, cart: any) =>
+                  total + cart.product.price * cart.count,
+                0
+              ),
+              "сом"
+            )}
           </Paragraph>
-
         </Flex>
       </Flex>
     </>

@@ -7,3 +7,8 @@ export interface Cart {
   count: number;
   product: Product;
 }
+
+export interface CartItem {
+  count: number;
+  product_id: number;
+}

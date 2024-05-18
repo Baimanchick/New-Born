@@ -3,7 +3,8 @@ import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
 import { AxiosError } from "axios";
 import { RootState } from "../../store";
-import { Cart } from "../../../helpers/interfaces/cart.interface";
+import { Cart, CartItem } from "../../../helpers/interfaces/cart.interface";
+import { Localstorage } from "../../../helpers/localstorage";
 
 export interface CartState {
   carts: Cart[];
@@ -17,8 +18,12 @@ const cartSlice = createSlice({
   name: "carts",
   initialState,
   reducers: {
-    setCart: (state, action: PayloadAction<CartState>) => {
-      state.carts = action.payload.carts;
+    setCart: (state, action: PayloadAction<Cart[]>) => {
+      localStorage.setItem(
+        Localstorage.AddedProduct,
+        JSON.stringify(action.payload)
+      );
+      state.carts = action.payload;
     },
   },
 });
@@ -27,9 +32,8 @@ export const fetchCarts = createAsyncThunk<unknown, void>(
   "carts/fetchCarts",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await $axios.get(`${API_URL}/carts/`);
-      const data: CartState = { carts: response.data.results };
-      dispatch(cartSlice.actions.setCart(data));
+      const { data } = await $axios.get(`${API_URL}/carts/`);
+      dispatch(cartSlice.actions.setCart(data.results));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -43,11 +47,11 @@ export const deleteCart = createAsyncThunk<unknown, any, { state: RootState }>(
   async (id, { dispatch, rejectWithValue, getState }) => {
     try {
       const response = await $axios.delete(`${API_URL}/carts/${id}/`);
+      const state = getState() as RootState;
       if (response.status === 204) {
-        const updatedCarts = getState().carts.carts.filter(
+        const updatedCartData = state.carts.carts.filter(
           (cart) => cart.id !== id
         );
-        const updatedCartData: CartState = { carts: updatedCarts };
         dispatch(cartSlice.actions.setCart(updatedCartData));
       } else {
         console.log("Ошибка при удалении товара");
@@ -60,23 +64,19 @@ export const deleteCart = createAsyncThunk<unknown, any, { state: RootState }>(
   }
 );
 
-export const addToCart = createAsyncThunk<unknown, any>(
+export const addToCart = createAsyncThunk<unknown, CartItem>(
   "carts/addToCart",
-  async ({ count, product_id }: any, { dispatch, rejectWithValue }) => {
+  async (
+    { count, product_id: product }: CartItem,
+    { dispatch, rejectWithValue }
+  ) => {
     try {
-      const obj = {
-        count: count,
-        product: product_id,
-      };
-      const response = await $axios.post(`${API_URL}/carts/`, obj);
-      const addedProducts = JSON.parse(
-        localStorage.getItem("addedProducts") || "[]"
-      );
-      const updatedProducts = [...addedProducts, product_id];
-      localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
-      dispatch(fetchCarts());
-      console.log(response);
+      const response = await $axios.post(`${API_URL}/carts/`, {
+        count,
+        product,
+      });
 
+      dispatch(fetchCarts());
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -96,9 +96,6 @@ export const changeCountCartProduct = createAsyncThunk<
       const response = await $axios.patch(`${API_URL}/carts/${product_id}/`, {
         count: count,
       });
-      console.log(product_id);
-      console.log(response.data);
-      dispatch(fetchCarts());
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
