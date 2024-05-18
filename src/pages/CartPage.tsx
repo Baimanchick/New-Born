@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Flex, message, Result, Steps, theme } from "antd";
+import { Button, Flex, message, Result, Steps, theme, Typography } from "antd";
 import { ReactComponent as CardIcon } from "../assets/svgs/cart/card.svg";
 import { ReactComponent as SuccessIcon } from "../assets/svgs/cart/sucsess.svg";
 import { ReactComponent as BusIcon } from "../assets/svgs/cart/bus.svg";
@@ -13,6 +13,10 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchCarts } from "../store/features/cart/cartSlice";
 import Loading from "../components/Loader/Loading";
 import openNotification from "../components/Notification/Notification";
+import useWindowSize from "../hooks/useWindowSize";
+import styles from "../components/CartList/cartList.module.scss"
+
+const { Title } = Typography
 
 function CartPage() {
   const { token } = theme.useToken();
@@ -23,6 +27,8 @@ function CartPage() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((states) => states.auth.user !== null);
   const carts = useAppSelector((state) => state.carts.carts);
+  const windowWidth = useWindowSize()
+  const isMobile = windowWidth.width && windowWidth.width < 660;
 
   useEffect(() => {
     if (!isAuth) {
@@ -50,38 +56,38 @@ function CartPage() {
 
   const steps = [
     {
-      title: "Моя корзина",
+      title: <Title className={styles.stepTitle}>Моя корзина</Title>,
       content: <CartList carts={carts} />,
-      icon: <CardIcon />,
+      icon: <CardIcon className={isMobile ? 'small-icon' : ''} />,
     },
     {
-      title: "Доставка",
+      title: <Title className={styles.stepTitle}>Доставка</Title>,
       content: <Delivery />,
-      icon: <BusIcon />,
+      icon: <BusIcon className={isMobile ? 'small-icon' : ''} />,
     },
     {
-      title: "Оплата",
+      title: <Title className={styles.stepTitle}>Оплата</Title>,
       content: <Payment />,
-      icon: <CardIcon />,
+      icon: <CardIcon className={isMobile ? 'small-icon' : ''} />,
     },
     {
-      title: "Подтверждение",
+      title: <Title className={styles.stepTitle}>Подтверждение</Title>,
       content: (
         <Result
           icon={<SmileOutlined />}
           title="Спасибо за покупку"
           subTitle="Копия или краткое описание вашего заказа были отправлены по адресу customer@example.com"
-          extra={<Button type="primary">К покупкам</Button>}
+          extra={<Button onClick={() => navigate('/')} type="primary">К покупкам</Button>}
         />
       ),
-      icon: <SuccessIcon />,
+      icon: <SuccessIcon className={isMobile ? 'small-icon' : ''} />,
     },
   ];
 
   const contentStyle: React.CSSProperties = {
     lineHeight: "260px",
     textAlign: "center",
-    padding: "40px",
+    padding: isMobile ? '10px' : "40px",
     color: token.colorTextTertiary,
     backgroundColor: token.colorWhite,
     borderRadius: "20px",
