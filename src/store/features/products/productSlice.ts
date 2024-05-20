@@ -6,22 +6,36 @@ import {
   Product,
 } from "../../../helpers/interfaces/product.interface";
 import { AxiosError } from "axios";
+import { login, register } from "../auth/authSlice";
 
 interface ProductState {
   products: Product[];
+  loading: boolean;
 }
 
 const initialState: ProductState = {
   products: [],
+  loading: true,
 };
 
 const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    setProduct: (state, action: PayloadAction<ProductState>) => {
-      state.products = action.payload.products;
+    setProduct: (state, action: PayloadAction<Product[]>) => {
+      state.products = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(fetchProducts.rejected, (state, action) => {
+      state.loading = false;
+    });
   },
 });
 
@@ -33,16 +47,18 @@ export const fetchProducts = createAsyncThunk<unknown, FilterProduct>(
         limit: filters.limit || 100,
         offset: filters.offset || 0,
       };
-
       if (filters.brand) {
         queryParams.brand = filters.brand;
       }
 
-      const response = await $axios.get(`${API_URL}/products/`, {
+      if (filters.category && filters.subcategory) {
+        queryParams.subcategory = filters.subcategory;
+        queryParams.category = filters.category;
+      }
+      const { data } = await $axios.get(`${API_URL}/products/`, {
         params: queryParams,
       });
-      const data: ProductState = { products: response.data.results };
-      dispatch(productSlice.actions.setProduct(data));
+      dispatch(productSlice.actions.setProduct(data.results));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -64,11 +80,10 @@ export const fetchRecAndPopProducts = createAsyncThunk<unknown, FilterProduct>(
         category: filters.category || [],
         product_name: filters.product_name || [],
       };
-      const response = await $axios.get(`${API_URL}/products/recommended/`, {
+      const { data } = await $axios.get(`${API_URL}/products/recommended/`, {
         params: queryParams,
       });
-      const data: ProductState = { products: response.data.products };
-      dispatch(productSlice.actions.setProduct(data));
+      dispatch(productSlice.actions.setProduct(data.products));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -90,11 +105,10 @@ export const fetchNewProducts = createAsyncThunk<unknown, FilterProduct>(
         category: filters.category || [],
         product_name: filters.product_name || [],
       };
-      const response = await $axios.get(`${API_URL}/products/new_products/`, {
+      const { data } = await $axios.get(`${API_URL}/products/new_products/`, {
         params: queryParams,
       });
-      const data: ProductState = { products: response.data.products };
-      dispatch(productSlice.actions.setProduct(data));
+      dispatch(productSlice.actions.setProduct(data.products));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -111,14 +125,13 @@ export const searchProducts = createAsyncThunk<
   "products/searchProducts",
   async (search_filters, { dispatch, rejectWithValue }) => {
     try {
-      const response = await $axios.get(`${API_URL}/products/`, {
+      const { data } = await $axios.get(`${API_URL}/products/`, {
         params: {
           search: search_filters,
         },
       });
-      const data: ProductState = { products: response.data.results };
-      dispatch(productSlice.actions.setProduct(data));
-      return data;
+      dispatch(productSlice.actions.setProduct(data.results));
+      return data.results;
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(

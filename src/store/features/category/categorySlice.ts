@@ -2,17 +2,15 @@ import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import $axios from "../../../utils/axios";
 import { API_URL } from "../../../utils/consts";
 import { AxiosError } from "axios";
-import {
-  CategoryI,
-  CategoryType,
-} from "../../../components/CategoryCard/CategoryCard.props";
+import { CategoryType } from "../../../components/CategoryCard/CategoryCard.props";
+import { SubCategory } from "../../../helpers/interfaces/category.interface";
 
 interface CategoryState {
   category: CategoryType[];
-  subcategories: any[];
+  subcategories: SubCategory[];
 }
 
-const initialState = {
+const initialState: CategoryState = {
   category: [],
   subcategories: [],
 };
@@ -27,7 +25,10 @@ const categoryCardlSlice = createSlice({
     ) => {
       state.category = action.payload;
     },
-    setSubcategories: (state: CategoryState, action: PayloadAction<any[]>) => {
+    setSubcategories: (
+      state: CategoryState,
+      action: PayloadAction<SubCategory[]>
+    ) => {
       state.subcategories = action.payload;
     },
   },

@@ -25,6 +25,7 @@ export interface FilterProduct {
   min_price?: number;
   max_price?: number;
   brand?: number | string;
-  category?: number;
+  category?: string;
+  subcategory?: string;
   product_name?: string;
 }
