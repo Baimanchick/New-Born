@@ -5,7 +5,6 @@ import { Button as ButtonAnt } from "antd";
 import { ReactComponent as Star } from "../../assets/svgs/card/star.svg";
 import { ReactComponent as Fav } from "../../assets/svgs/card/heart.svg";
 import { ReactComponent as FavFill } from "../../assets/svgs/card/filHeart.svg";
-
 import { Button } from "../Button/Button";
 import { ProductCardProps } from "./ProductCard.props";
 import {
@@ -21,24 +20,49 @@ import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
 import openNotification from "../Notification/Notification";
 import cn from "classnames";
-import { addToCart } from "../../store/features/cart/cartSlice";
+import { addToCart, changeCountCartProduct, deleteCart, fetchCarts } from "../../store/features/cart/cartSlice";
+import { Cart } from "../../helpers/interfaces/cart.interface";
 
 const { Title, Paragraph, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
-  const [isClicked, setIsClicked] = useState(false);
   const isAuth = useAppSelector((store) => store.auth.user !== null);
+  const carts = useAppSelector((state) => state.carts.carts)
   const dispatch: AppDispatch = useDispatch();
   const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
+  const [addedToCart, setAddedToCart] = useState(false);
+
+  useEffect(() => {
+    const addedProducts = JSON.parse(localStorage.getItem('AddedProducts') || '[]');
+    const addedToCart = addedProducts.includes(product?.id);
+    setAddedToCart(addedToCart);
+  }, [product]);
+
+  useEffect(() => {
+    dispatch(fetchCarts())
+  }, [dispatch])
 
   const handleAddToCart = (productId: number) => {
     if (isAuth) {
       dispatch(addToCart({ count: 1, product_id: productId }));
+      setAddedToCart(true);
     } else {
       navigate("/register");
       openNotification("error", "Ошибка", "Вы не авторизованы", 2);
+    }
+  };
+
+  const incrementCount = ({ count, id }: { count: number; id: number }) => {
+    dispatch(changeCountCartProduct({ count, product_id: id }));
+  };
+
+  const decrementCount = ({ count, id }: { count: number; id: number }) => {
+    dispatch(changeCountCartProduct({ count, product_id: id }));
+    if (count < 1) {
+      dispatch(deleteCart(+id))
+      localStorage.removeItem("AddedProducts")
     }
   };
 
@@ -51,15 +75,6 @@ export function ProductCard({ product }: ProductCardProps) {
     if (e.currentTarget === target || e.target instanceof HTMLImageElement) {
       navigate(`/detail/${id}`);
     }
-  };
-
-  const handleDecrement = (newCount: number) => {
-    if (newCount === 0) setIsClicked(false);
-  };
-
-  const handleBuyClick = (productId: number) => {
-    setIsClicked(true);
-    handleAddToCart(productId);
   };
 
   const handleClickFavorite = (product_id: number) => {
@@ -113,18 +128,34 @@ export function ProductCard({ product }: ProductCardProps) {
         />
       }
       actions={[
-        !isClicked ? (
-          <Button
-            className={styles.btnBuy}
-            onClick={() => handleBuyClick(product.id)}
-            appearance={"blue"}
-            block
-          >
-            Купить
-          </Button>
-        ) : (
-          <Counter initialValue={1} onDecrement={handleDecrement} />
-        ),
+        <>
+          {addedToCart ?
+            (
+              carts.map((cart: Cart, index: number) => (
+                <Counter
+                  initialValue={cart.count}
+                  onIncrement={(newCount) =>
+                    incrementCount({ count: newCount, id: cart.id })
+                  }
+                  onDecrement={(newCount) =>
+                    decrementCount({ count: newCount, id: cart.id })
+                  }
+                  key={index}
+                />
+              ))
+            )
+            :
+            <>
+              <Button
+                className={styles.btnBuy}
+                onClick={() => handleAddToCart(product.id)}
+                appearance={"blue"}
+                block
+              >
+                Купить
+              </Button>
+            </>}
+        </>
       ]}
     >
       <Flex vertical align={"center"}>
@@ -150,6 +181,6 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </Paragraph>
       </Flex>
-    </Card>
+    </Card >
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Divider, Flex, Layout, List, Typography, Button as ButtonAntd } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 import styles from "./profile.module.scss";
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loader/Loading';
@@ -135,11 +135,14 @@ function ProfileList({ user }: any) {
                                 </>
                             }
                             extra={
-                                <Title
-                                    className={styles.CustomMainTitle}
-                                >
-                                    Изменить имя
-                                </Title>
+                                <Flex>
+                                    <Title
+                                        className={styles.CustomMainTitle}
+                                    >
+                                        Изменить имя
+                                    </Title>
+                                    <CloseOutlined onClick={closeProfileModal} style={{ fontSize: 28 }} />
+                                </Flex>
                             }
                         >
                             <Flex justify={'end'}>

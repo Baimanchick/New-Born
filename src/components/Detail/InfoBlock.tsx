@@ -48,9 +48,8 @@ function InfoBlock({ product }: any) {
         }
 
     };
-
     useEffect(() => {
-        const addedProducts = JSON.parse(localStorage.getItem('addedProducts') || '[]');
+        const addedProducts = JSON.parse(localStorage.getItem('AddedProducts') || '[]');
         const addedToCart = addedProducts.includes(product?.id);
         setAddedToCart(addedToCart);
     }, [product]);
