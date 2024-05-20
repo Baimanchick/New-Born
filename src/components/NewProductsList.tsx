@@ -6,12 +6,14 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { fetchNewProducts } from "../store/features/products/productSlice";
 import { default_filters } from "../utils/consts";
 import ProductList from "./ProductList/ProductList";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
 function NewProductsList() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(
@@ -39,6 +41,7 @@ function NewProductsList() {
               fontSize: "16px",
               fontWeight: "600",
             }}
+            onClick={() => navigate('/filter')}
           >
             Больше
           </Button>

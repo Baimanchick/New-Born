@@ -11,6 +11,7 @@ import { Typography, Flex } from "antd";
 import styles from "../styles/card.module.scss";
 import ProductList from "./ProductList/ProductList";
 import useWindowSize from "../hooks/useWindowSize";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -19,6 +20,7 @@ function RecommendedProductsList() {
   const products = useAppSelector((state) => state.products.products);
   const windowSize = useWindowSize()
   const isMobile = windowSize.width && windowSize.width < 660;
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -47,6 +49,7 @@ function RecommendedProductsList() {
               fontSize: "16px",
               fontWeight: "600",
             }}
+            onClick={() => navigate('/filter')}
           >
             Больше
           </Button>

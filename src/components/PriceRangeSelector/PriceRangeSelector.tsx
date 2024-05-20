@@ -29,7 +29,7 @@ function PriceRangeSelector() {
                     }}
                     options={SALARY_RANGE.map(salary => {
                         return {
-                            label: `$${salary}`,
+                            label: `${salary}`,
                             value: salary
                         }
                     })}
@@ -39,7 +39,7 @@ function PriceRangeSelector() {
                     onChange={(value: any) => { setSalaryTo(value) }}
                     options={SALARY_RANGE.map(salary => {
                         return {
-                            label: `$${salary}`,
+                            label: `${salary}`,
                             value: salary
                         }
                     }).filter(salary => salary.value >= salaryFrom)}
