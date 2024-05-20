@@ -86,6 +86,8 @@ export function ProductCard({ product }: ProductCardProps) {
     }
   };
 
+  const cartForProduct = carts.find((cart: Cart) => cart.product.id === product.id);
+
   return (
     <Card
       onClick={(e) => navigateToDetail(e, product.id)}
@@ -129,32 +131,22 @@ export function ProductCard({ product }: ProductCardProps) {
       }
       actions={[
         <>
-          {addedToCart ?
-            (
-              carts.map((cart: Cart, index: number) => (
-                <Counter
-                  initialValue={cart.count}
-                  onIncrement={(newCount) =>
-                    incrementCount({ count: newCount, id: cart.id })
-                  }
-                  onDecrement={(newCount) =>
-                    decrementCount({ count: newCount, id: cart.id })
-                  }
-                  key={index}
-                />
-              ))
-            )
-            :
-            <>
-              <Button
-                className={styles.btnBuy}
-                onClick={() => handleAddToCart(product.id)}
-                appearance={"blue"}
-                block
-              >
-                Купить
-              </Button>
-            </>}
+          {addedToCart && cartForProduct ? (
+            <Counter
+              initialValue={cartForProduct.count}
+              onIncrement={(newCount) => incrementCount({ count: newCount, id: cartForProduct.id })}
+              onDecrement={(newCount) => decrementCount({ count: newCount, id: cartForProduct.id })}
+            />
+          ) : (
+            <Button
+              className={styles.btnBuy}
+              onClick={() => handleAddToCart(product.id)}
+              appearance={"blue"}
+              block
+            >
+              Купить
+            </Button>
+          )}
         </>
       ]}
     >
