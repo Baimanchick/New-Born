@@ -5,6 +5,7 @@ import { Button as ButtonAnt } from "antd";
 import { ReactComponent as Star } from "../../assets/svgs/card/star.svg";
 import { ReactComponent as Fav } from "../../assets/svgs/card/heart.svg";
 import { ReactComponent as FavFill } from "../../assets/svgs/card/filHeart.svg";
+import { ReactComponent as Remove } from "../../assets/svgs/card/remove.svg"
 import { Button } from "../Button/Button";
 import { ProductCardProps } from "./ProductCard.props";
 import {
@@ -14,7 +15,7 @@ import styles from "./productCard.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
 import { useNavigate } from "react-router-dom";
 import { Counter } from "../Counter/Counter";
-import { useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { AppDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
@@ -27,9 +28,10 @@ const { Title, Paragraph, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
+  const isOnCartPage = window.location.pathname === "/cart";
   const isAuth = useAppSelector((store) => store.auth.user !== null);
   const carts = useAppSelector((state) => state.carts.carts)
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -111,15 +113,19 @@ export function ProductCard({ product }: ProductCardProps) {
               </Tag>
             ))}
           </Flex>
-          <ButtonAnt
-            className={cn(styles.favButton, {
-              [styles.clickedHeartProduct]: isProductInFavorites,
-            })}
-            icon={isProductInFavorites ? <FavFill /> : <Fav />}
-            shape="circle"
-            danger
-            onClick={() => handleClickFavorite(product.id)}
-          />
+          {isOnCartPage && cartForProduct ? (
+            <Remove onClick={() => dispatch(deleteCart(cartForProduct.id))} />
+          ) : (
+            <ButtonAnt
+              className={cn(styles.favButton, {
+                [styles.clickedHeartProduct]: isProductInFavorites,
+              })}
+              icon={isProductInFavorites ? <FavFill /> : <Fav />}
+              shape="circle"
+              danger
+              onClick={() => handleClickFavorite(product.id)}
+            />
+          )}
         </Flex>
       }
       cover={
