@@ -81,6 +81,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
       openNotification('warning', 'Предупреждение', "Вы уже на странице фильтров", 2);
     } else {
       navigate("/filter");
+      setActiveMenuItem('')
     }
   };
 
@@ -116,7 +117,10 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
       <div className={styles.nav_down}>
         <div className={styles.logo}>
           <img
-            onClick={() => navigate("/")}
+            onClick={() => {
+              setActiveMenuItem('Главная')
+              navigate("/")
+            }}
             style={{ cursor: "pointer" }}
             src={logo}
             alt="Логотип"
@@ -160,10 +164,21 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
           </Flex>
         </div>
         <div className={styles.icon}>
-          <img src={favourite} onClick={() => navigate('/favorite')} className={styles.icon__item} alt="Избранное" />
+          <img
+            src={favourite}
+            onClick={() => {
+              setActiveMenuItem('')
+              navigate("/favorite")
+            }}
+            className={styles.icon__item}
+            alt="Избранное"
+          />
           <img
             src={cart}
-            onClick={() => navigate("/cart")}
+            onClick={() => {
+              setActiveMenuItem('')
+              navigate("/cart")
+            }}
             className={styles.icon__item}
             alt="Корзина"
           />
