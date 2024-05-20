@@ -108,6 +108,10 @@
     border-bottom: none !important;
     padding: 0px !important;
     min-height: 44px !important;
+
+    div {
+        display: initial !important;
+    }
 }
 
 .bodyCustom {

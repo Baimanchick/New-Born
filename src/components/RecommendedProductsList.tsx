@@ -10,12 +10,15 @@ import { Typography, Flex } from "antd";
 
 import styles from "../styles/card.module.scss";
 import ProductList from "./ProductList/ProductList";
+import useWindowSize from "../hooks/useWindowSize";
 
 const { Title } = Typography;
 
 function RecommendedProductsList() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
+  const windowSize = useWindowSize()
+  const isMobile = windowSize.width && windowSize.width < 660;
 
 
   useEffect(() => {
@@ -30,7 +33,7 @@ function RecommendedProductsList() {
   return (
     <div className={styles.recommendedProducts_main}>
       <div className={styles.recommendedProducts_container}>
-        <Flex justify={"space-between"}>
+        <Flex style={{ flexDirection: `${isMobile ? "column" : "initial"}` }} justify={`${isMobile ? '' : 'space-between'}`}>
           <Title
             style={{ fontSize: "24px", fontWeight: "1000", color: "#FABC22" }}
           >
