@@ -12,12 +12,13 @@ import {
 } from "../../store/features/cart/cartSlice";
 import { Cart } from "../../helpers/interfaces/cart.interface";
 import useWindowSize from "../../hooks/useWindowSize";
-import { ProductProps } from "../ProductList/Product.props";
+import { ProductCard } from "../ProductCard/ProductCard";
+import ProductList from "../ProductList/ProductList";
 const { Text, Paragraph } = Typography;
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
 
-export function CartList({ carts, grid }: any | ProductProps) {
+export function CartList({ carts }: any) {
   const dispatch = useAppDispatch();
   const windowSize = useWindowSize();
   const isMobile = windowSize.width && windowSize.width < 660;
@@ -39,13 +40,25 @@ export function CartList({ carts, grid }: any | ProductProps) {
   };
 
   const sortedCarts = sortCartsById(carts);
-  console.log(sortedCarts);
-
 
   return (
     <>
       {isMobile ? (
-        <div></div>
+        sortedCarts.map((cart: Cart) => (
+          <ProductList
+            products={[cart.product]}
+            grid={{
+              gutter: 16,
+              column: 6,
+              xxl: 6,
+              xl: 6,
+              lg: 4,
+              md: 3,
+              sm: 2,
+              xs: 2,
+            }}
+          />
+        ))
       ) : (
         <>
           <List
@@ -125,7 +138,8 @@ export function CartList({ carts, grid }: any | ProductProps) {
             )}
           />
         </>
-      )}
+      )
+      }
       {isMobile ? null : <Divider />}
       <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>
