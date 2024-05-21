@@ -175,7 +175,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </Text>
           </Flex>
         </Flex>
-        <Paragraph className={styles.productParagraph}>
+        <Paragraph style={{ textAlign: `${isOnCartPage ? 'left' : 'initial'}` }} className={styles.productParagraph}>
           {product.name}
         </Paragraph>
       </Flex>

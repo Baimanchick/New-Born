@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Flex, message, Result, Steps, theme, Typography } from "antd";
+import { Button, Flex, List, message, Result, Steps, theme, Typography } from "antd";
 import { ReactComponent as CardIcon } from "../assets/svgs/cart/card.svg";
 import { ReactComponent as SuccessIcon } from "../assets/svgs/cart/sucsess.svg";
 import { ReactComponent as BusIcon } from "../assets/svgs/cart/bus.svg";
@@ -102,7 +102,8 @@ function CartPage() {
   const cartStyle: React.CSSProperties = {
     display: current === 0 ? 'flex' : '',
     justifyContent: current === 0 ? 'center' : '',
-    gap: current === 0 ? 15 : 0,
+    gap: current === 0 ? 5 : 0,
+    flexWrap: current === 0 ? 'wrap' : 'initial'
   }
 
   const navigationButtons = (
