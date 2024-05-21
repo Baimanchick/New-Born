@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Flex, List, message, Result, Steps, theme, Typography } from "antd";
+import { Button as ButtonAntd, Flex, message, Result, Steps, theme, Typography } from "antd";
 import { ReactComponent as CardIcon } from "../assets/svgs/cart/card.svg";
 import { ReactComponent as SuccessIcon } from "../assets/svgs/cart/sucsess.svg";
 import { ReactComponent as BusIcon } from "../assets/svgs/cart/bus.svg";
@@ -17,6 +17,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import styles from "../components/CartList/cartList.module.scss"
 import { formatNumberAndAddCurrency } from "../helpers/functions/helperFunctions";
 import { Colors } from "../helpers/enums/color.enum";
+import { Button } from "../components";
 
 const { Title, Paragraph, Text } = Typography
 
@@ -79,7 +80,7 @@ function CartPage() {
           icon={<SmileOutlined />}
           title="Спасибо за покупку"
           subTitle="Копия или краткое описание вашего заказа были отправлены по адресу customer@example.com"
-          extra={<Button onClick={() => navigate('/')} type="primary">К покупкам</Button>}
+          extra={<ButtonAntd onClick={() => navigate('/')} type="primary">К покупкам</ButtonAntd>}
         />
       ),
       icon: <SuccessIcon className={isMobile ? 'small-icon' : ''} />,
@@ -106,7 +107,7 @@ function CartPage() {
     flexWrap: current === 0 ? 'wrap' : 'initial'
   }
 
-  const navigationButtons = (
+  const navigationButtonAntds = (
     <>
 
       <Flex justify={"end"}>
@@ -133,33 +134,33 @@ function CartPage() {
 
       <Flex align={"center"} justify={"space-between"}>
         {current === 0 && (
-          <Button
+          <ButtonAntd
             type={"link"}
             icon={<ArrowLeftOutlined />}
             style={{ margin: "0 8px", fontSize: "16px" }}
             onClick={() => navigation("/")}
           >
             К покупкам
-          </Button>
+          </ButtonAntd>
         )}
         {current > 0 && (
-          <Button
+          <ButtonAntd
             type={"link"}
             icon={<ArrowLeftOutlined />}
             style={{ margin: "0 8px", fontSize: "16px" }}
             onClick={() => prev()}
           >
             Назад
-          </Button>
+          </ButtonAntd>
         )}
         {current === steps.length - 1 ? (
-          <Button onClick={() => message.success("Processing complete!")}>
+          <ButtonAntd onClick={() => message.success("Processing complete!")}>
             Готово
-          </Button>
+          </ButtonAntd>
         ) : (
-          <Button onClick={() => next()} type={"primary"}>
+          <ButtonAntd onClick={() => next()} type={"primary"}>
             Далее
-          </Button>
+          </ButtonAntd>
         )}
       </Flex>
     </>
@@ -171,40 +172,55 @@ function CartPage() {
 
   return (
     <div className="container">
-      <Steps
-        className="site-navigation-steps"
-        responsive={false}
-        labelPlacement="horizontal"
-        type={"navigation"}
-        current={current}
-        items={steps.map((item) => ({
-          key: item.title,
-          title: item.title,
-          icon: item.icon,
-        }))}
-      />
-      {current !== 3 ? (
-        <div style={contentStyle}>
-          {isMobile && current === 0 ? (
-            <>
-              <div style={cartStyle}>
-                {steps[current].content}
-              </div>
-              <div>
-                {navigationButtons}
-              </div>
-            </>
-          ) : (
-            <>
-              {steps[current].content}
-              {navigationButtons}
-            </>
-          )}
-
-        </div>
+      {carts.length === 0 ? (
+        <Result
+          title="Нет товаров"
+          subTitle="Извините но вы еще не добавили продукты в корзину"
+          extra={
+            <Flex justify={'center'}>
+              <Button appearance="yellow" onClick={() => navigate('/')}>К покупкам</Button>
+            </Flex>
+          }
+        />
       ) : (
-        steps[3].content
+        <>
+          <Steps
+            className="site-navigation-steps"
+            responsive={false}
+            labelPlacement="horizontal"
+            type={"navigation"}
+            current={current}
+            items={steps.map((item) => ({
+              key: item.title,
+              title: item.title,
+              icon: item.icon,
+            }))}
+          />
+          {current !== 3 ? (
+            <div style={contentStyle}>
+              {isMobile && current === 0 ? (
+                <>
+                  <div style={cartStyle}>
+                    {steps[current].content}
+                  </div>
+                  <div>
+                    {navigationButtonAntds}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {steps[current].content}
+                  {navigationButtonAntds}
+                </>
+              )}
+
+            </div>
+          ) : (
+            steps[3].content
+          )}
+        </>
       )}
+
     </div>
   );
 }
