@@ -2,8 +2,8 @@ import { Flex } from "antd"
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { useEffect, useState } from "react"
 import { fetchFavorites } from "../../store/features/favorite/favoriteSlice"
-import { ProductCard } from "../ProductCard/ProductCard"
 import Loading from "../Loader/Loading"
+import ProductList from "../ProductList/ProductList"
 
 function FavoriteList({ favoriteProducts }: any) {
     const dispatch = useAppDispatch()
@@ -22,11 +22,19 @@ function FavoriteList({ favoriteProducts }: any) {
                     <Loading />
                 </Flex>
             ) : (
-                <Flex>
-                    {favoriteProducts.map((cardItem: any) => (
-                        <ProductCard key={cardItem.id} product={cardItem} />
-                    ))}
-                </Flex>
+                <ProductList
+                    products={favoriteProducts}
+                    grid={{
+                        gutter: 16,
+                        column: 6,
+                        xxl: 6,
+                        xl: 6,
+                        lg: 4,
+                        md: 3,
+                        sm: 2,
+                        xs: 2,
+                    }}
+                />
             )}
         </>
     )

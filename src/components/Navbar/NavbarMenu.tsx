@@ -47,13 +47,13 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
   const products = useAppSelector((state) => state.products.products);
 
   // useEffect(() => {
-  //   dispatch(
-  //     fetchProducts({
-  //       limit: 16,
-  //       offset: 0,
-  //     })
-  //   );
-  // }, [dispatch]);
+  //   //   dispatch(
+  //   //     fetchProducts({
+  //   //       limit: 16,
+  //   //       offset: 0,
+  //   //     })
+  //   //   );
+  //   // }, [dispatch]);
 
   const handleSearch = (value: string) => {
     if (value.trim() !== "") {
@@ -77,6 +77,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
       );
     } else {
       navigate("/filter");
+      setActiveMenuItem("");
     }
   };
 
@@ -113,7 +114,10 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
       <div className={styles.nav_down}>
         <div className={styles.logo}>
           <img
-            onClick={() => navigate("/")}
+            onClick={() => {
+              setActiveMenuItem("Главная");
+              navigate("/");
+            }}
             style={{ cursor: "pointer" }}
             src={logo}
             alt="Логотип"
@@ -159,13 +163,19 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <div className={styles.icon}>
           <img
             src={favourite}
-            onClick={() => navigate("/favorite")}
+            onClick={() => {
+              setActiveMenuItem("");
+              navigate("/favorite");
+            }}
             className={styles.icon__item}
             alt="Избранное"
           />
           <img
             src={cart}
-            onClick={() => navigate("/cart")}
+            onClick={() => {
+              setActiveMenuItem("");
+              navigate("/cart");
+            }}
             className={styles.icon__item}
             alt="Корзина"
           />

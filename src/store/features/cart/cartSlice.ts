@@ -19,9 +19,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setCart: (state, action: PayloadAction<Cart[]>) => {
+      const productIds = action.payload.map((cart) => cart.product.id);
       localStorage.setItem(
-        Localstorage.AddedProduct,
-        JSON.stringify(action.payload)
+        Localstorage.AddedProducts,
+        JSON.stringify(productIds)
       );
       state.carts = action.payload;
     },
@@ -48,11 +49,13 @@ export const deleteCart = createAsyncThunk<unknown, any, { state: RootState }>(
     try {
       const response = await $axios.delete(`${API_URL}/carts/${id}/`);
       const state = getState() as RootState;
+
       if (response.status === 204) {
         const updatedCartData = state.carts.carts.filter(
           (cart) => cart.id !== id
         );
         dispatch(cartSlice.actions.setCart(updatedCartData));
+        dispatch(fetchCarts());
       } else {
         console.log("Ошибка при удалении товара");
       }
@@ -96,6 +99,7 @@ export const changeCountCartProduct = createAsyncThunk<
       const response = await $axios.patch(`${API_URL}/carts/${product_id}/`, {
         count: count,
       });
+      dispatch(fetchCarts());
       return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {

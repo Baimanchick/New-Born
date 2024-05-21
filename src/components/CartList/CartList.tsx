@@ -5,14 +5,14 @@ import { MinusOutlined } from "@ant-design/icons";
 import { Counter } from "../Counter/Counter";
 import { Colors } from "../../helpers/enums/color.enum";
 import { formatNumberAndAddCurrency } from "../../helpers/functions/helperFunctions";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import {
   changeCountCartProduct,
   deleteCart,
-  fetchCarts,
 } from "../../store/features/cart/cartSlice";
 import { Cart } from "../../helpers/interfaces/cart.interface";
 import useWindowSize from "../../hooks/useWindowSize";
+import { ProductCard } from "../ProductCard/ProductCard";
 import ProductList from "../ProductList/ProductList";
 const { Text, Paragraph } = Typography;
 
@@ -29,26 +29,36 @@ export function CartList({ carts }: any) {
 
   const decrementCount = ({ count, id }: { count: number; id: number }) => {
     dispatch(changeCountCartProduct({ count, product_id: id }));
+    if (count < 1) {
+      dispatch(deleteCart(+id))
+      localStorage.removeItem("AddedProducts")
+    }
   };
+
+  const sortCartsById = (carts: any) => {
+    return [...carts].sort((a, b) => a.id - b.id);
+  };
+
+  const sortedCarts = sortCartsById(carts);
 
   return (
     <>
       {isMobile ? (
-        <div>
-          {/*<ProductList*/}
-          {/*  products={products}*/}
-          {/*  grid={{*/}
-          {/*    gutter: 16,*/}
-          {/*    column: 6,*/}
-          {/*    xxl: 6,*/}
-          {/*    xl: 6,*/}
-          {/*    lg: 4,*/}
-          {/*    md: 3,*/}
-          {/*    sm: 2,*/}
-          {/*    xs: 2,*/}
-          {/*  }}*/}
-          {/*/>*/}
-        </div>
+        sortedCarts.map((cart: Cart) => (
+          <ProductList
+            products={[cart.product]}
+            grid={{
+              gutter: 16,
+              column: 6,
+              xxl: 6,
+              xl: 6,
+              lg: 4,
+              md: 3,
+              sm: 2,
+              xs: 2,
+            }}
+          />
+        ))
       ) : (
         <>
           <List
@@ -69,7 +79,7 @@ export function CartList({ carts }: any) {
               </Flex>
             }
             itemLayout="horizontal"
-            dataSource={carts}
+            dataSource={sortedCarts}
             renderItem={(cart: Cart, index: number) => (
               <List.Item
                 actions={[
@@ -78,7 +88,7 @@ export function CartList({ carts }: any) {
                     danger
                     icon={<MinusOutlined />}
                     shape={"circle"}
-                    onClick={() => {}}
+                    onClick={() => dispatch(deleteCart(cart.id))}
                   />,
                 ]}
                 key={index}
@@ -128,7 +138,8 @@ export function CartList({ carts }: any) {
             )}
           />
         </>
-      )}
+      )
+      }
       {isMobile ? null : <Divider />}
       <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>

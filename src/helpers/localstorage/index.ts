@@ -1,3 +1,3 @@
 export enum Localstorage {
-  "AddedProduct" = "AddedProduct",
+  "AddedProducts" = "AddedProducts",
 }

@@ -103,6 +103,13 @@ function FilterMenuSideBar() {
     setCatalogKey(e.key);
   };
 
+  const onPriceTo = (value: number) => {
+    handleFilterChange("max_price", value.toString());
+  };
+  const onPriceFrom = (value: number) => {
+    handleFilterChange("min_price", value.toString());
+  };
+
   return (
     <Flex gap={20} vertical>
       <Flex style={inlineStylesFlex}>
@@ -133,7 +140,7 @@ function FilterMenuSideBar() {
         >
           Цена, сом
         </Title>
-        <PriceRangeSelector />
+        <PriceRangeSelector onPriceTo={onPriceTo} onPriceFrom={onPriceFrom} />
       </Flex>
 
       <Flex style={inlineStylesFlex}>
