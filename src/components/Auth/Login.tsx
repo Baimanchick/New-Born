@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button as ButtonAntd,
   Flex,
@@ -10,10 +10,11 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import styles from "./auth.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { login, LoginUser, userMe } from "../../store/features/auth/authSlice";
 import { Button } from "../Button/Button";
+import openNotification from "../Notification/Notification";
 function Login({ }) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
@@ -29,12 +30,17 @@ function Login({ }) {
     setClientReady(true);
   }, []);
 
+  if (error) {
+    openNotification('error', 'Ошибка', `${error.message}`, 2)
+  }
+
   const onFinish = async (values: LoginUser) => {
     await dispatch(login(values))
       .unwrap()
       .then(() => {
         dispatch(userMe());
         navigate("/");
+        openNotification('success', 'Успешно', 'Вы успешно вошли', 2)
       })
       .catch((error) => setError(error));
   };
@@ -83,8 +89,6 @@ function Login({ }) {
             placeholder="Password"
           />
         </Form.Item>
-        {error && <span>{error.message}</span>}
-
         <Form.Item shouldUpdate style={{ marginTop: "170px", marginBottom: 0 }}>
           {() => (
             <Flex justify={"space-between"} align={"center"}>

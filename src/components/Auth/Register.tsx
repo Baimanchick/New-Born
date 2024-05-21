@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button as ButtonAntd, Flex, Form, Input, Typography } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
@@ -10,8 +10,9 @@ import {
   RegisterUser,
   userMe,
 } from "../../store/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { useAppDispatch } from "../../hooks/hooks";
 import { Button } from "../Button/Button";
+import openNotification from "../Notification/Notification";
 function Register({ }) {
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
@@ -27,12 +28,17 @@ function Register({ }) {
     setClientReady(true);
   }, []);
 
+  if (error) {
+    openNotification('error', 'Ошибка', `${error.message}`, 2)
+  }
+
   const onFinish = async (values: RegisterUser) => {
     await dispatch(register(values))
       .unwrap()
       .then(() => {
         dispatch(userMe());
         navigate("/");
+        openNotification('success', 'Успешно', 'Вы успешно зарегистрировались', 2)
       })
       .catch((error) => setError(error));
   };
