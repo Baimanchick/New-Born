@@ -14,6 +14,8 @@ import { Cart } from "../../helpers/interfaces/cart.interface";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ProductCard } from "../ProductCard/ProductCard";
 import ProductList from "../ProductList/ProductList";
+import { wrap } from "module";
+import Loading from "../Loader/Loading";
 const { Text, Paragraph } = Typography;
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
@@ -45,19 +47,7 @@ export function CartList({ carts }: any) {
     <>
       {isMobile ? (
         sortedCarts.map((cart: Cart) => (
-          <ProductList
-            products={[cart.product]}
-            grid={{
-              gutter: 16,
-              column: 6,
-              xxl: 6,
-              xl: 6,
-              lg: 4,
-              md: 3,
-              sm: 2,
-              xs: 2,
-            }}
-          />
+          <ProductCard product={cart.product} />
         ))
       ) : (
         <>
@@ -141,7 +131,7 @@ export function CartList({ carts }: any) {
       )
       }
       {isMobile ? null : <Divider />}
-      <Flex justify={"end"}>
+      {/* <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>
           <Text
             style={{ fontSize: "16px", fontWeight: 400, color: Colors.GREY }}
@@ -161,7 +151,7 @@ export function CartList({ carts }: any) {
             )}
           </Paragraph>
         </Flex>
-      </Flex>
+      </Flex> */}
     </>
   );
 }
