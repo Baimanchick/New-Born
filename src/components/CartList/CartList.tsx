@@ -15,6 +15,7 @@ import useWindowSize from "../../hooks/useWindowSize";
 import { ProductCard } from "../ProductCard/ProductCard";
 import ProductList from "../ProductList/ProductList";
 import { wrap } from "module";
+import Loading from "../Loader/Loading";
 const { Text, Paragraph } = Typography;
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
@@ -46,35 +47,6 @@ export function CartList({ carts }: any) {
     <>
       {isMobile ? (
         sortedCarts.map((cart: Cart) => (
-          // <List
-          //   size={"small"}
-          //   grid={{
-          //     gutter: 16,
-          //     column: 6,
-          //     xxl: 6,
-          //     xl: 6,
-          //     lg: 4,
-          //     md: 3,
-          //     sm: 2,
-          //     xs: 2,
-          //   }}
-          //   loading={!cart.product}
-          //   dataSource={[cart.product]}
-          //   renderItem={(item) => (
-          //     <List.Item
-          //       style={{
-          //         background: "transparent",
-          //         display: "flex",
-          //         justifyContent: "center",
-          //         alignItems: "center",
-          //         gap: '10px',
-          //         padding: 0,
-          //       }}
-          //     >
-          //       <ProductCard product={item} />
-          //     </List.Item>
-          //   )}
-          // />
           <ProductCard product={cart.product} />
         ))
       ) : (
