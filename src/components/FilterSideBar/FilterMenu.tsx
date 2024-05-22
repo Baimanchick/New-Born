@@ -34,7 +34,10 @@ const inlineStylesFlex: React.CSSProperties = {
   borderRadius: 20,
 };
 
-function FilterMenuSideBar() {
+interface FilterMenuProps {
+  setFilterIsDrawerOpen?: (value: boolean) => void;
+}
+function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const brands = useAppSelector((state) => state.brand.brand);
   const { category, subcategories } = useAppSelector((state) => state.category);
@@ -55,6 +58,12 @@ function FilterMenuSideBar() {
       return prevParams;
     });
   }
+
+  const closeMenu = () => {
+    if (setFilterIsDrawerOpen) {
+      setFilterIsDrawerOpen(false);
+    }
+  };
 
   const items = brands.map((brand: BrandType, index) => ({
     key: index.toString(),
@@ -86,6 +95,7 @@ function FilterMenuSideBar() {
     if (brand) {
       handleFilterChange("brand", brand.label);
     }
+    closeMenu();
   };
 
   const catalogHandler: MenuProps["onClick"] = (e) => {
@@ -101,13 +111,16 @@ function FilterMenuSideBar() {
     }
 
     setCatalogKey(e.key);
+    closeMenu();
   };
 
   const onPriceTo = (value: number) => {
     handleFilterChange("max_price", value.toString());
+    closeMenu();
   };
   const onPriceFrom = (value: number) => {
     handleFilterChange("min_price", value.toString());
+    closeMenu();
   };
 
   return (
@@ -167,4 +180,4 @@ function FilterMenuSideBar() {
   );
 }
 
-export default FilterMenuSideBar;
+export default FilterMenu;
