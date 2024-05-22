@@ -11,3 +11,26 @@
         color: blue !important;
     }
 }
+
+.layoutFilter{
+    margin: 20px auto !important;
+    max-width: 1400px !important;
+    background: transparent !important;
+    padding-block: 40px;
+}
+
+@media screen and (max-width: 1400px) {
+    .siderFilter{
+        max-width: 300px !important;
+        min-width: 300px !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .layoutFilter{
+        padding-block: 20px;
+    }
+    .siderFilter{
+      display: none;
+    }
+}

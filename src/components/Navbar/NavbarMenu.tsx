@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  AutoComplete,
-  Button,
-  Flex,
-  Input,
-  SelectProps,
-} from "antd";
+import { AutoComplete, Button, Flex, Input, SelectProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
@@ -15,9 +9,7 @@ import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import {
-  fetchProducts,
-} from "../../store/features/products/productSlice";
+import { fetchProducts } from "../../store/features/products/productSlice";
 import { Product } from "../../helpers/interfaces/product.interface";
 import openNotification from "../Notification/Notification";
 
@@ -39,8 +31,7 @@ const searchResult = (products: Product[], query: string, navigate: any) =>
             navigate(`/detail/${product.id}`);
           }}
         >
-          <span
-            style={{ cursor: "pointer" }}>
+          <span style={{ cursor: "pointer" }}>
             <strong>Найдено:</strong> {product.name}
           </span>
         </div>
@@ -55,14 +46,14 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
 
-  useEffect(() => {
-    dispatch(
-      fetchProducts({
-        limit: 16,
-        offset: 0,
-      })
-    );
-  }, [dispatch]);
+  // useEffect(() => {
+  //   //   dispatch(
+  //   //     fetchProducts({
+  //   //       limit: 16,
+  //   //       offset: 0,
+  //   //     })
+  //   //   );
+  //   // }, [dispatch]);
 
   const handleSearch = (value: string) => {
     if (value.trim() !== "") {
@@ -78,10 +69,15 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
 
   const handleFilterButtonClick = () => {
     if (isOnFilterPage) {
-      openNotification('warning', 'Предупреждение', "Вы уже на странице фильтров", 2);
+      openNotification(
+        "warning",
+        "Предупреждение",
+        "Вы уже на странице фильтров",
+        2
+      );
     } else {
       navigate("/filter");
-      setActiveMenuItem('')
+      setActiveMenuItem("");
     }
   };
 
@@ -97,8 +93,9 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <ul className={styles.navbar_navigation}>
           {menuItems.map((item: MenuItem, index: number) => (
             <li
-              className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ""
-                }`}
+              className={`${styles.menuItem} ${
+                item.label === activeMenuItem ? styles.active : ""
+              }`}
               onClick={() => {
                 setActiveMenuItem(item.label);
                 navigate(item.link);
@@ -118,8 +115,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <div className={styles.logo}>
           <img
             onClick={() => {
-              setActiveMenuItem('Главная')
-              navigate("/")
+              setActiveMenuItem("Главная");
+              navigate("/");
             }}
             style={{ cursor: "pointer" }}
             src={logo}
@@ -167,8 +164,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
           <img
             src={favourite}
             onClick={() => {
-              setActiveMenuItem('')
-              navigate("/favorite")
+              setActiveMenuItem("");
+              navigate("/favorite");
             }}
             className={styles.icon__item}
             alt="Избранное"
@@ -176,8 +173,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
           <img
             src={cart}
             onClick={() => {
-              setActiveMenuItem('')
-              navigate("/cart")
+              setActiveMenuItem("");
+              navigate("/cart");
             }}
             className={styles.icon__item}
             alt="Корзина"
