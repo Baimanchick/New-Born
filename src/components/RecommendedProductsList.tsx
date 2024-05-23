@@ -1,13 +1,9 @@
-// Ваш файл RecommendedProductsList.tsx
-
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchRecAndPopProducts } from "../store/features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { default_filters } from "../utils/consts";
 import { Button } from "./Button/Button";
-
 import { Typography, Flex } from "antd";
-
 import styles from "../styles/card.module.scss";
 import ProductList from "./ProductList/ProductList";
 import useWindowSize from "../hooks/useWindowSize";
