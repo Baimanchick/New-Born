@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import FavoriteList from "../components/Favorite/FavoriteList"
-import { useAppSelector } from "../hooks/hooks"
+import { useAppDispatch, useAppSelector } from "../hooks/hooks"
 import { useNavigate } from "react-router-dom";
 import openNotification from "../components/Notification/Notification";
 import { Flex, Result } from "antd";
 import { Button } from "../components";
+import { fetchFavorites } from "../store/features/favorite/favoriteSlice";
 
 
 function FavoritePage() {
@@ -12,6 +13,16 @@ function FavoritePage() {
     const isAuth = useAppSelector((state) => state.auth.user !== null)
     const favoriteProducts = useAppSelector((state) => state.favorites.favorites)
     const [notificationShown, setNotificationShown] = useState(false);
+    const dispatch = useAppDispatch()
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        dispatch(fetchFavorites())
+            .then(() => setLoading(false))
+            .catch(() => setLoading(false));
+    }, [dispatch])
+
 
     useEffect(() => {
         if (!isAuth) {

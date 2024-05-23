@@ -13,7 +13,7 @@ const { Title } = Typography;
 function NewProductsList() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
