@@ -12,17 +12,18 @@ const { Title } = Typography;
 
 function NewProductsList() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products.newProducts);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
       fetchNewProducts({
         ...default_filters,
-        limit: 16,
+        limit: 6,
       })
     );
-  }, []);
+  }, [dispatch]);
+
 
   return (
     <div className={styles.newProducts_main}>
@@ -48,7 +49,7 @@ function NewProductsList() {
         </div>
         <div className={styles.newProducts}>
           <ProductList
-            products={products}
+            products={products ? products : []}
             grid={{
               gutter: 16,
               column: 6,

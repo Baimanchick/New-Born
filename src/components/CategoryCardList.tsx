@@ -9,6 +9,7 @@ import Loading from "./Loader/Loading";
 function CategoryCardList() {
   const dispatch = useAppDispatch();
   const category = useAppSelector((state) => state.category.category);
+  const subcategories = useAppSelector((state) => state.category.subcategories);
 
   useEffect(() => {
     dispatch(fetchCategory());
@@ -16,11 +17,12 @@ function CategoryCardList() {
   if (!category || !category?.length) {
     return <Loading />;
   }
+
   return (
     <div className={styles.categoryCard_main}>
       <div className={styles.categoryCard_container}>
         {category.map((category: CategoryType, index: number) => (
-          <CategoryCard category={category} key={index} />
+          <CategoryCard category={category} subcategories={subcategories} key={index} />
         ))}
       </div>
     </div>
