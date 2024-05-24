@@ -50,10 +50,10 @@ function ProfileList({ user }: any) {
     }
 
     const handleSave = async () => {
-        // if (!modifiedName.trim()) {
-        //     openNotification('warning', 'Предупреждение', 'Пожалуйста, заполните поле правильно', 2)
-        //     return
-        // }
+        if (modifiedName.trim() !== "") {
+            openNotification('warning', 'Предупреждение', 'Пожалуйста, заполните поле правильно', 2)
+            return
+        }
         closeProfileModal()
         setLoadingSubmit(true);
         try {

@@ -12,14 +12,14 @@ const { Title } = Typography;
 
 function PopularProductsList() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products.productsPopRec);
   const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(
       fetchRecAndPopProducts({
         ...default_filters,
-        limit: 16,
+        limit: 6,
       })
     );
   }, [dispatch]);
@@ -47,7 +47,7 @@ function PopularProductsList() {
         </div>
         <div className={styles.popularProducts}>
           <ProductList
-            products={products}
+            products={products ? products : []}
             grid={{
               gutter: 16,
               column: 6,

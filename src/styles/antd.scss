@@ -25,22 +25,6 @@
   border-bottom: none;
 }
 
-// TODO Оно мешает стилям в Profilelist
-// :where(.css-dev-only-do-not-override-42nv3w).ant-card-bordered .ant-card-cover {
-//   margin: 0;
-//   width: 200px;
-//   height: 240px;
-//   overflow: hidden;
-
-//   @media screen and (max-width: 480px) {
-//     width: initial;
-//     height: 140px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//   }
-// }
-
 :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions {
   border-top: 0;
 }
@@ -64,6 +48,11 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-item,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-item {
   padding-left: 0px !important;
+
+  span {
+    color: gray !important;
+    font-size: 13px !important;
+  }
 }
 
 .ant-menu-submenu-title {
@@ -77,10 +66,10 @@
 }
 
 //FilterSideBarClickedText
-:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
-:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
-  color: #000;
-}
+// :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+// :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
+//   color: #000;
+// }
 
 //RightLineForFilterMenuSideBar
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-root.ant-menu-inline,

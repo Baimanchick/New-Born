@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AutoComplete, Button, Flex, Input, SelectProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
@@ -8,8 +8,7 @@ import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchProducts } from "../../store/features/products/productSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import { Product } from "../../helpers/interfaces/product.interface";
 import openNotification from "../Notification/Notification";
 
@@ -43,17 +42,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
   const isOnFilterPage = window.location.pathname === "/filter";
   const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
   const [activeMenuItem, setActiveMenuItem] = useState<string>();
-  const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
-
-  // useEffect(() => {
-  //   //   dispatch(
-  //   //     fetchProducts({
-  //   //       limit: 16,
-  //   //       offset: 0,
-  //   //     })
-  //   //   );
-  //   // }, [dispatch]);
 
   const handleSearch = (value: string) => {
     if (value.trim() !== "") {
@@ -93,9 +82,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <ul className={styles.navbar_navigation}>
           {menuItems.map((item: MenuItem, index: number) => (
             <li
-              className={`${styles.menuItem} ${
-                item.label === activeMenuItem ? styles.active : ""
-              }`}
+              className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ""
+                }`}
               onClick={() => {
                 setActiveMenuItem(item.label);
                 navigate(item.link);

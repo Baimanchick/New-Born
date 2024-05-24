@@ -1,15 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Flex, Layout, List, theme } from "antd";
-import { ProductCard } from "../ProductCard/ProductCard";
+import { useEffect, useMemo } from "react";
+import { Layout } from "antd";
 import FilterMenu from "./FilterMenu";
 import { fetchProducts } from "../../store/features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import useWindowSize from "../../hooks/useWindowSize";
 import Loading from "../Loader/Loading";
 import ProductList from "../ProductList/ProductList";
 import { useSearchParams } from "react-router-dom";
 import styles from "./filterSideBar.module.scss";
-import FilterNavBar from "../Navbar/FilterNavBar";
 
 const { Content, Sider } = Layout;
 
@@ -23,7 +20,6 @@ function FilterSideBar() {
   );
 
   useEffect(() => {
-    console.log(filters);
     dispatch(
       fetchProducts({
         ...filters,
@@ -31,7 +27,7 @@ function FilterSideBar() {
         offset: 0,
       })
     );
-  }, [searchParams]);
+  }, [searchParams, filters]);
 
   return (
     <>

@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { Drawer, Button } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { Drawer } from "antd";
 import styles from "./navbar.module.scss";
 import FilterMenu from "../FilterSideBar/FilterMenu";
 const FilterNavBar = ({ isFilterDrawerOpen, setFilterIsDrawerOpen }: any) => {
@@ -10,7 +8,6 @@ const FilterNavBar = ({ isFilterDrawerOpen, setFilterIsDrawerOpen }: any) => {
       bodyStyle={{ backgroundColor: "rgba(248, 248, 248, 1)" }}
       width="100%"
       placement="right"
-      // onClick={() => setFilterIsDrawerOpen(false)}
       onClose={() => setFilterIsDrawerOpen(false)}
       visible={isFilterDrawerOpen}
     >

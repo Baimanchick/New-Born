@@ -6,15 +6,18 @@ import {
   Product,
 } from "../../../helpers/interfaces/product.interface";
 import { AxiosError } from "axios";
-import { login, register } from "../auth/authSlice";
 
 interface ProductState {
   products: Product[];
+  newProducts?: Product[];
+  productsPopRec?: Product[];
   loading: boolean;
 }
 
 const initialState: ProductState = {
   products: [],
+  newProducts: [],
+  productsPopRec: [],
   loading: true,
 };
 
@@ -24,6 +27,12 @@ const productSlice = createSlice({
   reducers: {
     setProduct: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
+    },
+    setNewProduct: (state, action: PayloadAction<Product[]>) => {
+      state.newProducts = action.payload;
+    },
+    setPopRecProduct: (state, action: PayloadAction<Product[]>) => {
+      state.productsPopRec = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -83,7 +92,7 @@ export const fetchRecAndPopProducts = createAsyncThunk<unknown, FilterProduct>(
       const { data } = await $axios.get(`${API_URL}/products/recommended/`, {
         params: queryParams,
       });
-      dispatch(productSlice.actions.setProduct(data.products));
+      dispatch(productSlice.actions.setPopRecProduct(data.products));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -108,7 +117,7 @@ export const fetchNewProducts = createAsyncThunk<unknown, FilterProduct>(
       const { data } = await $axios.get(`${API_URL}/products/new_products/`, {
         params: queryParams,
       });
-      dispatch(productSlice.actions.setProduct(data.products));
+      dispatch(productSlice.actions.setNewProduct(data.products));
     } catch (error) {
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response!.data.message);
@@ -143,5 +152,6 @@ export const searchProducts = createAsyncThunk<
   }
 );
 
-export const { setProduct } = productSlice.actions;
+export const { setProduct, setNewProduct, setPopRecProduct } =
+  productSlice.actions;
 export default productSlice.reducer;

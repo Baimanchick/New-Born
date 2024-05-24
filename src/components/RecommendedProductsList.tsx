@@ -13,7 +13,7 @@ const { Title } = Typography;
 
 function RecommendedProductsList() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products.productsPopRec);
   const windowSize = useWindowSize()
   const isMobile = windowSize.width && windowSize.width < 660;
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function RecommendedProductsList() {
     dispatch(
       fetchRecAndPopProducts({
         ...default_filters,
-        limit: 16,
+        limit: 6,
       })
     );
   }, [dispatch]);
@@ -52,7 +52,7 @@ function RecommendedProductsList() {
         </Flex>
         <div className={styles.recommendedProducts}>
           <ProductList
-            products={products}
+            products={products ? products : []}
             grid={{
               gutter: 16,
               column: 6,
