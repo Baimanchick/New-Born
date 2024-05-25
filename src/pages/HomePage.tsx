@@ -9,6 +9,7 @@ import CustomerReviewsCarousel from '../components/Carousel/CustomerReviewsCarou
 import { useEffect } from 'react'
 import { useAppDispatch } from '../hooks/hooks'
 import { fetchFavorites } from '../store/features/favorite/favoriteSlice'
+import App from './lol'
 
 function HomePage() {
     const dispatch = useAppDispatch()
@@ -32,6 +33,9 @@ function HomePage() {
                     <CustomerReviewsCarousel />
                     <BrandCardList />
                 </div>
+            </div>
+            <div className='container'>
+                <App />
             </div>
         </>
     )
