@@ -65,11 +65,11 @@
   border-radius: 40px !important;
 }
 
-//FilterSideBarClickedText
-// :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
-// :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
-//   color: #000;
-// }
+// FilterSideBarClickedText
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
+  color: #000 !important;
+}
 
 //RightLineForFilterMenuSideBar
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-root.ant-menu-inline,

@@ -39,7 +39,13 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   const brands = useAppSelector((state) => state.brand.brand);
   const { category, subcategories } = useAppSelector((state) => state.category);
   const [brandKey, setBrandKey] = useState(localStorage.getItem('brandKey') || '');
-  let [catalogKey, setCatalogKey] = useState(localStorage.getItem('catalogKey') || '');
+  const [catalogKey, setCatalogKey] = useState<number[]>(
+    JSON.parse(localStorage.getItem('catalogKey') || '[]')
+  );
+  const [subKey, setSubKey] = useState<number[]>(
+    JSON.parse(localStorage.getItem('subKey') || '[]')
+  );
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -111,28 +117,31 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
     const selectedSub: SubCategory | undefined = subcategories.find(
       (item: SubCategory) => item.id === Number(e.key)
     );
-    const selectedArray = [selectedCategory?.id, selectedSub?.id]
-    if (selectedSub && selectedCategory) {
+    if (selectedCategory && selectedSub) {
       handleFilterChange('category', selectedCategory.name);
       handleFilterChange('subcategory', selectedSub.title);
     }
-    if (catalogKey) {
-      localStorage.setItem("catalogKey", JSON.stringify([...selectedArray]))
-    } else {
-      localStorage.setItem("catalogKey", JSON.stringify([...selectedArray]))
-    }
-    setCatalogKey(e.key);
+    const selectedCategorykey = [selectedCategory?.id].filter(Boolean) as number[];
+    const selectedSubkey = [selectedSub?.id].filter(Boolean) as number[];
+    localStorage.setItem("catalogKey", JSON.stringify(selectedCategorykey));
+    localStorage.setItem("subKey", JSON.stringify(selectedSubkey));
+    setCatalogKey(selectedCategorykey);
+    setCatalogKey(selectedSubkey);
     closeMenu();
   };
+
 
   const onPriceTo = (value: number) => {
     handleFilterChange('max_price', value.toString());
     closeMenu();
   };
+
   const onPriceFrom = (value: number) => {
     handleFilterChange('min_price', value.toString());
     closeMenu();
   };
+
+  console.log(catalogKey);
 
   return (
     <Flex gap={20} vertical>
@@ -151,7 +160,8 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
           theme={'light'}
           onClick={catalogHandler}
           style={{ width: '100%' }}
-          selectedKeys={[catalogKey]}
+          defaultSelectedKeys={subKey.map(String)}
+          defaultOpenKeys={catalogKey.map(String)}
           mode="inline"
           items={categoriesAndSubs}
           className={styles.menuCustomFilter}
