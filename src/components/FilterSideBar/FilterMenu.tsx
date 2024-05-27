@@ -36,6 +36,7 @@ interface FilterMenuProps {
 function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const brands = useAppSelector((state) => state.brand.brand);
   const { category, subcategories } = useAppSelector((state) => state.category);
   const [brandKey, setBrandKey] = useState(localStorage.getItem('brandKey') || '');
@@ -45,9 +46,6 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   const [subKey, setSubKey] = useState<number[]>(
     JSON.parse(localStorage.getItem('subKey') || '[]')
   );
-
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(fetchBrand());
     dispatch(fetchCategory());
@@ -140,8 +138,6 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
     handleFilterChange('min_price', value.toString());
     closeMenu();
   };
-
-  console.log(catalogKey);
 
   return (
     <Flex gap={20} vertical>
