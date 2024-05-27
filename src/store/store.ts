@@ -10,6 +10,7 @@ import authSlice from "./features/auth/authSlice";
 import favoritesReducer from "./features/favorite/favoriteSlice";
 import cartReducer from "./features/cart/cartSlice";
 import deliveryReducer from "./features/delivery/deliveryDetailSlice";
+import orderHistoryReducer from "./features/orders/orderHistorySlice";
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     customerReviews: reviewsReducer,
     products: productsReducer,
     oneProduct: oneProductReducer,
+    orderHistory: orderHistoryReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
