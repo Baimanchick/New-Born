@@ -9,14 +9,19 @@ import CustomerReviewsCarousel from '../components/Carousel/CustomerReviewsCarou
 import { useEffect } from 'react'
 import { useAppDispatch } from '../hooks/hooks'
 import { fetchFavorites } from '../store/features/favorite/favoriteSlice'
-import App from './lol'
 
 function HomePage() {
     const dispatch = useAppDispatch()
+    const isOnFilterPage = window.location.pathname === "/filter";
+
+    if (!isOnFilterPage) {
+        localStorage.removeItem('catalogKey')
+        localStorage.removeItem('subKey')
+    }
 
     useEffect(() => {
         dispatch(fetchFavorites())
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -33,9 +38,6 @@ function HomePage() {
                     <CustomerReviewsCarousel />
                     <BrandCardList />
                 </div>
-            </div>
-            <div className='container'>
-                <App />
             </div>
         </>
     )
