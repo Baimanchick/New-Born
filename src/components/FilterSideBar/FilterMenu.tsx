@@ -9,6 +9,7 @@ import { useSearchParams, useLocation } from 'react-router-dom';
 import { fetchCategory, fetchSubcategory } from '../../store/features/category/categorySlice';
 import { CategoryType } from '../CategoryCard/CategoryCard.props';
 import { SubCategory } from '../../helpers/interfaces/category.interface';
+import "../../styles/antd.scss"
 
 export interface BrandI {
   brand: BrandType[];
