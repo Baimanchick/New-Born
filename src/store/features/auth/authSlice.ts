@@ -66,7 +66,7 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.isAuth = true;
     });
-    builder.addCase(register.fulfilled, (state, action) => {
+    builder.addCase(register.rejected, (state, action) => {
       state.isAuth = true;
     });
   },

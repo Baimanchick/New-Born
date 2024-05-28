@@ -5,12 +5,10 @@ import { Button as ButtonAnt } from "antd";
 import { ReactComponent as Star } from "../../assets/svgs/card/star.svg";
 import { ReactComponent as Fav } from "../../assets/svgs/card/heart.svg";
 import { ReactComponent as FavFill } from "../../assets/svgs/card/filHeart.svg";
-import { ReactComponent as Remove } from "../../assets/svgs/card/remove.svg"
+import { ReactComponent as Remove } from "../../assets/svgs/card/remove.svg";
 import { Button } from "../Button/Button";
 import { ProductCardProps } from "./ProductCard.props";
-import {
-  formatNumberAndAddCurrency,
-} from "../../helpers/functions/helperFunctions";
+import { formatNumberAndAddCurrency } from "../../helpers/functions/helperFunctions";
 import styles from "./productCard.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
 import { useNavigate } from "react-router-dom";
@@ -21,30 +19,31 @@ import { useDispatch } from "react-redux";
 import { addFavorites } from "../../store/features/favorite/favoriteSlice";
 import openNotification from "../Notification/Notification";
 import cn from "classnames";
-import { addToCart, changeCountCartProduct, deleteCart, fetchCarts } from "../../store/features/cart/cartSlice";
+import {
+  addToCart,
+  changeCountCartProduct,
+  deleteCart,
+  fetchCarts,
+} from "../../store/features/cart/cartSlice";
 import { Cart } from "../../helpers/interfaces/cart.interface";
 
 const { Title, Paragraph, Text } = Typography;
 
 export function ProductCard({ product }: ProductCardProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isOnCartPage = window.location.pathname === "/cart";
   const isAuth = useAppSelector((store) => store.auth.user !== null);
-  const carts = useAppSelector((state) => state.carts.carts)
-  const dispatch = useAppDispatch();
+  const carts = useAppSelector((state) => state.carts.carts);
   const favorites = useAppSelector((state) => state.favorites.favorites);
   const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
   const [addedToCart, setAddedToCart] = useState(false);
+  const productFromCart: Cart | null =
+    carts.find((item) => item.product.id === product.id) || null;
 
   useEffect(() => {
-    const addedProducts = JSON.parse(localStorage.getItem('AddedProducts') || '[]');
-    const addedToCart = addedProducts.includes(product?.id);
-    setAddedToCart(addedToCart);
-  }, [product]);
-
-  useEffect(() => {
-    dispatch(fetchCarts())
-  }, [dispatch])
+    setAddedToCart(!!productFromCart);
+  }, [product, carts]);
 
   const handleAddToCart = (productId: number) => {
     if (isAuth) {
@@ -56,15 +55,31 @@ export function ProductCard({ product }: ProductCardProps) {
     }
   };
 
-  const incrementCount = ({ count, id }: { count: number; id: number }) => {
-    dispatch(changeCountCartProduct({ count, product_id: id }));
+  const incrementCount = ({
+    count,
+    product_id,
+    cart_id,
+  }: {
+    count: number;
+    product_id: number;
+    cart_id: number;
+  }) => {
+    dispatch(changeCountCartProduct({ count, product_id, cart_id }));
   };
 
-  const decrementCount = ({ count, id }: { count: number; id: number }) => {
-    dispatch(changeCountCartProduct({ count, product_id: id }));
+  const decrementCount = ({
+    count,
+    product_id,
+    cart_id,
+  }: {
+    count: number;
+    product_id: number;
+    cart_id: number;
+  }) => {
+    dispatch(changeCountCartProduct({ count, product_id, cart_id }));
     if (count < 1) {
-      dispatch(deleteCart(+id))
-      localStorage.removeItem("AddedProducts")
+      dispatch(deleteCart(+cart_id));
+      localStorage.removeItem("AddedProducts");
     }
   };
 
@@ -87,8 +102,6 @@ export function ProductCard({ product }: ProductCardProps) {
       openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
   };
-
-  const cartForProduct = carts.find((cart: Cart) => cart.product.id === product.id);
 
   return (
     <Card
@@ -113,8 +126,8 @@ export function ProductCard({ product }: ProductCardProps) {
               </Tag>
             ))}
           </Flex>
-          {isOnCartPage && cartForProduct ? (
-            <Remove onClick={() => dispatch(deleteCart(cartForProduct.id))} />
+          {isOnCartPage && productFromCart ? (
+            <Remove onClick={() => dispatch(deleteCart(productFromCart.id))} />
           ) : (
             <ButtonAnt
               className={cn(styles.favButton, {
@@ -137,11 +150,23 @@ export function ProductCard({ product }: ProductCardProps) {
       }
       actions={[
         <>
-          {addedToCart && cartForProduct ? (
+          {addedToCart && productFromCart ? (
             <Counter
-              initialValue={cartForProduct.count}
-              onIncrement={(newCount) => incrementCount({ count: newCount, id: cartForProduct.id })}
-              onDecrement={(newCount) => decrementCount({ count: newCount, id: cartForProduct.id })}
+              initialValue={productFromCart.count}
+              onIncrement={(newCount) =>
+                incrementCount({
+                  count: newCount,
+                  product_id: product.id,
+                  cart_id: productFromCart.id,
+                })
+              }
+              onDecrement={(newCount) =>
+                decrementCount({
+                  count: newCount,
+                  product_id: product.id,
+                  cart_id: productFromCart.id,
+                })
+              }
             />
           ) : (
             <Button
@@ -153,7 +178,7 @@ export function ProductCard({ product }: ProductCardProps) {
               Купить
             </Button>
           )}
-        </>
+        </>,
       ]}
     >
       <Flex vertical align={"center"}>
@@ -175,10 +200,13 @@ export function ProductCard({ product }: ProductCardProps) {
             </Text>
           </Flex>
         </Flex>
-        <Paragraph style={{ textAlign: `${isOnCartPage ? 'left' : 'initial'}` }} className={styles.productParagraph}>
+        <Paragraph
+          style={{ textAlign: `${isOnCartPage ? "left" : "initial"}` }}
+          className={styles.productParagraph}
+        >
           {product.name}
         </Paragraph>
       </Flex>
-    </Card >
+    </Card>
   );
 }
