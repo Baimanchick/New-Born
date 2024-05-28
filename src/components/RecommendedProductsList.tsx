@@ -52,7 +52,7 @@ function RecommendedProductsList() {
         </Flex>
         <div className={styles.recommendedProducts}>
           <ProductList
-            products={products ? products : []}
+            products={products}
             grid={{
               gutter: 16,
               column: 6,

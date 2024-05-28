@@ -47,7 +47,7 @@ function PopularProductsList() {
         </div>
         <div className={styles.popularProducts}>
           <ProductList
-            products={products ? products : []}
+            products={products}
             grid={{
               gutter: 16,
               column: 6,
