@@ -56,7 +56,8 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
     }
   };
   const onSelect = (value: string) => {
-    setSearchValue("");
+    // setSearchValue("");
+    console.log(value);
   };
   const handleFilterButtonClick = () => {
     if (isOnFilterPage) {
@@ -140,7 +141,6 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
               size="large"
               onSelect={onSelect}
               onSearch={handleSearch}
-              value={searchValue}
             >
               <Input.Search
                 style={{ height: "50px" }}
