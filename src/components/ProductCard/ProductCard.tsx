@@ -84,7 +84,7 @@ export function ProductCard({ product }: ProductCardProps) {
       dispatch(addFavorites(product_id));
     } else if (!isAuth) {
       navigate("/register");
-      alert("Вы не авторизованы");
+      openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
   };
 
