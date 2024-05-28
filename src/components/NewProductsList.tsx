@@ -49,7 +49,7 @@ function NewProductsList() {
         </div>
         <div className={styles.newProducts}>
           <ProductList
-            products={products ? products : []}
+            products={products}
             grid={{
               gutter: 16,
               column: 6,

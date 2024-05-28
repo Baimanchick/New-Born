@@ -6,22 +6,13 @@ import RecommendedProductsList from '../components/RecommendedProductsList'
 import PopularProductsList from '../components/PopularProductsList'
 import BrandCardList from '../components/BrandCardList'
 import CustomerReviewsCarousel from '../components/Carousel/CustomerReviewsCarousel'
-import { useEffect } from 'react'
-import { useAppDispatch } from '../hooks/hooks'
-import { fetchFavorites } from '../store/features/favorite/favoriteSlice'
-
 function HomePage() {
-    const dispatch = useAppDispatch()
     const isOnFilterPage = window.location.pathname === "/filter";
 
     if (!isOnFilterPage) {
         localStorage.removeItem('catalogKey')
         localStorage.removeItem('subKey')
     }
-
-    useEffect(() => {
-        dispatch(fetchFavorites())
-    }, [dispatch])
 
     return (
         <>
