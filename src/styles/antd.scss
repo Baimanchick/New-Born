@@ -2,55 +2,39 @@
 .ant-drawer-content {
   .ant-drawer-header {
     div>button>span>svg {
-      color: rgba(27, 129, 231, 1);
-      font-size: 22px;
+      color: rgba(27, 129, 231, 1) !important;
+      font-size: 22px !important;
     }
 
     div>button>span {
-      background-color: rgba(236, 245, 255, 1);
-      padding: 15px;
-      border-radius: 15px;
+      background-color: rgba(236, 245, 255, 1) !important;
+      padding: 15px !important;
+      border-radius: 15px !important;
     }
 
     div {
-      margin-top: 15px;
-      display: flex;
-      justify-content: flex-end;
+      margin-top: 15px !important;
+      display: flex !important;
+      justify-content: flex-end !important;
     }
   }
 }
 
 //UndreLineAboveTheCloseSvg
 :where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-header {
-  border-bottom: none;
+  border-bottom: none !important;
 }
 
-// TODO Оно мешает стилям в Profilelist
-// :where(.css-dev-only-do-not-override-42nv3w).ant-card-bordered .ant-card-cover {
-//   margin: 0;
-//   width: 200px;
-//   height: 240px;
-//   overflow: hidden;
-
-//   @media screen and (max-width: 480px) {
-//     width: initial;
-//     height: 140px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//   }
-// }
-
 :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions {
-  border-top: 0;
+  border-top: 0 !important;
 }
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-actions>li {
-  margin: 0;
+  margin: 0 !important;
 }
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-drawer .ant-drawer-content {
-  background: none;
+  background: none !important;
 }
 
 // UlInsideOfFilterSideBar
@@ -64,6 +48,11 @@
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light.ant-menu-inline .ant-menu-item,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu.ant-menu-inline .ant-menu-item {
   padding-left: 0px !important;
+
+  span {
+    color: gray !important;
+    font-size: 13px !important;
+  }
 }
 
 .ant-menu-submenu-title {
@@ -76,10 +65,10 @@
   border-radius: 40px !important;
 }
 
-//FilterSideBarClickedText
+// FilterSideBarClickedText
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
 :where(.css-dev-only-do-not-override-42nv3w).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
-  color: #000;
+  color: #000 !important;
 }
 
 //RightLineForFilterMenuSideBar
@@ -92,7 +81,7 @@
 
 //ImagePreviewHover
 :where(.css-dev-only-do-not-override-42nv3w).ant-image .ant-image-mask {
-  display: none;
+  display: none !important;
 }
 
 //UnderLineAboveUlLiInNavbarAndFilter
@@ -122,7 +111,7 @@
 }
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-card .ant-card-head-wrapper {
-  display: block;
+  display: block !important;
 }
 
 :where(.css-dev-only-do-not-override-42nv3w).ant-col {
@@ -136,7 +125,7 @@
   @media screen and (max-width: 660px) {
     width: 5px !important;
     height: 5px !important;
-    top: calc(50% - 1px)
+    top: calc(50% - 1px) !important;
   }
 }
 

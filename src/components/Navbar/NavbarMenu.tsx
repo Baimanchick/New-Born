@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AutoComplete, Button, Flex, Input, SelectProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
@@ -8,65 +8,57 @@ import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchProducts } from "../../store/features/products/productSlice";
+import { useAppDispatch } from "../../hooks/hooks";
 import { Product } from "../../helpers/interfaces/product.interface";
 import openNotification from "../Notification/Notification";
+import { searchProducts } from "../../store/features/products/productSlice";
 
-const searchResult = (products: Product[], query: string, navigate: any) =>
-  products
-    .filter((product) =>
-      product.name.toLowerCase().includes(query.toLowerCase())
-    )
-    .map((product) => ({
-      value: product.name,
-      label: (
-        <div
-          key={product.id}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-          onClick={() => {
-            navigate(`/detail/${product.id}`);
-          }}
-        >
-          <span style={{ cursor: "pointer" }}>
-            <strong>Найдено:</strong> {product.name}
-          </span>
-        </div>
-      ),
-    }));
-
-function NavbarMenu({ menuItems }: NavbarMenuProps) {
+const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const isOnFilterPage = window.location.pathname === "/filter";
   const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
   const [activeMenuItem, setActiveMenuItem] = useState<string>();
-  const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  // useEffect(() => {
-  //   //   dispatch(
-  //   //     fetchProducts({
-  //   //       limit: 16,
-  //   //       offset: 0,
-  //   //     })
-  //   //   );
-  //   // }, [dispatch]);
-
-  const handleSearch = (value: string) => {
+  const handleSearch = async (value: string) => {
+    setSearchValue(value);
     if (value.trim() !== "") {
-      setOptions(searchResult(products, value.trim(), navigate));
+      const resultAction = await dispatch(searchProducts(value.trim()));
+      if (searchProducts.fulfilled.match(resultAction)) {
+        const searchResults = resultAction.payload as unknown as Product[];
+        setOptions(
+          searchResults.map((product) => ({
+            value: product.name,
+            label: (
+              <div
+                key={product.id}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+                onClick={() => {
+                  navigate(`/detail/${product.id}`);
+                }}
+              >
+                <span style={{ cursor: "pointer" }}>
+                  <strong>Найдено:</strong> {product.name}
+                </span>
+              </div>
+            ),
+          }))
+        );
+      } else {
+        setOptions([]);
+      }
     } else {
       setOptions([]);
     }
   };
-
   const onSelect = (value: string) => {
-    console.log("onSelect", value);
+    // setSearchValue("");
+    console.log(value);
   };
-
   const handleFilterButtonClick = () => {
     if (isOnFilterPage) {
       openNotification(
@@ -93,9 +85,8 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
         <ul className={styles.navbar_navigation}>
           {menuItems.map((item: MenuItem, index: number) => (
             <li
-              className={`${styles.menuItem} ${
-                item.label === activeMenuItem ? styles.active : ""
-              }`}
+              className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ""
+                }`}
               onClick={() => {
                 setActiveMenuItem(item.label);
                 navigate(item.link);
@@ -158,6 +149,7 @@ function NavbarMenu({ menuItems }: NavbarMenuProps) {
                 variant={"borderless"}
               />
             </AutoComplete>
+
           </Flex>
         </div>
         <div className={styles.icon}>

@@ -44,6 +44,7 @@ function DetailReviewsDescription({ product }: any) {
     const isAuth = useAppSelector((state) => state.auth.user !== null)
     const isTablet = windowSize.width && windowSize.width < 870;
     const isMobile = windowSize.width && windowSize.width < 660;
+    const verifiedReviews = product.reviews.filter((review: any) => review.is_verified);
     const [reviewStar] = useState(0);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [reviewData, setReviewData] = useState({
@@ -87,6 +88,7 @@ function DetailReviewsDescription({ product }: any) {
             await dispatch(addReview({ ...reviewData, product: product?.id }));
             setReviewData({ text: "", rating: reviewStar });
             closeReviewsModal();
+            openNotification('success', 'Успешно', 'Ваш отзыв успешно отправлен и сейчас проходит проверку. Благодарим за ваше мнение!', 4);
         } catch (error) {
             console.error("Лови аптечку ->", error);
         } finally {
@@ -122,23 +124,30 @@ function DetailReviewsDescription({ product }: any) {
                     <Menu mode="horizontal" defaultSelectedKeys={['2']} items={item2} className={styles.CustomRewDesMenu} />
                 </Header>
                 <Flex style={{ flexDirection: 'column', rowGap: '15px', marginTop: '20px', overflowY: 'scroll', maxHeight: '320px', marginBottom: '10vh' }}>
-                    {product.reviews.map((reviews: ReviewType, index: number) => (
-                        <Flex key={index} style={{ flexDirection: 'column', rowGap: '10px' }}>
-                            <Flex align={'center'} justify={'space-between'}>
-                                <Flex align={'center'} gap={8}>
-                                    <Title style={{ fontSize: `${isTablet ? '12px' : '18px'}`, margin: '0px', fontWeight: '1000', color: '#4B4E51' }}>{reviews.user_name}</Title>
-                                    <Star />
-                                    <Title style={{ fontSize: `${isTablet ? '12px' : '16px'}`, margin: '0px', fontWeight: '600', color: '#1B81E7' }}>{reviews.rating}</Title>
+                    {verifiedReviews.length > 0 ? (
+                        verifiedReviews.map((reviews: ReviewType, index: number) => (
+                            <Flex key={index} style={{ flexDirection: 'column', rowGap: '10px' }}>
+                                <Flex align={'center'} justify={'space-between'}>
+                                    <Flex align={'center'} gap={8}>
+                                        <Title style={{ fontSize: `${isTablet ? '12px' : '18px'}`, margin: '0px', fontWeight: '1000', color: '#4B4E51' }}>{reviews.user_name}</Title>
+                                        <Star />
+                                        <Title style={{ fontSize: `${isTablet ? '12px' : '16px'}`, margin: '0px', fontWeight: '600', color: '#1B81E7' }}>{reviews.rating}</Title>
+                                    </Flex>
+                                    <Flex>
+                                        <Title style={{ margin: 0, color: '#7B7B7B', fontSize: `${isTablet ? '12px' : '16px'}`, fontWeight: '400' }}>{formatDate(reviews.created_at)}</Title>
+                                    </Flex>
                                 </Flex>
-                                <Flex>
-                                    <Title style={{ margin: 0, color: '#7B7B7B', fontSize: `${isTablet ? '12px' : '16px'}`, fontWeight: '400' }}>{formatDate(reviews.created_at)}</Title>
-                                </Flex>
+                                <Paragraph style={{ fontWeight: '600', fontSize: `${isTablet ? '12px' : '16px'}`, color: '#2A2A2A' }}>
+                                    {reviews.text}
+                                </Paragraph>
                             </Flex>
-                            <Paragraph style={{ fontWeight: '600', fontSize: `${isTablet ? '12px' : '16px'}`, color: '#2A2A2A' }}>
-                                {reviews.text}
-                            </Paragraph>
+                        ))
+                    ) : (
+                        <Flex style={{ marginLeft: 16 }} justify={'flex-start'}>
+                            <Title style={{ margin: 0, fontSize: 18 }}>Нету отзывов</Title>
                         </Flex>
-                    ))}
+                    )}
+
                 </Flex>
                 <Footer className={styles.CustomFooterSecond}>
                     <Flex>

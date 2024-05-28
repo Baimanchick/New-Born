@@ -1,17 +1,15 @@
-import type { MenuProps } from "antd";
-import { Flex, Layout, Menu, Typography } from "antd";
-import PriceRangeSelector from "../PriceRangeSelector/PriceRangeSelector";
-import styles from "./filterSideBar.module.scss";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { useEffect, useState } from "react";
-import { fetchBrand } from "../../store/features/brand/brandSlice";
-import { useSearchParams } from "react-router-dom";
-import {
-  fetchCategory,
-  fetchSubcategory,
-} from "../../store/features/category/categorySlice";
-import { CategoryType } from "../CategoryCard/CategoryCard.props";
-import { SubCategory } from "../../helpers/interfaces/category.interface";
+import React, { useState, useEffect } from 'react';
+import { Flex, Typography, Menu } from 'antd';
+import type { MenuProps } from 'antd';
+import PriceRangeSelector from '../PriceRangeSelector/PriceRangeSelector';
+import styles from './filterSideBar.module.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { fetchBrand } from '../../store/features/brand/brandSlice';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { fetchCategory, fetchSubcategory } from '../../store/features/category/categorySlice';
+import { CategoryType } from '../CategoryCard/CategoryCard.props';
+import { SubCategory } from '../../helpers/interfaces/category.interface';
+import "../../styles/antd.scss"
 
 export interface BrandI {
   brand: BrandType[];
@@ -23,27 +21,47 @@ export type BrandType = {
   image: string;
 };
 
-type MenuItem = Required<MenuProps>["items"][number];
-
 const { Title } = Typography;
 
 const inlineStylesFlex: React.CSSProperties = {
-  flexDirection: "column",
-  padding: "20px",
-  background: "white",
+  flexDirection: 'column',
+  padding: '20px',
+  background: 'white',
   borderRadius: 20,
 };
 
 interface FilterMenuProps {
   setFilterIsDrawerOpen?: (value: boolean) => void;
 }
+
 function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
   const brands = useAppSelector((state) => state.brand.brand);
   const { category, subcategories } = useAppSelector((state) => state.category);
-  const [brandKey, setBrandKey] = useState("");
-  const [catalogKey, setCatalogKey] = useState("");
-  const dispatch = useAppDispatch();
+  const [brandKey, setBrandKey] = useState(localStorage.getItem('brandKey') || '');
+  const [catalogKey, setCatalogKey] = useState<number[]>(
+    JSON.parse(localStorage.getItem('catalogKey') || '[]')
+  );
+  const [subKey, setSubKey] = useState<number[]>(
+    JSON.parse(localStorage.getItem('subKey') || '[]')
+  );
+  useEffect(() => {
+    dispatch(fetchBrand());
+    dispatch(fetchCategory());
+    dispatch(fetchSubcategory());
+
+    if (location.state) {
+      const { category, subcategory } = location.state;
+      if (category) {
+        handleFilterChange('category', category);
+      }
+      if (subcategory) {
+        handleFilterChange('subcategory', subcategory);
+      }
+    }
+  }, [location.state]);
 
   function handleFilterChange(key: string, value: string) {
     setSearchParams((prevParams) => {
@@ -70,56 +88,55 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
     label: brand.name,
   }));
 
-  const categoriesAndSubs = category.map(
-    (item: CategoryType, index: number) => ({
-      key: item.id?.toString() || index.toString(),
-      label: item.name,
-      children: subcategories
-        .filter((sub: SubCategory) => sub.category === item.id)
-        .map((sub: SubCategory) => ({
-          key: sub.id.toString(),
-          label: sub.title,
-        })),
-    })
-  );
+  const categoriesAndSubs = category.map((item: CategoryType, index: number) => ({
+    key: item.id?.toString() || index.toString(),
+    label: item.name,
+    children: subcategories
+      .filter((sub: SubCategory) => sub.category === item.id)
+      .map((sub: SubCategory) => ({
+        key: sub.id.toString(),
+        label: sub.title,
+      })),
+  }));
 
-  useEffect(() => {
-    dispatch(fetchBrand());
-    dispatch(fetchCategory());
-    dispatch(fetchSubcategory());
-  }, []);
-
-  const onClick: MenuProps["onClick"] = (e) => {
+  const onClick: MenuProps['onClick'] = (e) => {
     setBrandKey(e.key);
-    const brand = items.find((item) => item.key == e.key);
+    localStorage.setItem('brandKey', e.key);
+    const brand = items.find((item) => item.key === e.key);
     if (brand) {
-      handleFilterChange("brand", brand.label);
+      handleFilterChange('brand', brand.label);
     }
     closeMenu();
   };
 
-  const catalogHandler: MenuProps["onClick"] = (e) => {
+  const catalogHandler: MenuProps['onClick'] = (e) => {
     const selectedCategory: CategoryType | undefined = category.find(
       (item: CategoryType) => item.id === Number(e.keyPath[1])
     );
     const selectedSub: SubCategory | undefined = subcategories.find(
       (item: SubCategory) => item.id === Number(e.key)
     );
-    if (selectedSub && selectedCategory) {
-      handleFilterChange("category", selectedCategory.name);
-      handleFilterChange("subcategory", selectedSub.title);
+    if (selectedCategory && selectedSub) {
+      handleFilterChange('category', selectedCategory.name);
+      handleFilterChange('subcategory', selectedSub.title);
     }
-
-    setCatalogKey(e.key);
+    const selectedCategorykey = [selectedCategory?.id].filter(Boolean) as number[];
+    const selectedSubkey = [selectedSub?.id].filter(Boolean) as number[];
+    localStorage.setItem("catalogKey", JSON.stringify(selectedCategorykey));
+    localStorage.setItem("subKey", JSON.stringify(selectedSubkey));
+    setCatalogKey(selectedCategorykey);
+    setCatalogKey(selectedSubkey);
     closeMenu();
   };
+
 
   const onPriceTo = (value: number) => {
-    handleFilterChange("max_price", value.toString());
+    handleFilterChange('max_price', value.toString());
     closeMenu();
   };
+
   const onPriceFrom = (value: number) => {
-    handleFilterChange("min_price", value.toString());
+    handleFilterChange('min_price', value.toString());
     closeMenu();
   };
 
@@ -128,19 +145,20 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
       <Flex style={inlineStylesFlex}>
         <Title
           style={{
-            color: "#1B81E7",
-            fontWeight: "1000",
-            fontSize: "22px",
-            cursor: "pointer",
+            color: '#1B81E7',
+            fontWeight: '1000',
+            fontSize: '22px',
+            cursor: 'pointer',
           }}
         >
           Каталог
         </Title>
         <Menu
-          theme={"light"}
+          theme={'light'}
           onClick={catalogHandler}
-          style={{ width: "100%" }}
-          selectedKeys={[catalogKey]}
+          style={{ width: '100%' }}
+          defaultSelectedKeys={subKey.map(String)}
+          defaultOpenKeys={catalogKey.map(String)}
           mode="inline"
           items={categoriesAndSubs}
           className={styles.menuCustomFilter}
@@ -148,29 +166,18 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
       </Flex>
 
       <Flex style={inlineStylesFlex}>
-        <Title
-          style={{ color: "#1B81E7", fontWeight: "1000", fontSize: "22px" }}
-        >
-          Цена, сом
-        </Title>
+        <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px' }}>Цена, сом</Title>
         <PriceRangeSelector onPriceTo={onPriceTo} onPriceFrom={onPriceFrom} />
       </Flex>
 
       <Flex style={inlineStylesFlex}>
-        <Title
-          style={{
-            color: "#1B81E7",
-            fontWeight: "1000",
-            fontSize: "22px",
-            cursor: "pointer",
-          }}
-        >
+        <Title style={{ color: '#1B81E7', fontWeight: '1000', fontSize: '22px', cursor: 'pointer' }}>
           Бренд
         </Title>
         <Menu
           onClick={onClick}
-          theme={"light"}
-          style={{ width: "100%" }}
+          theme={'light'}
+          style={{ width: '100%' }}
           selectedKeys={[brandKey]}
           mode="inline"
           items={items}

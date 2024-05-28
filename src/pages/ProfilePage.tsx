@@ -8,11 +8,11 @@ import Loading from "../components/Loader/Loading";
 import useWindowSize from "../hooks/useWindowSize";
 import OrderHistoryMobile from "../components/Order/OrderHistoryMobile";
 import styles from "../components/ProfileList/profile.module.scss"
+import { fetchOrderHistory } from "../store/features/orders/orderHistorySlice";
 
 const { Title } = Typography
 
 function ProfilePage() {
-    const carts = useAppSelector((state) => state.carts.carts);
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
     const dispatch = useAppDispatch()
@@ -20,12 +20,13 @@ function ProfilePage() {
     const [loading, setLoading] = useState(true)
     const isMobile = windowSize.width && windowSize.width < 660;
     useEffect(() => {
-        dispatch(fetchCarts())
+        dispatch(fetchOrderHistory())
             .then(() => setLoading(false))
     }, [dispatch]);
     if (loading) {
         return <Loading />
     }
+
     return (
         <div className="container">
             <ProfileList user={user} />
@@ -36,9 +37,9 @@ function ProfilePage() {
             </Flex>
             {
                 isMobile ? (
-                    <OrderHistoryMobile carts={carts} />
+                    <OrderHistoryMobile />
                 ) : (
-                    <OrderHistory carts={carts} />
+                    <OrderHistory />
                 )
             }
         </div >

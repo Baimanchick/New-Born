@@ -1,13 +1,9 @@
-// Ваш файл RecommendedProductsList.tsx
-
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { fetchRecAndPopProducts } from "../store/features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { default_filters } from "../utils/consts";
 import { Button } from "./Button/Button";
-
 import { Typography, Flex } from "antd";
-
 import styles from "../styles/card.module.scss";
 import ProductList from "./ProductList/ProductList";
 import useWindowSize from "../hooks/useWindowSize";
@@ -17,7 +13,7 @@ const { Title } = Typography;
 
 function RecommendedProductsList() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products.productsPopRec);
   const windowSize = useWindowSize()
   const isMobile = windowSize.width && windowSize.width < 660;
   const navigate = useNavigate();
@@ -27,7 +23,7 @@ function RecommendedProductsList() {
     dispatch(
       fetchRecAndPopProducts({
         ...default_filters,
-        limit: 16,
+        limit: 6,
       })
     );
   }, [dispatch]);
@@ -56,7 +52,7 @@ function RecommendedProductsList() {
         </Flex>
         <div className={styles.recommendedProducts}>
           <ProductList
-            products={products}
+            products={products ? products : []}
             grid={{
               gutter: 16,
               column: 6,

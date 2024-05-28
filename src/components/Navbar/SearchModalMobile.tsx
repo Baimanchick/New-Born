@@ -2,68 +2,58 @@ import { AutoComplete, Input, SelectProps } from "antd";
 import { SearchModalProps } from "./Navbar.props";
 import styles from "./navbar.module.scss";
 import "../../styles/antd.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Product } from "../../helpers/interfaces/product.interface";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchProducts } from "../../store/features/products/productSlice";
+import { useAppDispatch } from "../../hooks/hooks";
 import { useNavigate } from "react-router-dom";
-
-const searchResult = (
-  products: Product[],
-  query: string,
-  navigate: any,
-  handleCloseModal: () => void
-) =>
-  products
-    .filter((product) =>
-      product.name.toLowerCase().includes(query.toLowerCase())
-    )
-    .map((product) => ({
-      value: product.name,
-      label: (
-        <div
-          key={product.id}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-          onClick={() => {
-            navigate(`/detail/${product.id}`);
-            handleCloseModal();
-          }}
-        >
-          <span style={{ cursor: "pointer" }}>
-            <strong>Найдено:</strong> {product.name}
-          </span>
-        </div>
-      ),
-    }));
+import { searchProducts } from "../../store/features/products/productSlice";
 
 function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
   const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState<string>("");
 
-  // useEffect(() => {
-  //     dispatch(fetchProducts({
-  //         limit: 16,
-  //         offset: 0,
-  //     }))
-  // }, [dispatch])
-
-  const handleSearchAntd = (value: string) => {
+  const handleSearchAntd = async (value: string) => {
+    setSearchValue(value)
     if (value.trim() !== "") {
-      setOptions(
-        searchResult(products, value.trim(), navigate, handleCloseModal)
-      );
+      const resultAction = await dispatch(searchProducts(value.trim()));
+      if (searchProducts.fulfilled.match(resultAction)) {
+        const searchResults = resultAction.payload as unknown as Product[];
+        setOptions(
+          searchResults.map((product) => ({
+            value: product.name,
+            label: (
+              <div
+                key={product.id}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+                onClick={() => {
+                  navigate(`/detail/${product.id}`);
+                  handleCloseModal();
+                }}
+              >
+                <span style={{ cursor: "pointer" }}>
+                  <strong>Найдено:</strong> {product.name}
+                </span>
+              </div>
+            ),
+          }))
+        );
+      } else {
+        setOptions([]);
+      }
     } else {
       setOptions([]);
     }
   };
 
   const onSelect = (value: string) => {
-    console.log("onSelect", value);
+    setSearchValue("")
+    // console.log(value);
+
   };
 
   const handleSearch = (value: string) => {
@@ -92,6 +82,7 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
         onSelect={onSelect}
         onSearch={handleSearchAntd}
         onClick={handleStopClose}
+        value={searchValue}
       >
         <Input.Search
           style={{ width: 325 }}
