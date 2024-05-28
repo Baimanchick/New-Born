@@ -2,7 +2,7 @@ import { squircle } from 'ldrs'
 import { Flex } from 'antd'
 
 
-function Loading({ delivery }: any) {
+function Loading() {
     squircle.register()
 
     return (
