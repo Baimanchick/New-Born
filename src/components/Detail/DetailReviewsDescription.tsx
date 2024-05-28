@@ -52,9 +52,6 @@ function DetailReviewsDescription({ product }: any) {
         rating: reviewStar,
     });
 
-    console.log(verifiedReviews);
-
-
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
     };
@@ -91,7 +88,7 @@ function DetailReviewsDescription({ product }: any) {
             await dispatch(addReview({ ...reviewData, product: product?.id }));
             setReviewData({ text: "", rating: reviewStar });
             closeReviewsModal();
-             openNotification('success', 'Успешно', 'Ваш отзыв успешно отправлен и сейчас проходит проверку. Благодарим за ваше мнение!', 4);
+            openNotification('success', 'Успешно', 'Ваш отзыв успешно отправлен и сейчас проходит проверку. Благодарим за ваше мнение!', 4);
         } catch (error) {
             console.error("Лови аптечку ->", error);
         } finally {
