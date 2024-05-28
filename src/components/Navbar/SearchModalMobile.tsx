@@ -52,6 +52,8 @@ function SearchModalMobile({ isVisible, onClose }: SearchModalProps) {
 
   const onSelect = (value: string) => {
     setSearchValue("")
+    // console.log(value);
+
   };
 
   const handleSearch = (value: string) => {
