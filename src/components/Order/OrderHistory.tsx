@@ -9,7 +9,6 @@ const headerItems = ["Товар", "Цена", "Количество", "Адре
 
 export function OrderHistory() {
     const orderHistory = useAppSelector((state) => state.orderHistory.orderHistory);
-    console.log(orderHistory);
 
     return (
         <>

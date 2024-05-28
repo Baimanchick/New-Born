@@ -16,7 +16,6 @@ function ProfilePage() {
     const userString = localStorage.getItem('user');
     const user = userString ? JSON.parse(userString) : null;
     const dispatch = useAppDispatch()
-    const orderHistory = useAppSelector((state) => state.orderHistory.orderHistory);
     const windowSize = useWindowSize();
     const [loading, setLoading] = useState(true)
     const isMobile = windowSize.width && windowSize.width < 660;
@@ -38,7 +37,7 @@ function ProfilePage() {
             </Flex>
             {
                 isMobile ? (
-                    <OrderHistoryMobile orderHistory={orderHistory} />
+                    <OrderHistoryMobile />
                 ) : (
                     <OrderHistory />
                 )
