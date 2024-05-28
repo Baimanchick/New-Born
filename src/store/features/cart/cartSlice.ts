@@ -11,7 +11,8 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  carts: [],
+  carts:
+    JSON.parse(localStorage.getItem(Localstorage.AddedProducts) || "[]") || [],
 };
 
 const cartSlice = createSlice({
@@ -19,10 +20,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setCart: (state, action: PayloadAction<Cart[]>) => {
-      const productIds = action.payload.map((cart) => cart.product.id);
+      // const productIds = action.payload.map((cart) => cart.product.id);
       localStorage.setItem(
         Localstorage.AddedProducts,
-        JSON.stringify(productIds)
+        JSON.stringify(action.payload)
       );
       state.carts = action.payload;
     },
@@ -69,14 +70,11 @@ export const deleteCart = createAsyncThunk<unknown, any, { state: RootState }>(
 
 export const addToCart = createAsyncThunk<unknown, CartItem>(
   "carts/addToCart",
-  async (
-    { count, product_id: product }: CartItem,
-    { dispatch, rejectWithValue }
-  ) => {
+  async ({ count, product_id }: CartItem, { dispatch, rejectWithValue }) => {
     try {
       const response = await $axios.post(`${API_URL}/carts/`, {
         count,
-        product,
+        product: product_id,
       });
 
       dispatch(fetchCarts());
@@ -91,13 +89,14 @@ export const addToCart = createAsyncThunk<unknown, CartItem>(
 
 export const changeCountCartProduct = createAsyncThunk<
   unknown,
-  { count: number; product_id: number }
+  { count: number; product_id: number; cart_id: number }
 >(
   "carts/changeCountCartProduct",
-  async ({ count, product_id }, { dispatch, rejectWithValue }) => {
+  async ({ count, product_id, cart_id }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await $axios.patch(`${API_URL}/carts/${product_id}/`, {
+      const response = await $axios.patch(`${API_URL}/carts/${cart_id}/`, {
         count: count,
+        product: product_id,
       });
       dispatch(fetchCarts());
       return response.data;

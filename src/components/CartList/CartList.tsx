@@ -13,9 +13,6 @@ import {
 import { Cart } from "../../helpers/interfaces/cart.interface";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ProductCard } from "../ProductCard/ProductCard";
-import ProductList from "../ProductList/ProductList";
-import { wrap } from "module";
-import Loading from "../Loader/Loading";
 const { Text, Paragraph } = Typography;
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
@@ -25,15 +22,31 @@ export function CartList({ carts }: any) {
   const windowSize = useWindowSize();
   const isMobile = windowSize.width && windowSize.width < 660;
 
-  const incrementCount = ({ count, id }: { count: number; id: number }) => {
-    dispatch(changeCountCartProduct({ count, product_id: id }));
+  const incrementCount = ({
+    count,
+    product_id,
+    cart_id,
+  }: {
+    count: number;
+    product_id: number;
+    cart_id: number;
+  }) => {
+    dispatch(changeCountCartProduct({ count, product_id, cart_id }));
   };
 
-  const decrementCount = ({ count, id }: { count: number; id: number }) => {
-    dispatch(changeCountCartProduct({ count, product_id: id }));
+  const decrementCount = ({
+    count,
+    product_id,
+    cart_id,
+  }: {
+    count: number;
+    product_id: number;
+    cart_id: number;
+  }) => {
+    dispatch(changeCountCartProduct({ count, product_id, cart_id }));
     if (count < 1) {
-      dispatch(deleteCart(+id))
-      localStorage.removeItem("AddedProducts")
+      dispatch(deleteCart(+cart_id));
+      localStorage.removeItem("AddedProducts");
     }
   };
 
@@ -46,9 +59,7 @@ export function CartList({ carts }: any) {
   return (
     <>
       {isMobile ? (
-        sortedCarts.map((cart: Cart) => (
-          <ProductCard product={cart.product} />
-        ))
+        sortedCarts.map((cart: Cart) => <ProductCard product={cart.product} />)
       ) : (
         <>
           <List
@@ -108,10 +119,18 @@ export function CartList({ carts }: any) {
                     <Counter
                       initialValue={cart.count}
                       onIncrement={(newCount) =>
-                        incrementCount({ count: newCount, id: cart.id })
+                        incrementCount({
+                          count: newCount,
+                          cart_id: cart.id,
+                          product_id: cart.product.id,
+                        })
                       }
                       onDecrement={(newCount) =>
-                        decrementCount({ count: newCount, id: cart.id })
+                        decrementCount({
+                          count: newCount,
+                          cart_id: cart.id,
+                          product_id: cart.product.id,
+                        })
                       }
                     />
                   }
@@ -128,8 +147,7 @@ export function CartList({ carts }: any) {
             )}
           />
         </>
-      )
-      }
+      )}
       {isMobile ? null : <Divider />}
       {/* <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>
