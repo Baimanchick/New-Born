@@ -33,15 +33,21 @@ function CartPage() {
   const windowWidth = useWindowSize()
   const isMobile = windowWidth.width && windowWidth.width < 660;
 
+
+  useEffect(() => {
+    dispatch(fetchCarts());
+  }, [dispatch]);
   useEffect(() => {
     if (!isAuth) {
       setNotificationShown(true);
     }
   }, []);
-
   useEffect(() => {
-    dispatch(fetchCarts());
-  }, [dispatch]);
+    if (notificationShown) {
+      openNotification("warning", "Предупреждение", "Вы не авторизованы", 2);
+      navigate("/register");
+    }
+  }, [notificationShown]);
 
   const next = () => {
     setCurrent(current + 1);
@@ -50,12 +56,6 @@ function CartPage() {
   const prev = () => {
     setCurrent(current - 1);
   };
-  useEffect(() => {
-    if (notificationShown) {
-      navigate("/register");
-      openNotification("warning", "Предупреждение", "Вы не авторизованы", 2);
-    }
-  }, [notificationShown]);
 
   const steps = [
     {
