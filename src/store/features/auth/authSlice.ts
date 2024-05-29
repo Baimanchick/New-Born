@@ -67,7 +67,7 @@ const authSlice = createSlice({
       state.isAuth = true;
     });
     builder.addCase(register.rejected, (state, action) => {
-      state.isAuth = true;
+      state.isAuth = false;
     });
   },
 });

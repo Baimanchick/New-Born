@@ -14,13 +14,10 @@ function FavoritePage() {
     const favoriteProducts = useAppSelector((state) => state.favorites.favorites)
     const [notificationShown, setNotificationShown] = useState(false);
     const dispatch = useAppDispatch()
-    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
         dispatch(fetchFavorites())
-            .then(() => setLoading(false))
-            .catch(() => setLoading(false));
     }, [dispatch])
 
 
