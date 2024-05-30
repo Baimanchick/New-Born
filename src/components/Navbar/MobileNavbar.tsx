@@ -1,4 +1,4 @@
-import { Button, Drawer } from "antd";
+import { Badge, Button, Drawer } from "antd";
 import { MenuItem, MobileNavbarProps } from "./Navbar.props";
 import styles from "./navbar.module.scss";
 import phoneWhite from "../../assets/svgs/navbar/phoneWhite.svg";
@@ -10,6 +10,8 @@ import burger from "../../assets/svgs/navbar/burgerMenu.svg";
 import "../../styles/antd.scss";
 import FilterNavBar from "./FilterNavBar";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useAppSelector } from "../../hooks/hooks";
 
 function MobileNavbar({
   setIsDrawerOpen,
@@ -21,6 +23,7 @@ function MobileNavbar({
 }: MobileNavbarProps) {
   const isOnFilterPage = window.location.pathname === "/filter";
   const navigate = useNavigate();
+  const cartItems = useAppSelector((store) => store.carts.carts);
 
   return (
     <div className={styles.navbar_mobile}>
@@ -40,12 +43,14 @@ function MobileNavbar({
             className={styles.icon_mobile__item}
             alt="Избранное"
           />
-          <img
-            src={cart}
-            onClick={() => navigate("/cart")}
-            className={styles.icon_mobile__item}
-            alt="Корзина"
-          />
+          <Badge count={cartItems.length} color={"#FABC22"}>
+            <img
+              src={cart}
+              onClick={() => navigate("/cart")}
+              className={styles.icon_mobile__item}
+              alt="Корзина"
+            />
+          </Badge>
           <img
             src={burger}
             className={styles.icon_mobile__item}

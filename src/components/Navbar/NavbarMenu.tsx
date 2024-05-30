@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AutoComplete, Button, Flex, Input, SelectProps } from "antd";
+import { AutoComplete, Badge, Button, Flex, Input, SelectProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, NavbarMenuProps } from "./Navbar.props";
 import logo from "../../assets/svgs/navbar/logo.svg";
@@ -8,10 +8,11 @@ import favourite from "../../assets/svgs/navbar/favourites.svg";
 import cart from "../../assets/svgs/navbar/cart.svg";
 import phone from "../../assets/svgs/navbar/phone.svg";
 import styles from "./navbar.module.scss";
-import { useAppDispatch } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { Product } from "../../helpers/interfaces/product.interface";
 import openNotification from "../Notification/Notification";
 import { searchProducts } from "../../store/features/products/productSlice";
+import { store } from "../../store/store";
 
 const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
   const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
   const [activeMenuItem, setActiveMenuItem] = useState<string>();
   const [searchValue, setSearchValue] = useState<string>("");
+  const cartItems = useAppSelector((store) => store.carts.carts);
 
   const handleSearch = async (value: string) => {
     setSearchValue(value);
@@ -85,8 +87,9 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
         <ul className={styles.navbar_navigation}>
           {menuItems.map((item: MenuItem, index: number) => (
             <li
-              className={`${styles.menuItem} ${item.label === activeMenuItem ? styles.active : ""
-                }`}
+              className={`${styles.menuItem} ${
+                item.label === activeMenuItem ? styles.active : ""
+              }`}
               onClick={() => {
                 setActiveMenuItem(item.label);
                 navigate(item.link);
@@ -149,7 +152,6 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
                 variant={"borderless"}
               />
             </AutoComplete>
-
           </Flex>
         </div>
         <div className={styles.icon}>
@@ -162,19 +164,21 @@ const NavbarMenu: React.FC<NavbarMenuProps> = ({ menuItems }) => {
             className={styles.icon__item}
             alt="Избранное"
           />
-          <img
-            src={cart}
-            onClick={() => {
-              setActiveMenuItem("");
-              navigate("/cart");
-            }}
-            className={styles.icon__item}
-            alt="Корзина"
-          />
+          <Badge count={cartItems.length} color={"#FABC22"}>
+            <img
+              src={cart}
+              onClick={() => {
+                setActiveMenuItem("");
+                navigate("/cart");
+              }}
+              className={styles.icon__item}
+              alt="Корзина"
+            />
+          </Badge>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default NavbarMenu;

@@ -12,12 +12,13 @@ function ProductList({ products, grid }: ProductProps) {
       dataSource={products}
       renderItem={(item) => (
         <List.Item
+          key={item.id}
           style={{
             background: "transparent",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: '10px',
+            gap: "10px",
             padding: 0,
           }}
         >

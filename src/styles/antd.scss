@@ -130,12 +130,19 @@
 }
 
 //StepsInCartList
-:where(.css-dev-only-do-not-override-42nv3w).ant-steps.ant-steps-navigation .ant-steps-item-container {
-  @media screen and (max-width: 660px) {
-    display: flex !important;
-    flex-direction: column !important;
+//:where(.css-dev-only-do-not-override-42nv3w).ant-steps.ant-steps-navigation .ant-steps-item-container {
+//  @media screen and (max-width: 660px) {
+//    display: flex !important;
+//    flex-direction: column !important;
+//  }
+//}
+
+@media screen and (max-width: 660px) {
+  :where(.css-dev-only-do-not-override-42nv3w).ant-steps.ant-steps-label-vertical .ant-steps-item-content{
+    width: 100px !important;
   }
 }
+
 
 //HeightForStepsInCartList
 :where(.css-dev-only-do-not-override-42nv3w).ant-steps:not(.ant-steps-vertical) .ant-steps-item-custom .ant-steps-item-icon {

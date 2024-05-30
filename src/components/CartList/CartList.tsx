@@ -13,6 +13,7 @@ import {
 import { Cart } from "../../helpers/interfaces/cart.interface";
 import useWindowSize from "../../hooks/useWindowSize";
 import { ProductCard } from "../ProductCard/ProductCard";
+import { Localstorage } from "../../helpers/localstorage";
 const { Text, Paragraph } = Typography;
 
 const headerItems = ["Товар", "Цена", "Количество", "В общем", "Удалить"];
@@ -46,7 +47,7 @@ export function CartList({ carts }: any) {
     dispatch(changeCountCartProduct({ count, product_id, cart_id }));
     if (count < 1) {
       dispatch(deleteCart(+cart_id));
-      localStorage.removeItem("AddedProducts");
+      localStorage.removeItem(Localstorage.AddedProducts);
     }
   };
 
@@ -59,7 +60,9 @@ export function CartList({ carts }: any) {
   return (
     <>
       {isMobile ? (
-        sortedCarts.map((cart: Cart) => <ProductCard product={cart.product} />)
+        sortedCarts.map((cart: Cart) => (
+          <ProductCard product={cart.product} key={cart.id} />
+        ))
       ) : (
         <>
           <List
@@ -92,7 +95,7 @@ export function CartList({ carts }: any) {
                     onClick={() => dispatch(deleteCart(cart.id))}
                   />,
                 ]}
-                key={index}
+                key={cart.id}
               >
                 <List.Item.Meta
                   className={styles.item}

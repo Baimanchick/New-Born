@@ -35,7 +35,10 @@ export const fetchCarts = createAsyncThunk<unknown, void>(
   "carts/fetchCarts",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await $axios.get(`${API_URL}/carts/`);
+      const { data } = await $axios.get(`${API_URL}/carts/`, {
+        params: { limit: 30 },
+      });
+      console.log("data", data.results);
       dispatch(cartSlice.actions.setCart(data.results));
     } catch (error) {
       if (error instanceof AxiosError) {
