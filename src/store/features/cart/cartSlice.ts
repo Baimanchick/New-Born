@@ -21,10 +21,10 @@ const cartSlice = createSlice({
   reducers: {
     setCart: (state, action: PayloadAction<Cart[]>) => {
       const productIds = action.payload.map((cart) => cart.product.id);
-      console.log(productIds);
       localStorage.setItem(
         Localstorage.AddedProducts,
         JSON.stringify(action.payload)
+        // JSON.stringify(productIds)
       );
       state.carts = action.payload;
     },

@@ -6,9 +6,7 @@ import RecommendedProductsList from "../components/RecommendedProductsList";
 import PopularProductsList from "../components/PopularProductsList";
 import BrandCardList from "../components/BrandCardList";
 import CustomerReviewsCarousel from "../components/Carousel/CustomerReviewsCarousel";
-import { useEffect } from "react";
 import { useAppDispatch } from "../hooks/hooks";
-import { fetchFavorites } from "../store/features/favorite/favoriteSlice";
 
 function HomePage() {
   const dispatch = useAppDispatch();
