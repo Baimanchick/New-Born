@@ -101,7 +101,11 @@ function DetailReviewsDescription({ product }: any) {
         openNotification('error', 'Ошибка', 'Вы не авторизованы', 2)
     }
 
+
     useEscapeKey(closeReviewsModal);
+    if (!product) {
+        return <Loading />
+    }
 
     return (
         <Flex onClick={closeReviewsModal} style={{ flexDirection: `${isMobile ? 'column' : 'initial'}` }} justify={'space-between'} gap={15}>

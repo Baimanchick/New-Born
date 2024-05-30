@@ -5,11 +5,16 @@ import { API_URL } from '../../utils/consts';
 import styles from "../../components/Detail/detail.module.scss"
 import arrowLeft from "../../assets/svgs/carousel/arrowLeft.svg";
 import arrowRight from "../../assets/svgs/carousel/arrowRight.svg";
+import Loading from '../Loader/Loading';
 
 const { Content } = Layout
 
 function DetailCarouselMobile({ product }: any) {
     const ref = useRef<CarouselRef>(null);
+
+    if (!product) {
+        return <Loading />
+    }
 
     return (
         <Content style={{ width: '100%', backgroundColor: '#fff', borderRadius: '20px', padding: '20px', position: 'relative' }}>
