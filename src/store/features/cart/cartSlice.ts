@@ -20,7 +20,8 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setCart: (state, action: PayloadAction<Cart[]>) => {
-      // const productIds = action.payload.map((cart) => cart.product.id);
+      const productIds = action.payload.map((cart) => cart.product.id);
+      console.log(productIds);
       localStorage.setItem(
         Localstorage.AddedProducts,
         JSON.stringify(action.payload)
@@ -34,7 +35,10 @@ export const fetchCarts = createAsyncThunk<unknown, void>(
   "carts/fetchCarts",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const { data } = await $axios.get(`${API_URL}/carts/`);
+      const { data } = await $axios.get(`${API_URL}/carts/`, {
+        params: { limit: 30 },
+      });
+      console.log("data", data.results);
       dispatch(cartSlice.actions.setCart(data.results));
     } catch (error) {
       if (error instanceof AxiosError) {
