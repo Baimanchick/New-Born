@@ -60,7 +60,9 @@ export function CartList({ carts }: any) {
   return (
     <>
       {isMobile ? (
-        sortedCarts.map((cart: Cart) => <ProductCard product={cart.product} />)
+        sortedCarts.map((cart: Cart) => (
+          <ProductCard product={cart.product} key={cart.id} />
+        ))
       ) : (
         <>
           <List

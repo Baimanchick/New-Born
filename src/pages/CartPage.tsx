@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Button as ButtonAntd, Flex, message, Result, Steps, theme, Typography } from "antd";
+import {
+  Button as ButtonAntd,
+  Flex,
+  message,
+  Result,
+  Steps,
+  theme,
+  Typography,
+} from "antd";
 import { ReactComponent as CardIcon } from "../assets/svgs/cart/card.svg";
 import { ReactComponent as SuccessIcon } from "../assets/svgs/cart/sucsess.svg";
 import { ReactComponent as BusIcon } from "../assets/svgs/cart/bus.svg";
@@ -14,12 +22,12 @@ import { fetchCarts } from "../store/features/cart/cartSlice";
 import Loading from "../components/Loader/Loading";
 import openNotification from "../components/Notification/Notification";
 import useWindowSize from "../hooks/useWindowSize";
-import styles from "../components/CartList/cartList.module.scss"
+import styles from "../components/CartList/cartList.module.scss";
 import { formatNumberAndAddCurrency } from "../helpers/functions/helperFunctions";
 import { Colors } from "../helpers/enums/color.enum";
 import { Button } from "../components";
 
-const { Title, Paragraph, Text } = Typography
+const { Title, Paragraph, Text } = Typography;
 
 function CartPage() {
   const { token } = theme.useToken();
@@ -30,7 +38,7 @@ function CartPage() {
   const dispatch = useAppDispatch();
   const isAuth = useAppSelector((states) => states.auth.user !== null);
   const carts = useAppSelector((state) => state.carts.carts);
-  const windowWidth = useWindowSize()
+  const windowWidth = useWindowSize();
   const isMobile = windowWidth.width && windowWidth.width < 660;
 
   useEffect(() => {
@@ -61,17 +69,17 @@ function CartPage() {
     {
       title: <Title className={styles.stepTitle}>Моя корзина</Title>,
       content: <CartList carts={carts} />,
-      icon: <CardIcon className={isMobile ? 'small-icon' : ''} />,
+      icon: <CardIcon className={isMobile ? "small-icon" : ""} />,
     },
     {
       title: <Title className={styles.stepTitle}>Доставка</Title>,
       content: <Delivery />,
-      icon: <BusIcon className={isMobile ? 'small-icon' : ''} />,
+      icon: <BusIcon className={isMobile ? "small-icon" : ""} />,
     },
     {
       title: <Title className={styles.stepTitle}>Оплата</Title>,
       content: <Payment />,
-      icon: <CardIcon className={isMobile ? 'small-icon' : ''} />,
+      icon: <CardIcon className={isMobile ? "small-icon" : ""} />,
     },
     {
       title: <Title className={styles.stepTitle}>Подтверждение</Title>,
@@ -80,17 +88,21 @@ function CartPage() {
           icon={<SmileOutlined />}
           title="Спасибо за покупку"
           subTitle="Копия или краткое описание вашего заказа были отправлены по адресу customer@example.com"
-          extra={<ButtonAntd onClick={() => navigate('/')} type="primary">К покупкам</ButtonAntd>}
+          extra={
+            <ButtonAntd onClick={() => navigate("/")} type="primary">
+              К покупкам
+            </ButtonAntd>
+          }
         />
       ),
-      icon: <SuccessIcon className={isMobile ? 'small-icon' : ''} />,
+      icon: <SuccessIcon className={isMobile ? "small-icon" : ""} />,
     },
   ];
 
   const contentStyle: React.CSSProperties = {
     lineHeight: "260px",
     textAlign: "center",
-    padding: isMobile ? '10px' : "40px",
+    padding: isMobile ? "10px" : "40px",
     color: token.colorTextTertiary,
     backgroundColor: token.colorWhite,
     borderRadius: "20px",
@@ -101,15 +113,14 @@ function CartPage() {
   };
 
   const cartStyle: React.CSSProperties = {
-    display: current === 0 ? 'flex' : '',
-    justifyContent: current === 0 ? 'center' : '',
+    display: current === 0 ? "flex" : "",
+    justifyContent: current === 0 ? "center" : "",
     gap: current === 0 ? 5 : 0,
-    flexWrap: current === 0 ? 'wrap' : 'initial'
-  }
+    flexWrap: current === 0 ? "wrap" : "initial",
+  };
 
   const navigationButtonAntds = (
     <>
-
       <Flex justify={"end"}>
         <Flex vertical={true} align={"end"}>
           <Text
@@ -177,8 +188,10 @@ function CartPage() {
           title="Нет товаров"
           subTitle="Извините но вы еще не добавили продукты в корзину"
           extra={
-            <Flex justify={'center'}>
-              <Button appearance="yellow" onClick={() => navigate('/')}>К покупкам</Button>
+            <Flex justify={"center"}>
+              <Button appearance="yellow" onClick={() => navigate("/")}>
+                К покупкам
+              </Button>
             </Flex>
           }
         />
@@ -187,7 +200,7 @@ function CartPage() {
           <Steps
             className="site-navigation-steps"
             responsive={false}
-            labelPlacement="horizontal"
+            labelPlacement={isMobile ? "vertical" : "horizontal"}
             type={"navigation"}
             current={current}
             items={steps.map((item) => ({
@@ -200,12 +213,8 @@ function CartPage() {
             <div style={contentStyle}>
               {isMobile && current === 0 ? (
                 <>
-                  <div style={cartStyle}>
-                    {steps[current].content}
-                  </div>
-                  <div>
-                    {navigationButtonAntds}
-                  </div>
+                  <div style={cartStyle}>{steps[current].content}</div>
+                  <div>{navigationButtonAntds}</div>
                 </>
               ) : (
                 <>
@@ -213,14 +222,12 @@ function CartPage() {
                   {navigationButtonAntds}
                 </>
               )}
-
             </div>
           ) : (
             steps[3].content
           )}
         </>
       )}
-
     </div>
   );
 }
