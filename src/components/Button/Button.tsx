@@ -19,6 +19,7 @@ export function Button({
         [styles.blue]: appearance == "blue",
         [styles.yellow]: appearance == "yellow",
         [styles.lightBlue]: appearance == "lightBlue",
+        [styles.darkBlue]: appearance == "darkBlue",
       })}
     >
       <Flex gap={"small"} align={"center"}>

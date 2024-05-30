@@ -10,6 +10,7 @@ import { fetchCategory, fetchSubcategory } from '../../store/features/category/c
 import { CategoryType } from '../CategoryCard/CategoryCard.props';
 import { SubCategory } from '../../helpers/interfaces/category.interface';
 import "../../styles/antd.scss"
+import { Button } from '../Button/Button';
 
 export interface BrandI {
   brand: BrandType[];
@@ -29,6 +30,10 @@ const inlineStylesFlex: React.CSSProperties = {
   background: 'white',
   borderRadius: 20,
 };
+
+const flexHeaderFilter: React.CSSProperties = {
+  justifyContent: 'space-between'
+}
 
 interface FilterMenuProps {
   setFilterIsDrawerOpen?: (value: boolean) => void;
@@ -130,6 +135,16 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   };
 
 
+  const handleClearParams = () => {
+    setSearchParams('');
+    localStorage.removeItem('catalogKey');
+    localStorage.removeItem('subKey');
+    localStorage.removeItem('brandKey');
+    setCatalogKey([]);
+    setSubKey([]);
+    setBrandKey('')
+  }
+
   const onPriceTo = (value: number) => {
     handleFilterChange('max_price', value.toString());
     closeMenu();
@@ -143,16 +158,25 @@ function FilterMenu({ setFilterIsDrawerOpen }: FilterMenuProps) {
   return (
     <Flex gap={20} vertical>
       <Flex style={inlineStylesFlex}>
-        <Title
-          style={{
-            color: '#1B81E7',
-            fontWeight: '1000',
-            fontSize: '22px',
-            cursor: 'pointer',
-          }}
-        >
-          Каталог
-        </Title>
+        <Flex style={flexHeaderFilter}>
+          <Title
+            style={{
+              color: '#1B81E7',
+              fontWeight: '1000',
+              fontSize: '22px',
+              cursor: 'pointer',
+            }}
+          >
+            Каталог
+          </Title>
+          <Button
+            appearance='darkBlue'
+            className={styles.filterButton}
+            onClick={handleClearParams}
+          >
+            Сбросить фильтры
+          </Button>
+        </Flex>
         <Menu
           theme={'light'}
           onClick={catalogHandler}
