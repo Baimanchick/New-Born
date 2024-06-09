@@ -14,6 +14,7 @@ import { AppDispatch } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../../store/features/cart/cartSlice';
 import openNotification from '../Notification/Notification';
+import Loading from '../Loader/Loading';
 const { Content } = Layout;
 const { Text, Title, Paragraph } = Typography;
 
@@ -53,6 +54,10 @@ function InfoBlock({ product }: any) {
         const addedToCart = addedProducts.includes(product?.id);
         setAddedToCart(addedToCart);
     }, [product]);
+
+    if (!product) {
+        return <Loading />
+    }
 
     return (
         <Content style={{ width: '100%', backgroundColor: '#fff', borderRadius: '20px', padding: '20px' }}>

@@ -26,6 +26,10 @@ function DetailPage() {
     return <Loading />;
   }
 
+  if (!product) {
+    return <div>Продукт не найден</div>;
+  }
+
   return (
     <div className="container">
       <Layout style={{ background: "none" }}>

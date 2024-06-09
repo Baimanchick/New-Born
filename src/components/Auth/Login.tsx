@@ -10,7 +10,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import styles from "./auth.module.scss";
 import { Colors } from "../../helpers/enums/color.enum";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { login, LoginUser, userMe } from "../../store/features/auth/authSlice";
 import { Button } from "../Button/Button";
@@ -88,6 +88,9 @@ function Login({ }) {
             type="password"
             placeholder="Password"
           />
+        </Form.Item>
+        <Form.Item style={{ marginBottom: 0 }}>
+          <Link to={"/register"}>У вас нет аккаунта?</Link>
         </Form.Item>
         <Form.Item shouldUpdate style={{ marginTop: "170px", marginBottom: 0 }}>
           {() => (

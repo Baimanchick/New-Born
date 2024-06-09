@@ -50,3 +50,17 @@
     color: #1B81E7 !important;
   }
 }
+
+.darkBlue {
+  background: #1B81E7;
+  color: #fff;
+
+  &:hover {
+    svg path {
+      stroke: #ECF5FF;
+    }
+
+    border-color: #1B81E7 !important;
+    color: #1B81E7 !important;
+  }
+}

@@ -20,6 +20,10 @@ function DetailCarousel({ product }: any) {
         setSelectedImageIndex(index);
     };
 
+    if (!product) {
+        return <Loading />
+    }
+
     return (
         <Content style={{ width: '100%', backgroundColor: '#fff', borderRadius: '20px', padding: '20px' }}>
             <Flex style={{ flexDirection: 'column' }}>

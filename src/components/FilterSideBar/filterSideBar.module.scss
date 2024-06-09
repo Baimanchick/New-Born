@@ -12,25 +12,32 @@
     }
 }
 
-.layoutFilter{
+.layoutFilter {
     margin: 20px auto !important;
     max-width: 1400px !important;
     background: transparent !important;
     padding-block: 40px;
 }
 
+.filterButton {
+    height: 30px !important;
+    width: 170px !important;
+    font-size: 14px !important;
+}
+
 @media screen and (max-width: 1400px) {
-    .siderFilter{
+    .siderFilter {
         max-width: 300px !important;
         min-width: 300px !important;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .layoutFilter{
+    .layoutFilter {
         padding-block: 20px;
     }
-    .siderFilter{
-      display: none;
+
+    .siderFilter {
+        display: none;
     }
 }
